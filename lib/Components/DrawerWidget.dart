@@ -33,11 +33,11 @@ class DrawerWidget extends StatelessWidget {
   return Column(
      children: DrawerItems.all.map((item) => ListTile(
        contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-       leading: Icon(item.icon, color: Colors.white),
+       leading: Icon(item.icon, color: Colors.white,),
        title: Text(
          item.title,
          style: GoogleFonts.poppins(
-           textStyle: TextStyle(color: Colors.white, fontSize: 25),
+           textStyle: TextStyle(color: Colors.white, fontSize: 17),
          ),
        ),
        onTap: () => onSelectedItem(item),
