@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../ui-elements/ui-elements.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
                     itemBuilder: ((context, index) =>
-                        const PlaceCardView(title: 'Place Card'))),
+                        const PlaceCardView( 'Place Card'))),
               ))
             ],
           ),
@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 11,
                     itemBuilder: ((context, index) =>
-                        const PlaceCardView(title: 'Country Card'))),
+                        const PlaceCardView( 'Country Card'))),
               ))
             ],
           ),

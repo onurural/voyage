@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CountryCardView extends StatelessWidget {
-  const CountryCardView({Key key}) : super(key: key);
+  const CountryCardView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const Center(

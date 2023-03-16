@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class PlaceCardView extends StatelessWidget {
   final String title;
-  
-  const PlaceCardView({Key key, this.title}) : super(key: key);
+
+
+  const PlaceCardView(this.title, {super.key});
+
   @override
   Widget build(BuildContext context) {
      return Center(

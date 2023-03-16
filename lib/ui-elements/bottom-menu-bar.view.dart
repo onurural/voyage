@@ -7,7 +7,7 @@ class BottomNavigationBarView extends StatelessWidget {
       _selectedIndex = index;
   }
   
-  BottomNavigationBarView({Key key}) : super(key: key);
+  BottomNavigationBarView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
