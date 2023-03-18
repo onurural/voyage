@@ -25,10 +25,8 @@ class DrawerWidget extends StatelessWidget {
 
       ),
     );
-
-
-
   }
+  
  Widget buildDrawerItems(BuildContext context){
   return Column(
      children: DrawerItems.all.map((item) => ListTile(

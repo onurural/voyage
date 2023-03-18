@@ -39,7 +39,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-
         decoration: const BoxDecoration(
             gradient: LinearGradient(
                 colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
