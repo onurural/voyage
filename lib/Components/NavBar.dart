@@ -22,16 +22,7 @@ class _NavBarState extends State<NavBar> {
   bool createScheduleScreenSelected = false;
   bool documentsScreensSelected=false;
   bool profileScreenSelected=false;
-
-
-
-
-
-
-
-
-
-
+  
   void selectScreen(int index){
 
     setState(() {

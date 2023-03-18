@@ -7,17 +7,13 @@ import '../Components/DrawerMenuWidget.dart';
 
 class ScreenViewer extends StatefulWidget {
   final VoidCallback openDrawer;
-
-
   const ScreenViewer(this.openDrawer, {super.key});
-
   @override
   State<ScreenViewer> createState() => _ScreenViewerState();
 }
 
 class _ScreenViewerState extends State<ScreenViewer> {
   Widget activeScreen=Container();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,15 +23,8 @@ class _ScreenViewerState extends State<ScreenViewer> {
         ],
         backgroundColor: Color.fromRGBO(126, 157, 164, 60),
         leading: DrawerMenuWidget( widget.openDrawer),
-
-
       ),
       bottomNavigationBar: NavBar(activeScreen),
-
-
-
-
-
     );
   }
 }
