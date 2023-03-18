@@ -1,20 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:voyage/ScreensContainer/HomeCon.dart';
 import 'GradientIcon.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({Key? key}) : super(key: key);
+late Widget activeScreen;
+
+
+NavBar(this.activeScreen, {super.key});
 
   @override
   State<NavBar> createState() => _NavBarState();
+
+
 }
 
 class _NavBarState extends State<NavBar> {
+  int index=0;
   bool homeScreenSelected = false;
   bool scheduleScreenSelected = false;
   bool createScheduleScreenSelected = false;
   bool documentsScreensSelected=false;
   bool profileScreenSelected=false;
+
+
+
+
+
+
 
 
 
@@ -25,6 +38,9 @@ class _NavBarState extends State<NavBar> {
 
 
       if(index ==0 ){
+        this.index=index;
+
+        widget.activeScreen=HomeCon();
 
         homeScreenSelected=true;
         scheduleScreenSelected=false;
@@ -35,7 +51,8 @@ class _NavBarState extends State<NavBar> {
 
       }
       else if(index ==1 ){
-
+        this.index=index;
+        widget.activeScreen=Container();
         homeScreenSelected=false;
         scheduleScreenSelected=true;
         createScheduleScreenSelected=false;
@@ -43,7 +60,8 @@ class _NavBarState extends State<NavBar> {
         profileScreenSelected=false;
       }
       else if(index == 2){
-
+        this.index=index;
+        widget.activeScreen=Container();
         homeScreenSelected=false;
         scheduleScreenSelected=false;
         createScheduleScreenSelected=true;
@@ -51,7 +69,8 @@ class _NavBarState extends State<NavBar> {
         profileScreenSelected=false;
       }
       else if( index ==3){
-
+        this.index=index;
+        widget.activeScreen=Container();
         homeScreenSelected=false;
         scheduleScreenSelected=false;
         createScheduleScreenSelected=false;
@@ -59,9 +78,9 @@ class _NavBarState extends State<NavBar> {
         profileScreenSelected=false;
       }
       else if(index ==4){
+        widget.activeScreen=Container();
 
-
-
+        this.index=index;
         homeScreenSelected=false;
         scheduleScreenSelected=false;
         createScheduleScreenSelected=false;
@@ -204,6 +223,7 @@ class _NavBarState extends State<NavBar> {
               ),
             ),
           ),
+
       ],
     )),
         ));

@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:voyage/Home/ScreensViewer.dart';
 
 import '../Components/DrawerItem.dart';
 import '../Components/DrawerItems.dart';
 import '../Components/DrawerWidget.dart';
-import '../Home/HomePage.dart';
+
 
 class HomeCon extends StatefulWidget {
   const HomeCon({Key? key}) : super(key: key);
@@ -50,11 +51,17 @@ class _HomeConState extends State<HomeCon> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-          children: [
-            buildDrawer(),
-            buildPage()
-          ],
+      backgroundColor: Color.fromRGBO(126, 157, 164, 60),
+
+        body: Container(
+
+          child: Stack(
+            children: [
+              buildDrawer(),
+              buildPage()
+
+            ],
+          ),
         ),
 
     );
@@ -99,8 +106,8 @@ class _HomeConState extends State<HomeCon> {
           isDragging = false;
         },
         child: AnimatedContainer(
-            transform: Matrix4.translationValues(230, 150, 0)..scale(0.6),
-            duration: Duration(milliseconds: 250),
+            transform: Matrix4.translationValues(xOffset, yOffset, 0)..scale(scaleFactor),
+            duration: Duration(milliseconds: 500),
             child: AbsorbPointer(absorbing: isDrawerOpen,child: ClipRRect(
               borderRadius:BorderRadius.circular(isDrawerOpen? 20 : 0) ,
               child: Container(
@@ -111,20 +118,13 @@ class _HomeConState extends State<HomeCon> {
   }
   Widget getDrawerPage(){
     switch (item){
-      case DrawerItems.explore:
-        return HomePage( openDrawer);
-      case DrawerItems.favourites:
-        return HomePage( openDrawer);
-      case DrawerItems.messages:
-        return HomePage( openDrawer);
-      case DrawerItems.profile:
-        return HomePage( openDrawer);
+
       case DrawerItems.settings:
-        return HomePage( openDrawer);
+        return ScreenViewer( openDrawer);
       case DrawerItems.home:
-        return HomePage( openDrawer);
+        return ScreenViewer( openDrawer);
 
     }
-    return HomePage(openDrawer);
+    return ScreenViewer(openDrawer);
   }
 }
