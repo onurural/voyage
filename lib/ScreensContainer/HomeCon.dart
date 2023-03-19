@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:voyage/Home/ScreensViewer.dart';
 
@@ -52,34 +51,30 @@ class _HomeConState extends State<HomeCon> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(126, 157, 164, 60),
-
         body: Container(
-
           child: Stack(
             children: [
               buildDrawer(),
               buildPage()
-
             ],
           ),
         ),
 
     );
   }
+
   Widget buildDrawer(){
     return SafeArea(child: Container(
       width: xOffset,
       child: DrawerWidget(onSelectedItem: (DrawerItem value) {
-
         setState(() {
           this.item=value;
           closeDrawer();
-
-
         });
       },),
     ));
   }
+
   Widget buildPage(){
     return WillPopScope(
       onWillPop: () async {
@@ -116,14 +111,13 @@ class _HomeConState extends State<HomeCon> {
       ),
     );
   }
+
   Widget getDrawerPage(){
     switch (item){
-
       case DrawerItems.settings:
         return ScreenViewer( openDrawer);
       case DrawerItems.home:
         return ScreenViewer( openDrawer);
-
     }
     return ScreenViewer(openDrawer);
   }
