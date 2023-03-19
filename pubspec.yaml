@@ -40,6 +40,7 @@ dependencies:
   meta: ^1.8.0
   http: ^0.13.5
   google_fonts: ^4.0.3
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,13 @@ flutter:
   uses-material-design: true
   assets:
     - assets/Images/Logo.png
+    - assets/Images/ContainerBackgroundImage.jpg
+    - assets/Images/1.jpeg
+    - assets/Images/2.jpeg
+    - assets/Images/3.jpeg
+    - assets/Images/4.jpeg
+    - assets/Images/5.jpeg
+    - assets/Images/6.jpeg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

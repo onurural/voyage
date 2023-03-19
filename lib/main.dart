@@ -5,6 +5,7 @@ import 'package:voyage/Auth/ForgetPasswordPage.dart';
 import 'package:voyage/Auth/SignUpScreen.dart';
 import 'package:voyage/Components/DrawerWidget.dart';
 import 'package:voyage/Components/NavBar.dart';
+import 'package:voyage/Home/HomePage.dart';
 
 import 'package:voyage/ScreensContainer/HomeCon.dart';
 
@@ -35,7 +36,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      home:ForgetPasswordPage()
+      home:HomePage()
 
 
 
