@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:voyage/ScreensContainer/HomeCon.dart';
 import 'GradientIcon.dart';
 
 class NavBar extends StatefulWidget {
@@ -30,9 +29,6 @@ class _NavBarState extends State<NavBar> {
 
       if(index ==0 ){
         this.index=index;
-
-        widget.activeScreen=HomeCon();
-
         homeScreenSelected=true;
         scheduleScreenSelected=false;
         createScheduleScreenSelected=false;

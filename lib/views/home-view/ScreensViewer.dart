@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:voyage/Components/NavBar.dart';
 
-import '../Components/DrawerMenuWidget.dart';
+import '../../ui-components/NavBar.dart';
+import '../../ui-components/drawer/DrawerMenuWidget.dart';
 
 
 class ScreenViewer extends StatefulWidget {

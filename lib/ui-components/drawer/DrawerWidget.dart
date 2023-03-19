@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:voyage/Components/DrawerItems.dart';
 
-import 'DrawerItem.dart';
+import '../DrawerItem.dart';
+import 'DrawerItems.dart';
 
 class DrawerWidget extends StatelessWidget {
  final ValueChanged<DrawerItem> onSelectedItem;

@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:voyage/Home/Place.dart';
-import 'package:voyage/Home/PlaceSmallCard.dart';
-import 'package:voyage/Home/SearchBar.dart';
-import 'package:voyage/Home/TopVisitedRowList.dart';
+import 'package:voyage/views/home-view/SearchBar.dart';
 
+import 'TopVisitedRowList.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -21,10 +18,8 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         body: Container(
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(""
-                "assets/Images/ContainerBackgroundImage.jpg",
-
-
+            image: DecorationImage(image: const AssetImage(
+                'assets/Images/ContainerBackgroundImage.jpg',
             ),
                 fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
@@ -44,15 +39,15 @@ class _HomePageState extends State<HomePage> {
 
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
                           child: SearchBar([]),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
                           child: Text(
-                            "Explore top destinations around the world", style:GoogleFonts.openSans(
-                            textStyle: TextStyle(
+                            'Explore top destinations around the world', style:GoogleFonts.openSans(
+                            textStyle: const TextStyle(
                               color: Colors.white,
                               fontSize: 28,
                               fontWeight:  FontWeight.w600,
@@ -80,15 +75,15 @@ class _HomePageState extends State<HomePage> {
                           width: 2,
                           color: Colors.black
                         ),
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25),
+                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25),
                         bottomLeft: Radius.circular(5),bottomRight: Radius.circular(5)
                         )
                       ),
                       child: SingleChildScrollView(
                      child: Column(
-                       children: [
+                       children: const [
                          Padding(
-                           padding: const EdgeInsets.fromLTRB(110, 0, 110, 0),
+                           padding: EdgeInsets.fromLTRB(110, 0, 110, 0),
                            child: Divider(
                              color: Color.fromRGBO(93, 94, 94, 100),
                              thickness: 5,
@@ -98,8 +93,6 @@ class _HomePageState extends State<HomePage> {
                            ),
                          ),
                        TopVisitedRowList()
-
-
                        ],
                      ),
                       ),
