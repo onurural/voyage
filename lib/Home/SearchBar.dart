@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 class SearchBar extends StatefulWidget {
 
@@ -12,7 +12,6 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  String _searchText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class _SearchBarState extends State<SearchBar> {
           fillColor: Colors.white,
 
           hintText: 'Search City',
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.search,
             color: Colors.grey,
           ),
@@ -37,7 +36,7 @@ class _SearchBarState extends State<SearchBar> {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0),
-            borderSide: BorderSide(color: Colors.blueAccent),
+            borderSide: const BorderSide(color: Colors.blueAccent),
           ),
         ),
       ),

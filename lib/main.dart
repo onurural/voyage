@@ -1,19 +1,18 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:voyage/Auth/ForgetPasswordPage.dart';
-import 'package:voyage/Auth/SignUpScreen.dart';
-import 'package:voyage/Components/DrawerWidget.dart';
-import 'package:voyage/Components/NavBar.dart';
-import 'package:voyage/Home/HomePage.dart';
 
-import 'package:voyage/views/forget-password.view.dart';
+
+
+import 'package:voyage/ScreensContainer/MainConnector.dart';
+
+
 
 
 void main() {
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   runApp(const MyApp());
+
+
 }
 
 class MyApp extends StatefulWidget {
@@ -31,15 +30,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-
-      home:HomePage()
-
-
-
-
     return const MaterialApp(
-      home:ForgetPasswordPage()
+
+      home: MainConnector()
+
+
+
+
 
     );
   }

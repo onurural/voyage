@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:voyage/Home/ScreensViewer.dart';
 
-import '../Components/DrawerItem.dart';
 import '../Components/DrawerItems.dart';
 import '../Components/DrawerWidget.dart';
 
@@ -24,7 +24,7 @@ class _HomeConState extends State<HomeCon> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    openDrawer();
+    closeDrawer();
   }
   void openDrawer(){
     return setState(() {
@@ -50,75 +50,93 @@ class _HomeConState extends State<HomeCon> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(126, 157, 164, 60),
-        body: Container(
-          child: Stack(
-            children: [
-              buildDrawer(),
-              buildPage()
-            ],
-          ),
+      backgroundColor: const Color.fromRGBO(44, 87, 116, 100),
+
+        body: Stack(
+          children: [
+            buildDrawer(),
+            buildPage(),
+
+          ],
         ),
 
     );
   }
 
-  Widget buildDrawer(){
-    return SafeArea(child: Container(
-      width: xOffset,
-      child: DrawerWidget(onSelectedItem: (DrawerItem value) {
-        setState(() {
-          this.item=value;
-          closeDrawer();
-        });
-      },),
-    ));
+  Widget buildDrawer() {
+    return SafeArea(
+      child: Container(
+        width: xOffset,
+        decoration: BoxDecoration(
+          color: Colors.blueGrey[800],
+          boxShadow: const [BoxShadow(color: Colors.black45, blurRadius: 10)],
+        ),
+        child: DrawerWidget(onSelectedItem: (DrawerItem value) {
+          setState(() {
+            item = value;
+            closeDrawer();
+          });
+        }),
+      ),
+    );
   }
 
-  Widget buildPage(){
+  Widget buildPage() {
     return WillPopScope(
       onWillPop: () async {
-        if(isDrawerOpen){
+        if (isDrawerOpen) {
           closeDrawer();
           return false;
-        }
-        else{
+        } else {
           return true;
         }
       },
       child: GestureDetector(
         onTap: closeDrawer,
-        onHorizontalDragStart: (details) => isDragging=true,
+        onHorizontalDragStart: (details) => isDragging = true,
         onHorizontalDragUpdate: (details) {
-          if(!isDragging) return;
-          const delta=1;
-          if(details.delta.dx> delta){
+          if (!isDragging) return;
+          const delta = 1;
+          if (details.delta.dx > delta) {
             openDrawer();
-          }
-          else if(details.delta.dx < -delta){
+          } else if (details.delta.dx < -delta) {
             closeDrawer();
           }
           isDragging = false;
         },
         child: AnimatedContainer(
-            transform: Matrix4.translationValues(xOffset, yOffset, 0)..scale(scaleFactor),
-            duration: Duration(milliseconds: 500),
-            child: AbsorbPointer(absorbing: isDrawerOpen,child: ClipRRect(
-              borderRadius:BorderRadius.circular(isDrawerOpen? 20 : 0) ,
+          transform: Matrix4.translationValues(xOffset, yOffset, 0)
+            ..scale(scaleFactor),
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOutCubic,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(isDrawerOpen ? 20 : 0),
+            boxShadow: [
+              BoxShadow(
+                color: isDrawerOpen ? Colors.black.withOpacity(0.5) : Colors.transparent,
+                blurRadius: 10,
+                spreadRadius: 5,
+              ),
+            ],
+          ),
+          child: AbsorbPointer(
+            absorbing: isDrawerOpen,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(isDrawerOpen ? 20 : 0),
               child: Container(
-                  color: isDrawerOpen? Colors.white: Colors.blue,child: getDrawerPage()),
-            ))),
+                color: isDrawerOpen ? Colors.white : Colors.blue,
+                child: getDrawerPage(),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
 
   Widget getDrawerPage(){
-    switch (item){
-      case DrawerItems.settings:
-        return ScreenViewer( openDrawer);
-      case DrawerItems.home:
-        return ScreenViewer( openDrawer);
-    }
-    return ScreenViewer(openDrawer);
+
+    return ScreenViewer(openDrawer,0);
   }
 }
