@@ -1,8 +1,13 @@
 
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:voyage/Home/ShowMoreScreen.dart';
 
+import '../PlaceScreen/PlaceScreen.dart';
+import '../PlaceScreen/hero_dialog_route.dart';
 import 'Place.dart';
 import 'PlaceSmallCard.dart';
 class TopVisitedRowList extends StatefulWidget {
@@ -11,29 +16,23 @@ class TopVisitedRowList extends StatefulWidget {
   @override
   State<TopVisitedRowList> createState() => _TopVisitedRowListState();
 }
-
+var globalId;
 class _TopVisitedRowListState extends State<TopVisitedRowList> {
-  var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],"Barcelona", "Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.", 3.5);
+  var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
   bool buttonViewed=false;
-  Container viewMoreButton=Container(
-    decoration: BoxDecoration(
-      color: Colors.black,
-      borderRadius: BorderRadius.circular(7)
-    ),
 
 
-    child: MaterialButton(onPressed: () {  },
-      child: Text("View More",style:
-        GoogleFonts.poppins(
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
-          fontSize: 16
-        ),),
-
-    ),
-  ) as Container;
   final ScrollController _controller = ScrollController();
-
+  String generateRandomString(int length) {
+    final rand = Random();
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    const charLength = chars.length;
+    String result = '';
+    for (var i = 0; i < length; i++) {
+      result += chars[rand.nextInt(charLength)];
+    }
+    return result;
+  }
 
   List<PlaceSmallCard> items=[];
   void _scrollListener() {
@@ -49,7 +48,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
   void generateList(){
 
     for(var i=0;i<=29;i++){
-    items.add(PlaceSmallCard(testPlace));
+    items.add(PlaceSmallCard(testPlace,globalId));
     }
 
   }
@@ -58,12 +57,13 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
 
     super.initState();
     _controller.addListener(_scrollListener);
+    globalId = generateRandomString(5);
 
     generateList();
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: double.infinity,
 
         child: Column(
@@ -72,9 +72,9 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 10, 0,0 ),
-                  child: Text("Top Visited Destinations",
+                  child: Text('Top Visited Destinations',
                     style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
@@ -89,9 +89,9 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
                 alignment: Alignment.centerLeft
                 ,child: Padding(
                 padding: const EdgeInsets.fromLTRB(22, 5, 0, 0),
-                child: Text("30 locations world wide",
+                child: Text('30 locations world wide',
                   style: GoogleFonts.openSans(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                           color: Color.fromRGBO(87, 99, 108, 100),
                           fontWeight: FontWeight.w600
                       )
@@ -118,7 +118,37 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
               ),
                Padding(
                  padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
-                 child: AnimatedCrossFade(firstChild: Container(), secondChild: viewMoreButton, crossFadeState: buttonViewed? CrossFadeState.showSecond : CrossFadeState.showFirst , duration: Duration(milliseconds: 100),
+                 child: AnimatedCrossFade(firstChild: Container(), secondChild: GestureDetector(
+                   onTap: () {
+                     Navigator.of(context).push(
+                       HeroDialogRoute(
+                         builder: (context) =>
+                             Center(
+                                 child: ShowMoreScreen(items,globalId)),
+                         settings: const RouteSettings(),
+                         fullscreenDialog: true,
+                       ),
+                     );
+                   },
+                   child: Hero(
+                     tag: globalId,
+                     child: Container(
+                       padding: const EdgeInsets.all(10),
+                       decoration: BoxDecoration(
+                         color: Colors.black,
+                         borderRadius: BorderRadius.circular(7),
+                       ),
+                       child: Text(
+                         'View More',
+                         style: GoogleFonts.poppins(
+                           color: Colors.white,
+                           fontWeight: FontWeight.w600,
+                           fontSize: 16,
+                         ),
+                       ),
+                     ),
+                   ),
+                 ), crossFadeState: buttonViewed? CrossFadeState.showSecond : CrossFadeState.showFirst , duration: const Duration(milliseconds: 100),
 
 
               ),
