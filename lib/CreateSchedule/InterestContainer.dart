@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'MatrixElement.dart';
 
 class InterestContainer extends StatefulWidget {
-  late bool isFinished;
+  Map<String, double> preferences={};
+  bool isFinished=false;
 
   InterestContainer({Key? key}) : super(key: key);
 
@@ -15,6 +16,7 @@ class InterestContainer extends StatefulWidget {
 }
 
 class _InterestContainerState extends State<InterestContainer> {
+  bool isFinished=false;
   var matrixes=[
     MatrixElement(title: 'Entertainment'),
     MatrixElement(title: 'Gastronomy'),
@@ -38,18 +40,49 @@ class _InterestContainerState extends State<InterestContainer> {
     interests= Column(
       children: [
       matrixes[0],
-        SizedBox(height: 8),
+
         matrixes[1],
-        SizedBox(height: 8),
+
         matrixes[2],
-        SizedBox(height: 8),
+
         matrixes[3],
-        SizedBox(height: 8),
+
         matrixes[4],
-        SizedBox(height: 8),
+
         matrixes[5],
-        SizedBox(height: 8),
+
         matrixes[6],
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.black),
+              color: const Color.fromRGBO(44, 87, 116, 100),
+              borderRadius: BorderRadius.circular(5)),
+          child: MaterialButton(
+            onPressed: () {
+              setState(() {
+               this.isFinished=true;
+               this.isContentShown=false;
+               matrixes.forEach((element) {
+                 widget.preferences.putIfAbsent(element.title, () => element.rate);
+               });
+               widget.isFinished=true;
+              });
+
+            },
+            child: Center(
+              child: Text(
+                "Apply",
+                style: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
 
     );
@@ -82,11 +115,9 @@ class _InterestContainerState extends State<InterestContainer> {
                 setState(() {
                   isContentShown = !isContentShown;
                   counter++;
-                  if (isContentShown == 0) {
-                    buttonIcon = Icons.add_circle;
-                  } else if (counter >= 2) {
-                    buttonIcon = Icons.check_circle;
-                  }
+                 if(isFinished ==true){
+                   buttonIcon=Icons.check_circle;
+                 }
                 });
               },
               child: Row(

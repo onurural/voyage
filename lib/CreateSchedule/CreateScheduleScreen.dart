@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:voyage/CreateSchedule/BudgetContainer.dart';
 import 'package:voyage/CreateSchedule/InterestContainer.dart';
 import 'package:voyage/CreateSchedule/MatrixElement.dart';
 import 'package:voyage/Home/SearchBar.dart';
@@ -22,7 +23,7 @@ class _CreateScheduleScreenState extends State<CreateScheduleScreen> {
                   padding: const EdgeInsets.fromLTRB(10, 60, 10, 0),
                   child: SearchBar([]),
                 ),
-                InterestContainer()
+                BudgetContainer()
 
               ])
       ),
