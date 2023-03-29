@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:voyage/CreateSchedule/CreateScheduleScreen.dart';
 import 'package:voyage/SchedulesScreen/Schedule.dart';
-import 'package:voyage/SchedulesScreen/ScheduleScreen.dart';
+
 
 import '../Components/NavBar.dart';
 import '../Home/Place.dart';
@@ -10,7 +10,7 @@ import '../SchedulesScreen/SchedulesScreen.dart';
 import 'HomeCon.dart';
 
 class MainConnector extends StatefulWidget {
-  const MainConnector({Key? key}) : super(key: key);
+   const MainConnector({Key? key}) : super(key: key);
 
   @override
   State<MainConnector> createState() => _MainConnectorState();
@@ -52,16 +52,16 @@ class _MainConnectorState extends State<MainConnector> {
           'https://wallpapercave.com/wp/wp2728594.jpg',
           'https://w0.peakpx.com/wallpaper/479/311/HD-wallpaper-beautiful-park-in-berlin-r-path-r-park-lawn-trees.jpg',
         ],
-        'https://www.google.com/maps/place/Location+${activityNumber}',
+        'https://www.google.com/maps/place/Location+$activityNumber',
       );
     });
     List<Schedule> schedules=[];
     for(int i=0;i<10;i++){
       schedules.add(Schedule(activities, testPlace));
     }
-    _screens.add(HomeCon());
+    _screens.add(const HomeCon());
     _screens.add(SchedulesScreen(schedules));
-    _screens.add(CreateScheduleScreen());
+    _screens.add(const CreateScheduleScreen());
 
   }
 
@@ -78,7 +78,7 @@ class _MainConnectorState extends State<MainConnector> {
                   offstage: _currentIndex != i,
                   child:    AnimatedOpacity(
                     opacity: _currentIndex == i ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 500),
+                    duration:  const Duration(milliseconds: 500),
                     child: _screens[i],
                   ),
                 ),

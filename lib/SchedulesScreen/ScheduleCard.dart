@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +9,7 @@ class ScheduleCard extends StatefulWidget {
   Schedule schedule;
 
 
-  ScheduleCard(this.schedule);
+  ScheduleCard(this.schedule, {super.key});
 
   @override
   State<ScheduleCard> createState() => _ScheduleCardState();
@@ -123,7 +123,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                     child: Container(
                       decoration: BoxDecoration(
                           border: Border.all(width: 1, color: Colors.black),
-                          color: const Color.fromRGBO(44, 87, 116, 100),
+                          color:  const Color.fromRGBO(44, 87, 116, 100),
                           borderRadius: BorderRadius.circular(5)),
                       child: MaterialButton(
                         onPressed: () {
@@ -133,9 +133,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                         },
                         child: Center(
                           child: Text(
-                            "View",
+                            'View',
                             style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,

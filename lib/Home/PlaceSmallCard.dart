@@ -36,7 +36,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.fromLTRB(10, 0, 10, 0),
+      padding:  const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Container(
         width: 250,
         decoration: BoxDecoration(
@@ -46,7 +46,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 3,
               blurRadius: 5,
-              offset:  Offset(0, 2),
+              offset:  const Offset(0, 2),
             ),
           ],
         ),
@@ -79,28 +79,28 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding:  EdgeInsets.fromLTRB(15, 20, 15, 0),
+                      padding:  const EdgeInsets.fromLTRB(15, 20, 15, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             widget.place.title,
                             style: GoogleFonts.notoSerif(
-                              textStyle:  TextStyle(
+                              textStyle:  const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 22,
                               ),
                             ),
                           ),
-                           SizedBox(height: 5),
+                           const SizedBox(height: 5),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RatingBarIndicator(
                                 rating: widget.place.rate,
                                 itemBuilder: (context, index) =>
-                                     Icon(
+                                     const Icon(
                                       Icons.star,
                                       color: Colors.white,
                                     ),
@@ -111,7 +111,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                               Text(
                                 widget.place.rate.toString(),
                                 style: GoogleFonts.roboto(
-                                  textStyle:  TextStyle(
+                                  textStyle:  const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w300,
                                     color: Colors.white,
@@ -125,14 +125,14 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                     ),
                   ),
                   Padding(
-                    padding:  EdgeInsets.fromLTRB(15, 0, 15, 15),
+                    padding:  const EdgeInsets.fromLTRB(15, 0, 15, 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [ Text('Read More',
-                            style: GoogleFonts.roboto(textStyle:  TextStyle(
+                            style: GoogleFonts.roboto(textStyle:  const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,),),),
@@ -153,7 +153,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                                         child: PlaceScreen(
                                             widget.place, widget.hero),
                                       ),
-                                  settings:  RouteSettings(),
+                                  settings:  const RouteSettings(),
                                   fullscreenDialog: true,
                                 ),
                               );
@@ -161,12 +161,12 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                             child: Hero(
                               tag: widget.hero,
                               child: Container(
-                                padding:  EdgeInsets.fromLTRB(8, 8, 8, 8),
+                                padding:  const EdgeInsets.fromLTRB(8, 8, 8, 8),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(5),
                                 ),
-                                child:  Icon(
+                                child:  const Icon(
                                   Icons.arrow_forward_ios,
                                   color: Colors.black,
                                   size: 18,

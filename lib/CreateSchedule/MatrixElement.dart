@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MatrixElement extends StatefulWidget {
   final String title;
   late double rate;
-  bool isChanged=false;
+  bool isChanged = false;
 
   MatrixElement({required this.title, Key? key}) : super(key: key);
 
@@ -14,7 +14,6 @@ class MatrixElement extends StatefulWidget {
 }
 
 class _MatrixElementState extends State<MatrixElement> {
-
   double rate = 0;
   late List<IconData> icons;
   late List<String> labels;
@@ -38,11 +37,11 @@ class _MatrixElementState extends State<MatrixElement> {
       Icons.sentiment_very_satisfied,
     ];
     labels = [
-      "Very Dissatisfied",
-      "Dissatisfied",
-      "Neutral",
-      "Satisfied",
-      "Very Satisfied",
+      'Very Dissatisfied',
+      'Dissatisfied',
+      'Neutral',
+      'Satisfied',
+      'Very Satisfied',
     ];
     activeTrackColor = Colors.blue;
     inactiveTrackColor = Colors.grey;
@@ -51,24 +50,24 @@ class _MatrixElementState extends State<MatrixElement> {
     shownIcon = icons[2];
     shownLabel = labels[2];
     gradientDecorations = [
-      LinearGradient(
-          colors: [Colors.red, Colors.black],
+      const LinearGradient(
+          colors: [Colors.red, Colors.grey],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight),
-      LinearGradient(
-          colors: [Colors.redAccent, Colors.black],
+      const LinearGradient(
+          colors: [Colors.redAccent, Colors.grey],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight),
-      LinearGradient(
-          colors: [Colors.amber, Colors.black],
+      const LinearGradient(
+          colors: [Colors.amber, Colors.grey],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight),
-      LinearGradient(
-          colors: [Colors.lightGreen, Colors.black],
+      const LinearGradient(
+          colors: [Colors.lightGreen, Colors.grey],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight),
-      LinearGradient(
-          colors: [Colors.green, Colors.black],
+      const LinearGradient(
+          colors: [Colors.green, Colors.grey],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight),
     ];
@@ -80,7 +79,7 @@ class _MatrixElementState extends State<MatrixElement> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           gradient: selectedGradient,
@@ -90,7 +89,7 @@ class _MatrixElementState extends State<MatrixElement> {
               color: Colors.black.withOpacity(0.2),
               spreadRadius: 1,
               blurRadius: 7,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
         ),
@@ -99,7 +98,7 @@ class _MatrixElementState extends State<MatrixElement> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              SizedBox(
                 width: 150,
                 height: 50,
                 child: FittedBox(
@@ -107,7 +106,7 @@ class _MatrixElementState extends State<MatrixElement> {
                   child: Text(
                     widget.title,
                     style: GoogleFonts.openSans(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -130,10 +129,10 @@ class _MatrixElementState extends State<MatrixElement> {
                         inactiveTrackColor: Colors.white.withOpacity(0.5),
                         thumbColor: Colors.white,
                         thumbShape:
-                            RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                            const RoundSliderThumbShape(enabledThumbRadius: 12.0),
                         overlayColor: overlayColor,
                         overlayShape:
-                            RoundSliderOverlayShape(overlayRadius: 28.0),
+                            const RoundSliderOverlayShape(overlayRadius: 28.0),
                       ),
                       child: Slider(
                         value: rate,
@@ -142,7 +141,7 @@ class _MatrixElementState extends State<MatrixElement> {
                         divisions: icons.length - 1,
                         onChanged: (double value) {
                           setState(() {
-                            widget.isChanged=true;
+                            widget.isChanged = true;
                             rate = value;
                             widget.rate = rate;
                             int index = ((rate + 1) * 2).toInt();
@@ -153,7 +152,7 @@ class _MatrixElementState extends State<MatrixElement> {
                         },
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -162,11 +161,11 @@ class _MatrixElementState extends State<MatrixElement> {
                           size: 28.0,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
                           shownLabel,
                           style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               color: Colors.white,

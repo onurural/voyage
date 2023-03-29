@@ -49,8 +49,8 @@ class _ScheduleScreenState extends State<ScheduleScreen>
   Widget build(BuildContext context) {
     // Define color palette and text styles
 
-    Color primaryColor = Color.fromRGBO(44, 87, 116, 1);
-    Color secondaryColor = Color.fromRGBO(235, 235, 235, 1);
+    Color primaryColor = const Color.fromRGBO(44, 87, 116, 1);
+    Color secondaryColor = const Color.fromRGBO(235, 235, 235, 1);
 
     TextStyle tabTextStyle = GoogleFonts.roboto(
       fontSize: 16,
@@ -67,19 +67,19 @@ class _ScheduleScreenState extends State<ScheduleScreen>
           controller: _tabController,
           isScrollable: true,
           indicatorColor: Colors.blue,
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.blue,
           ),
-          unselectedLabelStyle: TextStyle(
+          unselectedLabelStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
             color: Colors.grey,
           ),
           tabs: activitiesByDay.keys.map(
                 (day) => Container(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: Colors.white,
@@ -88,7 +88,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
                     color: Colors.grey.withOpacity(0.2),
                     spreadRadius: 1,
                     blurRadius: 5,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
@@ -97,7 +97,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
                 children: [
                   Text(
                     DateFormat('EEEE').format(day),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Colors.blue,
@@ -105,7 +105,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
                   ),
                   Text(
                     DateFormat('yyyy-MM-dd').format(day),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,

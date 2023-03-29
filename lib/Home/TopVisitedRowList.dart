@@ -48,6 +48,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
   void generateList(){
 
     for(var i=0;i<=29;i++){
+      globalId=generateRandomString(3);
     items.add(PlaceSmallCard(testPlace,globalId));
     }
 

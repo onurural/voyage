@@ -11,7 +11,7 @@ class BottomNavigationBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items:  const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -40,7 +40,7 @@ class BottomNavigationBarView extends StatelessWidget {
 }
 
 // BottomNavigationBar(
-//         items: const <BottomNavigationBarItem>[
+//         items:  <BottomNavigationBarItem>[
 //           BottomNavigationBarItem(
 //             icon: Icon(Icons.home),
 //             label: 'Home',

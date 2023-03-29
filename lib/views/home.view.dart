@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
               // TODO: Open Sidebar Menu
             },
           ),
-          const SearchBarView(),
+         SearchBarView(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: const [Text('Trending Destination'), Text('See all')],
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
                     itemBuilder: ((context, index) =>
-                        const PlaceCardView( 'Place Card'))),
+                        PlaceCardView( 'Place Card'))),
               ))
             ],
           ),
@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 11,
                     itemBuilder: ((context, index) =>
-                        const PlaceCardView( 'Country Card'))),
+                        PlaceCardView( 'Country Card'))),
               ))
             ],
           ),

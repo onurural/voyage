@@ -28,7 +28,7 @@ class _BudgetContainerState extends State<BudgetContainer> {
   var buttonIcon = Icons.add_circle;
 var content;
   var shownIcon;
-  Widget dollarIcon = Icon(
+  Widget dollarIcon = const Icon(
     CupertinoIcons.money_dollar,
     color: Colors.white,
     size: 20,
@@ -57,7 +57,7 @@ var content;
     shownIcon = dollarIcons[0];
 
     content = Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -69,18 +69,18 @@ var content;
               Text(
                 getBudgetLabel(_budgetValue),
                 style: GoogleFonts.poppins(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               shownIcon,
             ],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Slider(
             value: _budgetValue,
             min: 1,
@@ -93,28 +93,28 @@ var content;
               });
             },
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               setState(() {
                 isFinished = true;
                 buttonIcon = Icons.check_circle;
-                this.isContentShown=false;
+                isContentShown=false;
                 widget.budgetValue=_budgetValue;
               });
             },
             style: ElevatedButton.styleFrom(
-              primary: Color.fromRGBO(44, 87, 116, 100),
-              padding: EdgeInsets.symmetric(vertical: 16),
+              primary: const Color.fromRGBO(44, 87, 116, 100),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
               ),
             ),
             child: Center(
               child: Text(
-                "Apply",
+                'Apply',
                 style: GoogleFonts.poppins(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
@@ -133,16 +133,16 @@ var content;
     return Padding(
         padding: const EdgeInsets.all(10),
         child: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
     decoration: BoxDecoration(
-    color: Color.fromRGBO(44, 87, 116, 100
+    color: const Color.fromRGBO(44, 87, 116, 100
     ),
       borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.2),
           blurRadius: 8,
-          offset: Offset(0, 4),
+          offset: const Offset(0, 4),
         ),
       ],
     ),
@@ -164,7 +164,7 @@ var content;
                     Text(
                       'Budget',
                       style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
