@@ -12,7 +12,7 @@ import 'Place.dart';
 class PlaceBigCard extends StatefulWidget {
   final Place place;
 
-  const PlaceBigCard(this.place, {super.key});
+ PlaceBigCard(this.place, {super.key});
 
   @override
   State<PlaceBigCard> createState() => _PlaceBigCardState();
@@ -41,7 +41,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
     child: Container(
     width: double.infinity,
     decoration: BoxDecoration(
@@ -51,7 +51,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
     color: Colors.grey.withOpacity(0.5),
     spreadRadius: 3,
     blurRadius: 5,
-    offset: const Offset(0, 2),
+    offset:  Offset(0, 2),
     ),
     ],
     image: DecorationImage(
@@ -84,7 +84,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
     ),
     ),
     Padding(
-    padding: const EdgeInsets.all(16.0),
+    padding:  EdgeInsets.all(16.0),
     child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.end,
@@ -92,7 +92,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
     Text(
     widget.place.title,
     style: GoogleFonts.openSans(
-    textStyle: const TextStyle(
+    textStyle:  TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.w800,
     fontSize: 24,
@@ -100,14 +100,14 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
     ),
     ),
     ),
-    const SizedBox(height: 5),
+  SizedBox(height: 5),
     Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
     RatingBarIndicator(
     rating: widget.place.rate,
     itemBuilder: (context, index) =>
-    const Icon(
+   Icon(
     Icons.star,
     color: Colors.amber,
     ),
@@ -118,7 +118,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
       Text(
         widget.place.rate.toString(),
         style: GoogleFonts.poppins(
-          textStyle: const TextStyle(
+          textStyle:  TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w300,
             color: Colors.white,
@@ -127,7 +127,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
       ),
     ],
     ),
-      const SizedBox(height: 10),
+      SizedBox(height: 10),
       Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -141,7 +141,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
                     Center(
                       child: PlaceScreen(widget.place, globalId),
                     ),
-                settings: const RouteSettings(),
+                settings:  RouteSettings(),
                 fullscreenDialog: true,
               ),
             );
@@ -150,7 +150,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
             tag: globalId,
             child: Container(
               padding:
-              const EdgeInsets.fromLTRB(12, 8, 12, 8),
+              EdgeInsets.fromLTRB(12, 8, 12, 8),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
@@ -158,7 +158,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
               child: Text(
                 'Read More',
                 style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:voyage/CreateSchedule/CreateScheduleScreen.dart';
 import 'package:voyage/SchedulesScreen/Schedule.dart';
 import 'package:voyage/SchedulesScreen/ScheduleScreen.dart';
-
 
 import '../Components/NavBar.dart';
 import '../Home/Place.dart';
@@ -70,30 +68,30 @@ class _MainConnectorState extends State<MainConnector> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+        body: Column(
         children: [
-          Expanded(
-            child: Stack(
-              children: [
-
-                for (int i = 0; i < _screens.length; i++)
-                  AnimatedOpacity(
+        Expanded(
+          child: Stack(
+            children: [
+              for (int i = 0; i < _screens.length; i++)
+                Offstage(
+                  offstage: _currentIndex != i,
+                  child:    AnimatedOpacity(
                     opacity: _currentIndex == i ? 1.0 : 0.0,
                     duration: const Duration(milliseconds: 500),
                     child: _screens[i],
                   ),
-                Positioned(
-                    bottom: 5,
-                    left: 0,
-                    right: 0,
-                    child: NavBar(onTap: _onItemTapped)),
-
-
-              ],
-            ),
+                ),
+              Positioned(
+                  bottom: 5,
+                  left: 0,
+                  right: 0,
+                  child: NavBar(onTap: _onItemTapped)),
+            ],
           ),
+        ),
         ],
-      ),
+        ),
     );
   }
 }
