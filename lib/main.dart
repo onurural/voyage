@@ -1,13 +1,6 @@
 
 import 'package:flutter/material.dart';
-
-
-
-
 import 'package:voyage/ScreensContainer/MainConnector.dart';
-
-
-
 
 void main() {
   runApp(const MyApp());
