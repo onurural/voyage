@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:voyage/ScreensContainer/HomeCon.dart';
+import 'package:voyage/views/home-container.dart';
 
 import 'log-in.view.dart';
 

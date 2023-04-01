@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 
 
-import 'package:voyage/ScreensContainer/MainConnector.dart';
+import 'package:voyage/views/main-connector.dart';
 
 
 

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:voyage/ScreensContainer/HomeCon.dart';
+import 'package:voyage/views/home-container.dart';
 import 'package:voyage/views/forget-password.view.dart';
 import 'package:voyage/views/sign-up.view.dart';
 
