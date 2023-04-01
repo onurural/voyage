@@ -7,8 +7,12 @@ import 'MatrixElement.dart';
 class InterestContainer extends StatefulWidget {
   Map<String, double> preferences = {};
   bool isFinished = false;
+  bool unlocked;
+  int index;
+  final void Function(int) unlockNext;
 
-  InterestContainer({Key? key}) : super(key: key);
+
+  InterestContainer(this.unlocked,  this.unlockNext,this.index,);
 
   @override
   State<InterestContainer> createState() => _InterestContainerState();
@@ -58,6 +62,7 @@ class _InterestContainerState extends State<InterestContainer> {
                       .putIfAbsent(element.title, () => element.rate);
                 }
                 widget.isFinished = true;
+                widget.unlockNext(widget.index+1);
               });
             },
             child: Center(
@@ -81,64 +86,67 @@ class _InterestContainerState extends State<InterestContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(44, 87, 116, 100),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MaterialButton(
-              onPressed: () {
-                setState(() {
-                  isContentShown = !isContentShown;
-                  counter++;
-                  if (isFinished == true) {
-                    buttonIcon = Icons.check_circle;
-                  }
-                });
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Interests',
-                    style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
+    return AbsorbPointer(
+      absorbing: widget.unlocked,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(44, 87, 116, 100),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MaterialButton(
+                onPressed: () {
+                  setState(() {
+                    isContentShown = !isContentShown;
+                    counter++;
+                    if (isFinished == true) {
+                      buttonIcon = Icons.check_circle;
+                    }
+                  });
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Interests',
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
-                  ),
-                  Icon(
-                    buttonIcon,
-                    size: 25,
-                    color: Colors.white,
-                  )
-                ],
+                    Icon(
+                      buttonIcon,
+                      size: 25,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
               ),
-            ),
-            AnimatedCrossFade(
-              firstChild: Container(),
-              secondChild: interests,
-              crossFadeState: isContentShown
-                  ? CrossFadeState.showSecond
-                  : CrossFadeState.showFirst,
-              duration: const Duration(milliseconds: 500),
-            )
-          ],
+              AnimatedCrossFade(
+                firstChild: Container(),
+                secondChild: interests,
+                crossFadeState: isContentShown
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
+                duration: const Duration(milliseconds: 500),
+              )
+            ],
+          ),
         ),
       ),
     );
