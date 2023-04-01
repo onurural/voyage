@@ -9,11 +9,11 @@ import '../Home/Place.dart';
 
 
 class PlaceScreen extends StatefulWidget {
-  final Place place;
-  final String hero;
+  final Placez place;
+  // final String hero;
 
 
-   PlaceScreen(this.place, this.hero, {super.key});
+   PlaceScreen(this.place, {super.key});
 
   @override
   State<PlaceScreen> createState() => _PlaceScreenState();
@@ -63,10 +63,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
       Center(
           child: Padding(
               padding:  const EdgeInsets.all(10),
-              child: Hero(
-                  tag: widget.hero,
-
-                  child: Container(
+              child:  Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -256,7 +253,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                             ),
                           ),
                         )
-                      ]))))))
+                      ])))))
     ]));
   }
 }

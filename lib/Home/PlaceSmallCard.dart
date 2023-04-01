@@ -1,19 +1,21 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/PlaceScreen/PlaceScreen.dart';
 import 'package:voyage/PlaceScreen/hero_dialog_route.dart';
+import 'package:voyage/model/place.dart';
 
 
-import 'Place.dart';
 
 class PlaceSmallCard extends StatefulWidget {
   final Place place;
-final hero;
+// final hero;
 
 
-   PlaceSmallCard(this.place, this.hero, {super.key});
+   PlaceSmallCard(this.place);
 
   @override
   State<PlaceSmallCard> createState() => _PlaceSmallCardState();
@@ -55,12 +57,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
           child: Stack(
             children: [
               Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(widget.place.images[0]),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                child: Image.memory(base64Decode(widget.place.image?.image ?? ''))
               ),
               Container(
                 decoration: BoxDecoration(
@@ -84,7 +81,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.place.title,
+                            widget.place.name ?? '',
                             style: GoogleFonts.notoSerif(
                               textStyle:  const TextStyle(
                                 color: Colors.white,
@@ -98,7 +95,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RatingBarIndicator(
-                                rating: widget.place.rate,
+                                rating: widget.place.rating ?? 0,
                                 itemBuilder: (context, index) =>
                                      const Icon(
                                       Icons.star,
@@ -109,7 +106,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                                 direction: Axis.horizontal,
                               ),
                               Text(
-                                widget.place.rate.toString(),
+                                widget.place.rating.toString(),
                                 style: GoogleFonts.roboto(
                                   textStyle:  const TextStyle(
                                     fontSize: 14,
@@ -150,29 +147,29 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                                 HeroDialogRoute(
                                   builder: (context) =>
                                       Center(
-                                        child: PlaceScreen(
-                                            widget.place, widget.hero),
+                                        child: Text(
+                                            widget.place.name ?? ''),
                                       ),
                                   settings:  const RouteSettings(),
                                   fullscreenDialog: true,
                                 ),
                               );
                             },
-                            child: Hero(
-                              tag: widget.hero,
-                              child: Container(
-                                padding:  const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child:  const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.black,
-                                  size: 18,
-                                ),
-                              ),
-                            ),
+                            // child: Hero(
+                            //   tag: widget.hero,
+                            //   child: Container(
+                            //     padding:  const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                            //     decoration: BoxDecoration(
+                            //       color: Colors.white,
+                            //       borderRadius: BorderRadius.circular(5),
+                            //     ),
+                            //     child:  const Icon(
+                            //       Icons.arrow_forward_ios,
+                            //       color: Colors.black,
+                            //       size: 18,
+                            //     ),
+                            //   ),
+                            // ),
                           ),
                         ),
                       ],

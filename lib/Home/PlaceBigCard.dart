@@ -9,7 +9,7 @@ import '../PlaceScreen/hero_dialog_route.dart';
 import 'Place.dart';
 
 class PlaceBigCard extends StatefulWidget {
-  final Place place;
+  final Placez place;
   final String globlaId;
 
   PlaceBigCard(this.place, this.globlaId, {super.key});
@@ -137,7 +137,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
                           Navigator.of(context).push(
                             HeroDialogRoute(
                               builder: (context) =>
-                                  PlaceScreen(widget.place, widget.globlaId),
+                                  PlaceScreen(widget.place),
                               settings: const RouteSettings(),
                               fullscreenDialog: true,
                             ),

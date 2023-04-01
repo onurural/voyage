@@ -2,12 +2,16 @@ import 'dart:math';
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/Home/PlaceBigCard.dart';
 import 'package:voyage/Home/PlaceSmallCard.dart';
-
+import 'package:voyage/bloc/place/place.event.dart';
+import 'package:voyage/bloc/place/place.state.dart';
+import 'package:voyage/repository/place.repository.dart';
+import '../../model/place.dart';
 import '../PlaceScreen/hero_dialog_route.dart';
-import 'Place.dart';
+import '../bloc/place/place.bloc.dart';
 import 'ShowMoreScreen.dart';
 
 class CategoryPlacesList extends StatefulWidget {
@@ -18,7 +22,7 @@ class CategoryPlacesList extends StatefulWidget {
 }
 
 class _CategoryPlacesListState extends State<CategoryPlacesList> {
-  var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
+  final PlaceBloc _placeBloc = PlaceBloc(PlaceRepo());
   bool buttonViewed=false;
   var globalId;
   List<PlaceSmallCard> smallCards=[];
@@ -49,7 +53,7 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
   void fillInSmallCardList(){
     for (var element in items) {
       globalId=generateRandomString(3);
-      smallCards.add(PlaceSmallCard(element.place, globalId));
+      smallCards.add(PlaceSmallCard(Place()));
     }
   }
 
@@ -57,7 +61,7 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
 
     for(var i=0;i<=29;i++){
       globalId=generateRandomString(3);
-      items.add(PlaceBigCard(testPlace,globalId));
+      // items.add(PlaceBigCard(testPlace,globalId));
     }
 
   }
@@ -66,6 +70,7 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
   void initState() {
 
     super.initState();
+    _placeBloc.add(FetchPlace());
     _controller.addListener(_scrollListener);
 
     generateList();
@@ -82,20 +87,7 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
               SizedBox(
                 width: double.infinity,
                 height: 400,
-                child: ListView.builder(
-                  itemCount: 10,
-                  controller: _controller,
-
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (BuildContext context, int index) {
-
-
-                    return Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: items[index],
-                    );
-                  },
-                ),
+                child: _buildPlaceCard(),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
@@ -141,6 +133,33 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
                 ),
               )
             ])
+    );
+  }
+
+  Widget _buildPlaceCard() {
+    return ListView.builder(
+      itemCount: 6,
+      controller: _controller,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (BuildContext context, int index) {
+        return BlocProvider(
+            create: (_) => _placeBloc,
+            child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: BlocConsumer<PlaceBloc, PlaceState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      if (state is PlaceLoadedState) {
+                        return PlaceSmallCard(state.model[index]);
+                      } else if (state is PlaceLoadingState) {
+                        return const CircularProgressIndicator();
+                      } else if (state is PlaceErrorState) {
+                        return ErrorWidget(Exception);
+                      } else {
+                        return Text('Initial State ${state.toString()}');
+                      }
+                    })));
+      },
     );
   }
 }

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/Home/ShowMoreScreen.dart';
+import 'package:voyage/model/place.dart';
 
 import '../PlaceScreen/PlaceScreen.dart';
 import '../PlaceScreen/hero_dialog_route.dart';
@@ -18,7 +19,7 @@ class TopVisitedRowList extends StatefulWidget {
 }
 var globalId;
 class _TopVisitedRowListState extends State<TopVisitedRowList> {
-  var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
+  var testPlace=Placez(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
   bool buttonViewed=false;
 
 
@@ -49,7 +50,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
 
     for(var i=0;i<=29;i++){
       globalId=generateRandomString(3);
-    items.add(PlaceSmallCard(testPlace,globalId));
+    items.add(PlaceSmallCard(Place()));
     }
 
   }

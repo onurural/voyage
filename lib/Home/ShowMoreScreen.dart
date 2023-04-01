@@ -37,8 +37,7 @@ class ShowMoreScreen extends StatelessWidget {
                             itemCount: places.length,
                             itemBuilder: (context, index) {
                               return PlaceSmallCard(
-                                  places[index].place,
-                                  hero);
+                                  places[index].place);
                             },
                           ),
                         ),
