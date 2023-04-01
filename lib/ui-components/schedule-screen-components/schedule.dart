@@ -1,4 +1,4 @@
-import 'package:voyage/ui-components/home-view-components/Place.dart';
+import 'package:voyage/models/place.dart';
 
 import 'Activity.dart';
 

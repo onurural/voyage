@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,14 +40,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
           borderRadius: BorderRadius.circular(10),
           child: Stack(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(widget.schedule.place.images[0]),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              Image.memory(base64Decode(widget.schedule.place.image?.image ?? '')), // TODO handle the decoration.
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -79,7 +74,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                             ),
                           ),
                           Text(
-                            widget.schedule.place.title,
+                            widget.schedule.place.name ?? 'nil',
                             style: GoogleFonts.notoSerif(
                               textStyle: const TextStyle(
                                 color: Colors.white,
@@ -93,7 +88,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RatingBarIndicator(
-                                rating: widget.schedule.place.rate,
+                                rating: widget.schedule.place.rating ?? -1,
                                 itemBuilder: (context, index) =>
                                 const Icon(
                                   Icons.star,
@@ -104,7 +99,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                                 direction: Axis.horizontal,
                               ),
                               Text(
-                                widget.schedule.place.rate.toString(),
+                                widget.schedule.place.rating.toString(),
                                 style: GoogleFonts.roboto(
                                   textStyle: const TextStyle(
                                     fontSize: 14,

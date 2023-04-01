@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -54,7 +56,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
             ),
           ],
           image: DecorationImage(
-            image: AssetImage(widget.place.images[0]),
+            image: MemoryImage(Image.memory(base64Decode(widget.place.image?.image ?? '')) as Uint8List),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.25),
@@ -89,7 +91,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      widget.place.title,
+                      widget.place.name ?? 'nil',
                       style: GoogleFonts.openSans(
                         textStyle: const TextStyle(
                           color: Colors.white,
@@ -104,7 +106,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         RatingBarIndicator(
-                          rating: widget.place.rate,
+                          rating: widget.place.rating ?? -1,
                           itemBuilder: (context, index) => const Icon(
                             Icons.star,
                             color: Colors.amber,
@@ -114,7 +116,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
                           direction: Axis.horizontal,
                         ),
                         Text(
-                          widget.place.rate.toString(),
+                          widget.place.rating.toString(),
                           style: GoogleFonts.poppins(
                             textStyle: const TextStyle(
                               fontSize: 18,

@@ -1,10 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:voyage/bloc/place.bloc.dart';
+import 'package:voyage/bloc/place.event.dart';
+import 'package:voyage/bloc/place.state.dart';
+import 'package:voyage/data/place.data.dart';
 import 'package:voyage/views/show-more.view.dart';
 import 'package:voyage/ui-components/place-components/hero_dialog_route.dart';
-import 'package:voyage/models/place.dart';
 import 'place-small-card.dart';
 
 class TopVisitedRowList extends StatefulWidget {
@@ -17,16 +21,7 @@ class TopVisitedRowList extends StatefulWidget {
 var globalId;
 
 class _TopVisitedRowListState extends State<TopVisitedRowList> {
-  var testPlace = Place([
-    'assets/Images/1.jpeg',
-    'assets/Images/2.jpeg',
-    'assets/Images/3.jpeg',
-    'assets/Images/4.jpeg',
-    'assets/Images/5.jpeg'
-  ],
-      'Barcelona',
-      'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.',
-      3.5);
+  final PlaceBloc _placeBloc = PlaceBloc(PlaceData());
   bool buttonViewed = false;
 
   final ScrollController _controller = ScrollController();
@@ -54,13 +49,14 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
   void generateList() {
     for (var i = 0; i <= 29; i++) {
       globalId = generateRandomString(3);
-      items.add(PlaceSmallCard(testPlace, globalId));
+      // items.add(PlaceSmallCard(testPlace, globalId));
     }
   }
 
   @override
   void initState() {
     super.initState();
+    _placeBloc.add(FetchPlace());
     _controller.addListener(_scrollListener);
     globalId = generateRandomString(5);
 
@@ -110,7 +106,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.all(10),
-                  child: items[index],
+                  child: _buildPlaceSmallCard(),
                 );
               },
             ),
@@ -156,5 +152,32 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
             ),
           )
         ]));
+  }
+  
+  _buildPlaceSmallCard() {
+    return ListView.builder(
+      itemCount: 6,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: ((context, index) {
+      return BlocProvider(
+        create: (_) => _placeBloc,
+        child: BlocConsumer<PlaceBloc, PlaceState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is PlaceLoadedState) {
+                return PlaceSmallCard(state.model[index], globalId);
+            }
+            if (state is PlaceLoadingState) {
+                return  const CircularProgressIndicator();
+            }
+            if (state is PlaceErrorState) {
+              return const Text('Error on display the widget');
+            }
+            else {
+              return Text('Initial State ${state.toString()}');
+            }
+          }),
+        );
+    }));
   }
 }

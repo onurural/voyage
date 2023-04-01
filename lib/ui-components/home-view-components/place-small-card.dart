@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,7 +59,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
               Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(widget.place.images[0]),
+                    image:  MemoryImage(Image.memory(base64Decode(widget.place.image?.image ?? '')) as Uint8List),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -83,7 +86,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.place.title,
+                            widget.place.name ?? 'nil',
                             style: GoogleFonts.notoSerif(
                               textStyle:  const TextStyle(
                                 color: Colors.white,
@@ -97,7 +100,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RatingBarIndicator(
-                                rating: widget.place.rate,
+                                rating: widget.place.rating ?? -1,
                                 itemBuilder: (context, index) =>
                                      const Icon(
                                       Icons.star,
@@ -108,7 +111,7 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                                 direction: Axis.horizontal,
                               ),
                               Text(
-                                widget.place.rate.toString(),
+                                widget.place.rating.toString(),
                                 style: GoogleFonts.roboto(
                                   textStyle:  const TextStyle(
                                     fontSize: 14,

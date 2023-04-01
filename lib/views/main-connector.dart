@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:voyage/bloc/place.bloc.dart';
+import 'package:voyage/bloc/place.event.dart';
+import 'package:voyage/data/place.data.dart';
+import 'package:voyage/models/place.dart';
 import 'package:voyage/ui-components/nav-bar.dart';
-import 'package:voyage/ui-components/home-view-components/Place.dart';
 import 'package:voyage/ui-components/schedule-screen-components/Activity.dart';
 import 'package:voyage/ui-components/schedule-screen-components/schedule.dart';
 import 'package:voyage/views/schedule-view/schedules.view.dart';
@@ -16,14 +19,12 @@ class MainConnector extends StatefulWidget {
 
 class _MainConnectorState extends State<MainConnector> {
   int _currentIndex = 0;
-
+  final PlaceBloc _placeBloc = PlaceBloc(PlaceData());
   List<Activity> activities =[];
 
-  final List<Widget> _screens = [
-
-  ];
+  final List<Widget> _screens = [];
   // var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
-
+  var places;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -34,6 +35,7 @@ class _MainConnectorState extends State<MainConnector> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _placeBloc.add(FetchPlace());
     activities=List.generate(80, (index) {
       int day = index ~/ 10;
       int activityNumber = index % 10 + 1;
@@ -53,9 +55,11 @@ class _MainConnectorState extends State<MainConnector> {
         'https://www.google.com/maps/place/Location+$activityNumber',
       );
     });
+    places = fetchPlace();
     List<Schedule> schedules=[];
+    
     for(int i=0;i<10;i++){
-      schedules.add(Schedule(activities, ));
+      schedules.add(Schedule(activities, places[i]));
     }
     _screens.add(const HomeCon());
     _screens.add(SchedulesScreen(schedules));
@@ -63,6 +67,11 @@ class _MainConnectorState extends State<MainConnector> {
 
   }
 
+  Future<List<Place>> fetchPlace () async {
+    var places = await _placeBloc.placeData.fetchPlace();
+    return places;
+  }
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
