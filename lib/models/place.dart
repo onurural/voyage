@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 class Place {
   String? sId;
   String? name;
@@ -158,13 +161,13 @@ class Viewport {
 }
 
 class PlaceImage {
-  String? image;
+  Uint8List? image;
   String? contentType;
 
   PlaceImage({this.image, this.contentType});
 
   PlaceImage.fromJson(Map<String, dynamic> json) {
-    image = json['image'];
+    image = json['image'] != null ? Uint8List.fromList(base64.decode(json['image'])) : null;
     contentType = json['contentType'];
   }
 

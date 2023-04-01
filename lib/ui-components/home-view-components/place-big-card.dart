@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -55,14 +54,14 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
               offset: const Offset(0, 2),
             ),
           ],
-          image: DecorationImage(
-            image: MemoryImage(Image.memory(base64Decode(widget.place.image?.image ?? '')) as Uint8List),
+          image: widget.place.image != null ? DecorationImage(
+            image: MemoryImage(widget.place.image!.image!),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.25),
               BlendMode.darken,
             ),
-          ),
+          ) : null,
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),

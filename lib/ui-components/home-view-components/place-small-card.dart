@@ -58,10 +58,11 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image:  MemoryImage(Image.memory(base64Decode(widget.place.image?.image ?? '')) as Uint8List),
+                  image: widget.place.image != null ?
+                  DecorationImage(
+                    image:  MemoryImage(widget.place.image!.image!),
                     fit: BoxFit.cover,
-                  ),
+                  ): null,
                 ),
               ),
               Container(

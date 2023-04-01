@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 
@@ -14,7 +15,7 @@ class PlaceScreen extends StatefulWidget {
   final String hero;
 
 
-   PlaceScreen(this.place, this.hero, {super.key});
+   const PlaceScreen(this.place, this.hero, {super.key});
 
   @override
   State<PlaceScreen> createState() => _PlaceScreenState();
@@ -23,12 +24,10 @@ class PlaceScreen extends StatefulWidget {
 class _PlaceScreenState extends State<PlaceScreen> {
   var buttonIcon = Icons.arrow_downward_rounded;
   var isDescShowed = false;
-  var photoSelected;
 
   @override
   void initState() {
     super.initState();
-    photoSelected = widget.place.image;
   }
 
   Widget buildStar(BuildContext context, int index) {
@@ -51,12 +50,12 @@ class _PlaceScreenState extends State<PlaceScreen> {
     return Scaffold(
         body: Stack(children: [
       Container(
-        decoration: BoxDecoration(
+        decoration: widget.place.image != null ? BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(photoSelected),
+            image: MemoryImage(widget.place.image!.image!),
             fit: BoxFit.cover,
           ),
-        ),
+        ): null,
         child: BackdropFilter(
           filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(color: Colors.black.withOpacity(0.3)),
@@ -92,10 +91,10 @@ class _PlaceScreenState extends State<PlaceScreen> {
                                 borderRadius:  const BorderRadius.only(
                                     topRight: Radius.circular(20),
                                     topLeft: Radius.circular(20)),
-                                image: DecorationImage(
-                                  image: AssetImage(photoSelected),
+                                image: widget.place.image != null ? DecorationImage(
+                                  image: MemoryImage(widget.place.image!.image!),
                                   fit: BoxFit.cover,
-                                ),
+                                ): null,
                               ),
                               child: Padding(
                                 padding:
@@ -161,11 +160,11 @@ class _PlaceScreenState extends State<PlaceScreen> {
                                   child: GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        photoSelected =
-                                            widget.place.image;
+                                        // photoSelected =
+                                        //     widget.place.image;
                                       });
                                     },
-                                     child: Image.memory(base64Decode(widget.place.image?.image ?? ''))
+                                     child: Image.memory(widget.place.image!.image!)
                                   ),
                                 );
                               },

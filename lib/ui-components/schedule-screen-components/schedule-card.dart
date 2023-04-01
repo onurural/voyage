@@ -40,7 +40,14 @@ class _ScheduleCardState extends State<ScheduleCard> {
           borderRadius: BorderRadius.circular(10),
           child: Stack(
             children: [
-              Image.memory(base64Decode(widget.schedule.place.image?.image ?? '')), // TODO handle the decoration.
+              Container(
+                decoration: BoxDecoration(
+                  image: widget.schedule.place.image != null ? DecorationImage(
+                    image: MemoryImage(widget.schedule.place.image!.image!),
+                    fit: BoxFit.cover,
+                  ) : null,
+                ),
+              ), // TODO handle the decoration.
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(

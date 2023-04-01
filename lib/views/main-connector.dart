@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage/bloc/place.bloc.dart';
 import 'package:voyage/bloc/place.event.dart';
+import 'package:voyage/bloc/place.state.dart';
 import 'package:voyage/data/place.data.dart';
 import 'package:voyage/models/place.dart';
 import 'package:voyage/ui-components/nav-bar.dart';
@@ -33,7 +35,6 @@ class _MainConnectorState extends State<MainConnector> {
   }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _placeBloc.add(FetchPlace());
     activities=List.generate(80, (index) {
@@ -55,21 +56,16 @@ class _MainConnectorState extends State<MainConnector> {
         'https://www.google.com/maps/place/Location+$activityNumber',
       );
     });
-    places = fetchPlace();
-    List<Schedule> schedules=[];
+    // places = fetchPlace();
+    // List<Schedule> schedules=[];
     
-    for(int i=0;i<10;i++){
-      schedules.add(Schedule(activities, places[i]));
-    }
-    _screens.add(const HomeCon());
-    _screens.add(SchedulesScreen(schedules));
-    _screens.add(const CreateScheduleScreen());
+    // for(int i=0;i<10;i++){
+    //   schedules.add(Schedule(activities, places[i]));
+    // }
+    // _screens.add(const HomeCon());
+    // _screens.add(SchedulesScreen(schedules));
+    // _screens.add(const CreateScheduleScreen());
 
-  }
-
-  Future<List<Place>> fetchPlace () async {
-    var places = await _placeBloc.placeData.fetchPlace();
-    return places;
   }
  
   @override
@@ -80,13 +76,13 @@ class _MainConnectorState extends State<MainConnector> {
         Expanded(
           child: Stack(
             children: [
-              for (int i = 0; i < _screens.length; i++)
+              for (int i = 0; i < 3; i++)
                 Offstage(
                   offstage: _currentIndex != i,
                   child:    AnimatedOpacity(
                     opacity: _currentIndex == i ? 1.0 : 0.0,
                     duration:  const Duration(milliseconds: 500),
-                    child: _screens[i],
+                    child: _buildScreens(),
                   ),
                 ),
               Positioned(
@@ -100,6 +96,36 @@ class _MainConnectorState extends State<MainConnector> {
         ],
         ),
     );
+  }
+
+  Widget _buildScreens() {
+    return BlocProvider(
+        create: (_) => _placeBloc,
+        child: BlocConsumer<PlaceBloc, PlaceState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is PlaceLoadedState) {
+              List<Place> places = state.model;
+              List<Schedule> schedules=[];
+                for (var place in places) {
+                  schedules.add(Schedule(activities, place));
+                }
+                   _screens.add(const HomeCon());
+                  _screens.add(SchedulesScreen(schedules));
+                  _screens.add(const CreateScheduleScreen());
+                  return _screens[0];
+            }
+            else if (state is PlaceLoadingState) {
+                return  const CircularProgressIndicator();
+            }
+            else if (state is PlaceErrorState) {
+              return const Text('Error on display the widget');
+            }
+            else {
+              return Text('Initial State ${state.toString()}');
+            }
+          }),
+        );
   }
 }
 

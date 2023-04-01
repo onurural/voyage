@@ -155,7 +155,9 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
   }
   
   _buildPlaceSmallCard() {
-    return ListView.builder(
+    return ListView.separated(
+      separatorBuilder: (_, __) => const Divider(),
+      shrinkWrap: true,
       itemCount: 6,
       scrollDirection: Axis.horizontal,
       itemBuilder: ((context, index) {

@@ -17,7 +17,7 @@ class PlaceData extends PlaceRepository {
       final List<Place> places = data.map((json) => Place.fromJson(json)).toList();
       return places;
     } else {
-    throw Exception('Failed to load album');
+    throw Exception('Failed to load places');
     }
   }
 }
