@@ -79,7 +79,7 @@ class _MatrixElementState extends State<MatrixElement> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           gradient: selectedGradient,

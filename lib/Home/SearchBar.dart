@@ -5,7 +5,8 @@ class SearchBar extends StatefulWidget {
   final List<String> data;
 
 
-  const SearchBar(this.data, {super.key});
+
+ const SearchBar(this.data, {super.key});
 
   @override
   State<SearchBar> createState() => _SearchBarState();

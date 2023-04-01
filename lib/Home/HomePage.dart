@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
 
                       const Padding(
                         padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
-                        child: SearchBar([]),
+                        child:  SearchBar([])
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),

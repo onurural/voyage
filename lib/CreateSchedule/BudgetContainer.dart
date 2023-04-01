@@ -17,7 +17,7 @@ class _BudgetContainerState extends State<BudgetContainer> {
     if (value <= 1.0) {
       return 'Budget';
     } else if (value <= 3.0) {
-      return 'Medium';
+      return 'Normal';
     } else {
       return 'Expensive';
     }
@@ -130,66 +130,71 @@ var content;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10),
-        child: Container(
-        padding: const EdgeInsets.all(16.0),
-    decoration: BoxDecoration(
-    color: const Color.fromRGBO(44, 87, 116, 100
-    ),
-      borderRadius: BorderRadius.circular(16),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.2),
-          blurRadius: 8,
-          offset: const Offset(0, 4),
+    return Column(
+      children: [
+
+        Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+            padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+        color: const Color.fromRGBO(44, 87, 116, 100
+        ),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MaterialButton(
+                    onPressed: () {
+                      setState(() {
+                        isContentShown = !isContentShown;
+                        if (isFinished == true) {
+                          buttonIcon = Icons.check_circle;
+                        }
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Budget',
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        Icon(
+                          buttonIcon,
+                          size: 25,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                  ),
+                  AnimatedCrossFade(
+                    firstChild: Container(),
+                    secondChild: content,
+                    crossFadeState: isContentShown
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 300),
+                  )
+                ],
+              ),
+            ),
         ),
       ],
-    ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MaterialButton(
-                onPressed: () {
-                  setState(() {
-                    isContentShown = !isContentShown;
-                    if (isFinished == true) {
-                      buttonIcon = Icons.check_circle;
-                    }
-                  });
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Budget',
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      buttonIcon,
-                      size: 25,
-                      color: Colors.white,
-                    )
-                  ],
-                ),
-              ),
-              AnimatedCrossFade(
-                firstChild: Container(),
-                secondChild: content,
-                crossFadeState: isContentShown
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 500),
-              )
-            ],
-          ),
-        ),
     );
   }
 }
