@@ -238,5 +238,14 @@ class DrawerItems {
     ),
   );
 
-  static final all = [  profile,  home,  dashboard,  search,  notifications,  messages,  bookmarks,  settings];
+  static final all = [
+    profile,
+    home,
+    dashboard,
+    search,
+    notifications,
+    messages,
+    bookmarks,
+    settings
+  ];
 }

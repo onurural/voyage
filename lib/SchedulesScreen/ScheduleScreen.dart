@@ -49,8 +49,8 @@ class _ScheduleScreenState extends State<ScheduleScreen>
   Widget build(BuildContext context) {
     // Define color palette and text styles
 
-    Color primaryColor = Color.fromRGBO(44, 87, 116, 1);
-    Color secondaryColor = Color.fromRGBO(235, 235, 235, 1);
+    Color primaryColor = const Color.fromRGBO(44, 87, 116, 1);
+    Color secondaryColor = const Color.fromRGBO(235, 235, 235, 1);
 
     TextStyle tabTextStyle = GoogleFonts.roboto(
       fontSize: 16,
@@ -61,22 +61,69 @@ class _ScheduleScreenState extends State<ScheduleScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Schedule', style: TextStyle(color: secondaryColor)),
+        title: Text(widget.schedule.title, style: TextStyle(color: secondaryColor)),
         backgroundColor: primaryColor,
-        bottom: TabBar(
+        bottom:TabBar(
           controller: _tabController,
           isScrollable: true,
-          indicatorColor: secondaryColor,
-          labelStyle: tabTextStyle,
-          tabs: activitiesByDay.keys
-              .map((day) => Tab(text: (DateFormat('EEEE').format(day))+" "+DateFormat('yyyy-MM-dd').format(day)))
-              .toList(),
+          indicatorColor: Colors.blue,
+          labelStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.blue,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: Colors.grey,
+          ),
+          tabs: activitiesByDay.keys.map(
+                (day) => Container(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    DateFormat('EEEE').format(day),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Text(
+                    DateFormat('yyyy-MM-dd').format(day),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ).toList(),
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: activitiesByDay.values.map((activities) {
           activities.sort((a, b) => a.beginTime.compareTo(b.day));
+          activities.sort((a, b) => a.beginTime.compareTo(b.beginTime));
+
+
           return ListView.builder(
             itemCount: activities.length,
             itemBuilder: (context, index) {

@@ -20,12 +20,12 @@ class _DescriptionBoxState extends State<DescriptionBox> {
         width: double.infinity,
         height: 200,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding:  const EdgeInsets.all(8.0),
           child: ListView(
             children: [
               Text(widget.text,style:
                 GoogleFonts.poppins(
-                  textStyle: const TextStyle(
+                  textStyle:  const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 16

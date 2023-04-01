@@ -13,7 +13,7 @@ class PlaceScreen extends StatefulWidget {
   final String hero;
 
 
-  const PlaceScreen(this.place, this.hero, {super.key});
+   PlaceScreen(this.place, this.hero, {super.key});
 
   @override
   State<PlaceScreen> createState() => _PlaceScreenState();
@@ -62,7 +62,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
       ),
       Center(
           child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding:  const EdgeInsets.all(10),
               child: Hero(
                   tag: widget.hero,
 
@@ -75,7 +75,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 3,
                             blurRadius: 5,
-                            offset: const Offset(0, 2),
+                            offset:  const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -87,7 +87,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                               width: double.infinity,
                               height: 400,
                               decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
+                                borderRadius:  const BorderRadius.only(
                                     topRight: Radius.circular(20),
                                     topLeft: Radius.circular(20)),
                                 image: DecorationImage(
@@ -97,11 +97,11 @@ class _PlaceScreenState extends State<PlaceScreen> {
                               ),
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(20, 300, 20, 0),
+                                     const EdgeInsets.fromLTRB(20, 300, 20, 0),
                                 child: Column(
                                   children: [
                                     Container(
-                                        padding: const EdgeInsets.all(8),
+                                        padding:  const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(5),
@@ -115,7 +115,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                                           ),
                                         ),
                                         child: Text(widget.place.title,
-                                            style: const TextStyle(
+                                            style:  const TextStyle(
                                                 fontSize: 28,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.white,
@@ -128,7 +128,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                             Container(
                               height: 400,
                               decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
+                                borderRadius:  const BorderRadius.only(
                                     topRight: Radius.circular(20),
                                     topLeft: Radius.circular(20)),
                                 gradient: LinearGradient(
@@ -144,7 +144,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                          padding:  const EdgeInsets.fromLTRB(0, 20, 0, 0),
                           child: SizedBox(
                             height: 70,
                             width: double.infinity,
@@ -155,7 +155,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                                 index = index + 1;
                                 return Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(10, 0, 0, 10),
+                                       const EdgeInsets.fromLTRB(10, 0, 0, 10),
                                   child: GestureDetector(
                                     onTap: () {
                                       setState(() {
@@ -204,7 +204,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                                     Text(
                                       'Description',
                                       style: GoogleFonts.poppins(
-                                          textStyle: const TextStyle(
+                                          textStyle:  const TextStyle(
                                               color: Colors.white,
                                               fontSize: 20,
                                               fontWeight: FontWeight.w700)),
@@ -223,13 +223,13 @@ class _PlaceScreenState extends State<PlaceScreen> {
                                 crossFadeState: isDescShowed
                                     ? CrossFadeState.showSecond
                                     : CrossFadeState.showFirst,
-                                duration: const Duration(milliseconds: 500),
+                                duration:  const Duration(milliseconds: 500),
                               )
                             ],
                           ),
                         ),
                         Container(
-                          decoration: const BoxDecoration(
+                          decoration:  const BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20))
                           ),
@@ -242,12 +242,12 @@ class _PlaceScreenState extends State<PlaceScreen> {
                                 Text(
                                   'Create your own schedule',
                                   style: GoogleFonts.poppins(
-                                      textStyle: const TextStyle(
+                                      textStyle:  const TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
                                           fontWeight: FontWeight.w700)),
                                 ),
-                                const Icon(
+                                 const Icon(
                                   Icons.schedule,
                                   color: Colors.white,
                                   size: 25,

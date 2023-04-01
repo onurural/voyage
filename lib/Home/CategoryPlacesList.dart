@@ -48,6 +48,7 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
   }
   void fillInSmallCardList(){
     for (var element in items) {
+      globalId=generateRandomString(3);
       smallCards.add(PlaceSmallCard(element.place, globalId));
     }
   }
@@ -55,7 +56,8 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
   void generateList(){
 
     for(var i=0;i<=29;i++){
-      items.add(PlaceBigCard(testPlace));
+      globalId=generateRandomString(3);
+      items.add(PlaceBigCard(testPlace,globalId));
     }
 
   }
@@ -65,7 +67,7 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
 
     super.initState();
     _controller.addListener(_scrollListener);
-    globalId=generateRandomString(3);
+
     generateList();
     fillInSmallCardList();
   }

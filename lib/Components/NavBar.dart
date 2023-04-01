@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'GradientIcon.dart';
@@ -71,8 +70,9 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),child: Container(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Container(
           padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
           width: double.infinity,
           decoration: BoxDecoration(
@@ -101,7 +101,7 @@ class _NavBarState extends State<NavBar> {
             ],
           ),
         ),
-        ),
+      ),
     );
   }
 }
