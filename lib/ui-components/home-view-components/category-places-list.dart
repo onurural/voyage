@@ -1,7 +1,7 @@
 import 'dart:math';
 
 
-import 'package:voyage/ui-components/home-view-components/place.dart';
+import 'package:voyage/models/place.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/home-view-components/place-big-card.dart';
@@ -17,7 +17,7 @@ class CategoryPlacesList extends StatefulWidget {
 }
 
 class _CategoryPlacesListState extends State<CategoryPlacesList> {
-  var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
+  // var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
   bool buttonViewed=false;
   var globalId;
   List<PlaceSmallCard> smallCards=[];

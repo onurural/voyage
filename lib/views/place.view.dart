@@ -1,11 +1,12 @@
 
+import 'dart:convert';
 import 'dart:ui' as ui;
 
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/place-components/description-box.dart';
-import 'package:voyage/ui-components/home-view-components/place.dart';
+import 'package:voyage/models/place.dart';
 
 
 class PlaceScreen extends StatefulWidget {
@@ -27,12 +28,13 @@ class _PlaceScreenState extends State<PlaceScreen> {
   @override
   void initState() {
     super.initState();
-    photoSelected = widget.place.images.first;
+    photoSelected = widget.place.image;
   }
 
   Widget buildStar(BuildContext context, int index) {
     IconData starIcon;
-    if (index < widget.place.rate) {
+    var rating = widget.place.rating ?? -1;
+    if (index <  rating) {
       starIcon = Icons.star;
     } else {
       starIcon = Icons.star_border;
@@ -114,7 +116,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                                             ],
                                           ),
                                         ),
-                                        child: Text(widget.place.title,
+                                        child: Text(widget.place.name ?? 'null',
                                             style:  const TextStyle(
                                                 fontSize: 28,
                                                 fontWeight: FontWeight.bold,
@@ -150,7 +152,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                             width: double.infinity,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: widget.place.images.length - 1,
+                              itemCount:  1, // TODO: Fetch more image from API 
                               itemBuilder: (context, index) {
                                 index = index + 1;
                                 return Padding(
@@ -160,21 +162,10 @@ class _PlaceScreenState extends State<PlaceScreen> {
                                     onTap: () {
                                       setState(() {
                                         photoSelected =
-                                            widget.place.images[index];
+                                            widget.place.image;
                                       });
                                     },
-                                    child: Container(
-                                      width: 100,
-                                      height: 70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              widget.place.images[index]),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
+                                     child: Image.memory(base64Decode(widget.place.image?.image ?? ''))
                                   ),
                                 );
                               },
@@ -219,7 +210,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                               ),
                               AnimatedCrossFade(
                                 firstChild: Container(),
-                                secondChild: DescriptionBox(widget.place.desc),
+                                secondChild: DescriptionBox(widget.place.reviews?[0].text ?? 'null'), // TODO Wrap with Listview.builder and return AnimatedCrossFade then change '[0]' with index property
                                 crossFadeState: isDescShowed
                                     ? CrossFadeState.showSecond
                                     : CrossFadeState.showFirst,

@@ -4,7 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/place-components/hero_dialog_route.dart';
 import 'package:voyage/views/place.view.dart';
-import 'package:voyage/ui-components/home-view-components/place.dart';
+import 'package:voyage/models/place.dart';
 
 
 class PlaceSmallCard extends StatefulWidget {

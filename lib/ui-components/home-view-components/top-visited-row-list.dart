@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/views/show-more.view.dart';
 import 'package:voyage/ui-components/place-components/hero_dialog_route.dart';
-import 'package:voyage/ui-components/home-view-components/place.dart';
+import 'package:voyage/models/place.dart';
 import 'place-small-card.dart';
 
 class TopVisitedRowList extends StatefulWidget {

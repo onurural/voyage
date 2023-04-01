@@ -22,7 +22,7 @@ class _MainConnectorState extends State<MainConnector> {
   final List<Widget> _screens = [
 
   ];
-  var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
+  // var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
 
 
   void _onItemTapped(int index) {
@@ -55,7 +55,7 @@ class _MainConnectorState extends State<MainConnector> {
     });
     List<Schedule> schedules=[];
     for(int i=0;i<10;i++){
-      schedules.add(Schedule(activities, testPlace));
+      schedules.add(Schedule(activities, ));
     }
     _screens.add(const HomeCon());
     _screens.add(SchedulesScreen(schedules));
