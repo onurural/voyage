@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:voyage/bloc/place.bloc.dart';
-import 'package:voyage/bloc/place.event.dart';
-import 'package:voyage/bloc/place.state.dart';
+import 'package:voyage/bloc/place/place.bloc.dart';
+import 'package:voyage/bloc/place/place.event.dart';
+import 'package:voyage/bloc/place/place.state.dart';
 import 'package:voyage/data/place.data.dart';
 import 'package:voyage/models/place.dart';
 import 'package:voyage/ui-components/nav-bar.dart';
@@ -25,8 +25,6 @@ class _MainConnectorState extends State<MainConnector> {
   List<Activity> activities =[];
 
   final List<Widget> _screens = [];
-  // var testPlace=Place(['assets/Images/1.jpeg','assets/Images/2.jpeg','assets/Images/3.jpeg','assets/Images/4.jpeg', 'assets/Images/5.jpeg'],'Barcelona', 'Barcelona is a city with a wide range of original leisure options that encourage you to visit time and time again. Overlooking the Mediterranean Sea, and famous for Gaudí and other Art Nouveau architecture, Barcelona is one of Europe’s trendiest cities.', 3.5);
-  var places;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -56,15 +54,6 @@ class _MainConnectorState extends State<MainConnector> {
         'https://www.google.com/maps/place/Location+$activityNumber',
       );
     });
-    // places = fetchPlace();
-    // List<Schedule> schedules=[];
-    
-    // for(int i=0;i<10;i++){
-    //   schedules.add(Schedule(activities, places[i]));
-    // }
-    // _screens.add(const HomeCon());
-    // _screens.add(SchedulesScreen(schedules));
-    // _screens.add(const CreateScheduleScreen());
 
   }
  

@@ -2,9 +2,9 @@ import 'dart:math';
 
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:voyage/bloc/place.bloc.dart';
-import 'package:voyage/bloc/place.event.dart';
-import 'package:voyage/bloc/place.state.dart';
+import 'package:voyage/bloc/place/place.bloc.dart';
+import 'package:voyage/bloc/place/place.event.dart';
+import 'package:voyage/bloc/place/place.state.dart';
 import 'package:voyage/data/place.data.dart';
 import 'package:voyage/models/place.dart';
 import 'package:flutter/material.dart';

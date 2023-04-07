@@ -1,8 +1,8 @@
 
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:voyage/bloc/place.event.dart';
-import 'package:voyage/bloc/place.state.dart';
+import 'package:voyage/bloc/place/place.event.dart';
+import 'package:voyage/bloc/place/place.state.dart';
 import 'package:voyage/data/place.data.dart';
 import 'package:voyage/models/place.dart';
 
