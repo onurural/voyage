@@ -3,7 +3,7 @@ import 'package:voyage/ui-components/home-view-components/category-places-list.d
 
 
 class Category{
- String title;
+  String title;
   CategoryPlacesList cardsList;
   IconData icon;
 

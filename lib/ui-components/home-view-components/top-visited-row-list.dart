@@ -154,7 +154,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
         ]));
   }
   
-  _buildPlaceSmallCard() {
+  Widget _buildPlaceSmallCard() {
     return ListView.separated(
       separatorBuilder: (_, __) => const Divider(),
       shrinkWrap: true,

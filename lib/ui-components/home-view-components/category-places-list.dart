@@ -1,12 +1,10 @@
 import 'dart:math';
 
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage/bloc/place/place.bloc.dart';
 import 'package:voyage/bloc/place/place.event.dart';
 import 'package:voyage/bloc/place/place.state.dart';
 import 'package:voyage/data/place.data.dart';
-import 'package:voyage/models/place.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/home-view-components/place-big-card.dart';
@@ -23,12 +21,13 @@ class CategoryPlacesList extends StatefulWidget {
 
 class _CategoryPlacesListState extends State<CategoryPlacesList> {
   final PlaceBloc _placeBloc = PlaceBloc(PlaceData());
-  bool buttonViewed=false;
+  bool buttonViewed = false;
   var globalId;
-  List<PlaceSmallCard> smallCards=[];
+  List<PlaceSmallCard> smallCards = [];
   String generateRandomString(int length) {
     final rand = Random();
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const chars =
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const charLength = chars.length;
     String result = '';
     for (var i = 0; i < length; i++) {
@@ -39,20 +38,19 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
 
   final ScrollController _controller = ScrollController();
 
-
-  List<PlaceBigCard> items=[];
+  List<PlaceBigCard> items = [];
   void _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
       setState(() {
-        buttonViewed=true;
-
+        buttonViewed = true;
       });
     }
   }
-  void fillInSmallCardList(){
+
+  void fillInSmallCardList() {
     for (var element in items) {
-      globalId=generateRandomString(3);
+      globalId = generateRandomString(3);
       smallCards.add(PlaceSmallCard(element.place, globalId));
     }
   }
@@ -68,7 +66,6 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
 
   @override
   void initState() {
-
     super.initState();
     _placeBloc.add(FetchPlace());
     _controller.addListener(_scrollListener);
@@ -76,43 +73,42 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
     // generateList();
     fillInSmallCardList();
   }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
         width: double.infinity,
-
-        child: Column(
-            children: [
-
-              SizedBox(
-                width: double.infinity,
-                height: 400,
-                child: ListView.builder(
-                  itemCount: 10,
-                  controller: _controller,
-
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (BuildContext context, int index) {
-
-
-                    return Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: _buildPlaceCard(),
-                    );
-                  },
-                ),
-              ),
-              Padding(
+        child: Column(children: [
+          SizedBox(
+            width: double.infinity,
+            height: 400,
+            child: ListView.builder(
+              itemCount: 10,
+              controller: _controller,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: _buildPlaceCard(),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
+            child: AnimatedCrossFade(
+              firstChild: Container(),
+              secondChild: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
-                child: AnimatedCrossFade(firstChild: Container(), secondChild: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
-                  child: AnimatedCrossFade(firstChild: Container(), secondChild: GestureDetector(
+                child: AnimatedCrossFade(
+                  firstChild: Container(),
+                  secondChild: GestureDetector(
                     onTap: () {
+                      
                       Navigator.of(context).push(
                         HeroDialogRoute(
-                          builder: (context) =>
-                              Center(
-                                  child: ShowMoreScreen(smallCards,globalId)),
+                          builder: (context) => Center(
+                              child: ShowMoreScreen(smallCards, globalId)),
                           settings: const RouteSettings(),
                           fullscreenDialog: true,
                         ),
@@ -136,43 +132,44 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
                         ),
                       ),
                     ),
-                  ), crossFadeState: buttonViewed? CrossFadeState.showSecond : CrossFadeState.showFirst , duration: const Duration(milliseconds: 100),
-
-
                   ),
-                ), crossFadeState: buttonViewed? CrossFadeState.showSecond : CrossFadeState.showFirst , duration: const Duration(milliseconds: 100),
-
-
+                  crossFadeState: buttonViewed
+                      ? CrossFadeState.showSecond
+                      : CrossFadeState.showFirst,
+                  duration: const Duration(milliseconds: 100),
                 ),
-              )
-            ])
-    );
+              ),
+              crossFadeState: buttonViewed
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
+              duration: const Duration(milliseconds: 100),
+            ),
+          )
+        ]));
   }
 
   Widget _buildPlaceCard() {
     return ListView.builder(
-      itemCount: 6,
-      itemBuilder: ((context, index) {
-      return BlocProvider(
-        create: (_) => _placeBloc,
-        child: BlocConsumer<PlaceBloc, PlaceState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            if (state is PlaceLoadedState) {
-                return PlaceBigCard(state.model[index], globalId);
-            }
-            if (state is PlaceLoadingState) {
-                return  const CircularProgressIndicator();
-            }
-            if (state is PlaceErrorState) {
-              return const Text('Error on display the widget');
-            }
-            else {
-              return Text('Initial State ${state.toString()}');
-            }
-          }),
-        );
-    }));
+        itemCount: 6,
+        itemBuilder: ((context, index) {
+          return BlocProvider(
+            create: (_) => _placeBloc,
+            child: BlocConsumer<PlaceBloc, PlaceState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is PlaceLoadedState) {
+                    return PlaceBigCard(state.model[index], globalId);
+                  }
+                  if (state is PlaceLoadingState) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (state is PlaceErrorState) {
+                    return const Text('Error on display the widget');
+                  } else {
+                    return Text('Initial State ${state.toString()}');
+                  }
+                }),
+          );
+        }));
   }
 }
-
