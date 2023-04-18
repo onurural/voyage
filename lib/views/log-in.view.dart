@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/views/home-container.dart';
 import 'package:voyage/views/forget-password.view.dart';
+import 'package:voyage/views/main-connector.dart';
 import 'package:voyage/views/sign-up.view.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -328,7 +329,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeCon()),
+                            builder: (context) => const MainConnector()),
                       );
                     })),
           );

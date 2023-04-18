@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class MatrixElement extends StatefulWidget {
   final String title;
-  late double rate;
+   double rate=0;
   bool isChanged = false;
 
   MatrixElement({required this.title, Key? key}) : super(key: key);
