@@ -7,19 +7,53 @@ import 'matrix-element.dart';
 class InterestContainer extends StatefulWidget {
   Map<String, double> preferences = {};
   bool isFinished = false;
-  bool unlocked;
+  ValueNotifier<bool> locked;
+
   int index;
+
   final void Function(int) unlockNext;
+  ValueNotifier<bool> started;
 
+  final Function(BuildContext, int) onFinish;
 
-  InterestContainer(this.unlocked,  this.unlockNext,this.index,);
+  InterestContainer(
+      this.locked, this.unlockNext, this.index, this.started, this.onFinish,
+      {super.key});
 
   @override
   State<InterestContainer> createState() => _InterestContainerState();
 }
 
 class _InterestContainerState extends State<InterestContainer> {
-  bool isFinished = false;
+
+  var activeDesign = BoxDecoration(
+    color: const Color.fromRGBO(44, 87, 116, 100),
+    borderRadius: BorderRadius.circular(16),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.2),
+        blurRadius: 8,
+        offset: const Offset(0, 4),
+      ),
+    ],
+  );
+  var deactivatedDesign = BoxDecoration(
+    color: const Color.fromRGBO(120, 160, 190, 1),
+    borderRadius: BorderRadius.circular(16),
+    image: DecorationImage(
+      image: AssetImage('assets/Images/snowflake.png'),
+      fit: BoxFit.cover,
+    ),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.1),
+        blurRadius: 4,
+        offset: const Offset(0, 2),
+      ),
+    ],
+  );
+
+  var buttonIcon = Icons.add_circle;
   var matrixes = [
     MatrixElement(title: 'Entertainment'),
     MatrixElement(title: 'Gastronomy'),
@@ -30,13 +64,9 @@ class _InterestContainerState extends State<InterestContainer> {
     MatrixElement(title: 'Sport'),
   ];
   var interests;
-  var buttonIcon = Icons.add_circle;
-  int counter = 0;
-  var isContentShown = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     interests = Column(
       children: [
@@ -55,14 +85,15 @@ class _InterestContainerState extends State<InterestContainer> {
           child: MaterialButton(
             onPressed: () {
               setState(() {
-                isFinished = true;
-                isContentShown = false;
+                widget.isFinished = true;
+
                 for (var element in matrixes) {
                   widget.preferences
                       .putIfAbsent(element.title, () => element.rate);
                 }
                 widget.isFinished = true;
-                widget.unlockNext(widget.index+1);
+                widget.unlockNext(widget.index);
+                widget.onFinish(context, widget.index);
               });
             },
             child: Center(
@@ -78,77 +109,67 @@ class _InterestContainerState extends State<InterestContainer> {
               ),
             ),
           ),
-        ),
+        )
       ],
     );
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return AbsorbPointer(
-      absorbing: widget.unlocked,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(44, 87, 116, 100),
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MaterialButton(
-                onPressed: () {
-                  setState(() {
-                    isContentShown = !isContentShown;
-                    counter++;
-                    if (isFinished == true) {
-                      buttonIcon = Icons.check_circle;
-                    }
-                  });
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Interests',
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
+    return ValueListenableBuilder<bool>(
+        valueListenable: widget.locked,
+        builder: (context, locked, child) =>
+    ValueListenableBuilder<bool>(
+        valueListenable: widget.started,
+        builder
+            : (context, started, child) {
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              padding: const EdgeInsets.all(16.0),
+              decoration: locked && !started ? deactivatedDesign : activeDesign,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Interests',
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ),
-                      ),
+                        Icon(
+                          buttonIcon,
+                          size: 25,
+                          color: Colors.white,
+                        )
+                      ],
                     ),
-                    Icon(
-                      buttonIcon,
-                      size: 25,
-                      color: Colors.white,
-                    )
-                  ],
-                ),
+                  ),
+                  AnimatedCrossFade(
+                    firstChild: Container(),
+                    secondChild: interests,
+                    crossFadeState: !widget.locked.value
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 500),
+                  )
+                ],
               ),
-              AnimatedCrossFade(
-                firstChild: Container(),
-                secondChild: interests,
-                crossFadeState: isContentShown
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 500),
-              )
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        },
+    )
     );
   }
 }
