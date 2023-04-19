@@ -20,8 +20,8 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
         ),
         itemCount: widget.schedules.length,
         itemBuilder: (BuildContext context, int index) {

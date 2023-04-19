@@ -67,6 +67,8 @@ dependencies:
   pdf_render: ^1.0.15
   animations: ^2.0.1
   shimmer: ^2.0.0
+  flutter_settings_screens: ^0.3.3-null-safety+2
+  flutter_animator: ^3.2.2
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +100,8 @@ flutter:
     - assets/Images/4.jpeg
     - assets/Images/5.jpeg
     - assets/Images/6.jpeg
+    - assets/Images/snowflake.png
+    - assets/Images/default_profile_picture.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

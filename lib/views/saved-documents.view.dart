@@ -130,7 +130,8 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(37, 154, 180, 100),
         title: const Text('Documents and Photos'),
-        actions: _appBarActions(context)
+        actions: _appBarActions(context),
+          automaticallyImplyLeading: false
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

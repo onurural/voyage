@@ -22,7 +22,8 @@ class CategoryPlacesList extends StatefulWidget {
 class _CategoryPlacesListState extends State<CategoryPlacesList> {
   final PlaceBloc _placeBloc = PlaceBloc(PlaceData());
   bool buttonViewed = false;
-  var globalId;
+  var globalId = '';
+
   List<PlaceSmallCard> smallCards = [];
   String generateRandomString(int length) {
     final rand = Random();
@@ -82,18 +83,14 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
           SizedBox(
             width: double.infinity,
             height: 400,
-            child: ListView.builder(
-              itemCount: 10,
-              controller: _controller,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
+
+                child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: _buildPlaceCard(),
-                );
-              },
+                )
+
             ),
-          ),
+
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
             child: AnimatedCrossFade(
@@ -150,26 +147,34 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
 
   Widget _buildPlaceCard() {
     return ListView.builder(
-        itemCount: 6,
-        itemBuilder: ((context, index) {
-          return BlocProvider(
-            create: (_) => _placeBloc,
-            child: BlocConsumer<PlaceBloc, PlaceState>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  if (state is PlaceLoadedState) {
-                    return PlaceBigCard(state.model[index], globalId);
-                  }
-                  if (state is PlaceLoadingState) {
-                    return const CircularProgressIndicator();
-                  }
-                  if (state is PlaceErrorState) {
-                    return const Text('Error on display the widget');
-                  } else {
-                    return Text('Initial State ${state.toString()}');
-                  }
-                }),
-          );
-        }));
+      controller: _controller,
+      scrollDirection: Axis.vertical,
+      itemCount: 6,
+      itemBuilder: ((context, index) {
+        return BlocProvider(
+          create: (_) => _placeBloc,
+          child: BlocConsumer<PlaceBloc, PlaceState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is PlaceLoadedState) {
+                if (state.model != null && index < state.model.length) {
+                  return PlaceBigCard(state.model[index], globalId);
+                } else {
+                  return const Text('Model is null or index out of range');
+                }
+              }
+              if (state is PlaceLoadingState) {
+                return const CircularProgressIndicator();
+              }
+              if (state is PlaceErrorState) {
+                return const Text('Error on display the widget');
+              } else {
+                return Text('Initial State ${state.toString()}');
+              }
+            },
+          ),
+        );
+      }),
+    );
   }
 }

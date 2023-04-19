@@ -68,7 +68,13 @@ class _RenameDialogState extends State<RenameDialog> {
             children: <Widget>[
               TextField(
                 controller: _controller,
-                decoration: InputDecoration(labelText: 'New name'),
+                decoration: InputDecoration(labelText: 'New name' ,labelStyle: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500
+                  )
+                )),
               ),
               AnimatedCrossFade(firstChild: Container(), secondChild: errorText , crossFadeState: errorAppeared ? CrossFadeState.showSecond : CrossFadeState.showFirst, duration: Duration(milliseconds: 250)),
 

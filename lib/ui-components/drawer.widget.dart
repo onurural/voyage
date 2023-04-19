@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/drawer-items.dart';
+import 'package:voyage/views/log-in.view.dart';
 
 class DrawerWidget extends StatelessWidget {
   final ValueChanged<DrawerItem> onSelectedItem;
@@ -24,22 +25,38 @@ class DrawerWidget extends StatelessWidget {
   Widget buildDrawerItems(BuildContext context) {
     return Column(
       children: DrawerItems.all
-          .map((item) => ListTile(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                leading: Icon(
-                  item.icon,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  item.title,
-                  style: GoogleFonts.poppins(
-                    textStyle:
-                        const TextStyle(color: Colors.white, fontSize: 17),
-                  ),
-                ),
-                onTap: () => onSelectedItem(item),
-              ))
+          .map((item) {
+        if (item.widget != null) {
+          return item.widget!;
+        } else {
+          return ListTile(
+            contentPadding:
+            const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            leading: Icon(
+              item.icon,
+              color: Colors.white,
+            ),
+            title: Text(
+              item.title,
+              style: GoogleFonts.poppins(
+                textStyle:
+                const TextStyle(color: Colors.white, fontSize: 17),
+              ),
+            ),
+            onTap: () {
+              if(item.title != "Log Out"){
+                onSelectedItem(item);
+              }
+              else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LogInScreen()),
+                );
+              }
+            },
+          );
+        }
+      })
           .toList(),
     );
   }

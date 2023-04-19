@@ -27,7 +27,7 @@ class _HomeConState extends State<HomeCon> {
   }
   void openDrawer(){
     return setState(() {
-      xOffset=230;
+      xOffset=300;
       yOffset=150;
       scaleFactor=0.6;
       bool isDragging=false;
@@ -66,10 +66,7 @@ class _HomeConState extends State<HomeCon> {
     return SafeArea(
       child: Container(
         width: xOffset,
-        decoration: BoxDecoration(
-          color: Colors.blueGrey[800],
-          boxShadow: const [BoxShadow(color: Colors.black45, blurRadius: 10)],
-        ),
+
         child: DrawerWidget(onSelectedItem: (DrawerItem value) {
           setState(() {
             item = value;
@@ -136,6 +133,6 @@ class _HomeConState extends State<HomeCon> {
 
   Widget getDrawerPage(){
 
-    return ScreenViewer(openDrawer,0);
+    return ScreenViewer(openDrawer,item.title);
   }
 }
