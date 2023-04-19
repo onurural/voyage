@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class DrawerItem {
   final String title;
   final IconData icon;
-  final Widget widget;
+  final Widget? widget;
 
   DrawerItem({
     required this.title,
@@ -14,8 +15,7 @@ class DrawerItem {
 
 class DrawerItems {
   static final profile = DrawerItem(
-    title: 'John Doe',
-    icon: Icons.person,
+   
     widget: Container(
       height: 120,
       color: Colors.blue,
@@ -25,7 +25,7 @@ class DrawerItems {
           children: const [
             CircleAvatar(
               radius: 30,
-              backgroundImage: AssetImage('assets/profile_image.jpg'),
+              backgroundImage: AssetImage('assets/Images/default_profile_picture.png'),
             ),
             SizedBox(height: 10),
             Text(
@@ -39,213 +39,69 @@ class DrawerItems {
           ],
         ),
       ),
-    ),
+    ), title: 'profile', icon: Icons.account_circle,
   );
 
   static final home = DrawerItem(
     title: 'Home',
     icon: Icons.home,
-    widget: const Center(
-      child: Text(
-        'Home',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
+    widget: null
   );
 
   static final settings = DrawerItem(
     title: 'Settings',
     icon: Icons.settings,
-    widget: const Center(
-      child: Text(
-        'Settings',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
+    widget:null
   );
 
   static final logout = DrawerItem(
-    title: 'Logout',
+    title: 'Log Out',
     icon: Icons.logout,
-    widget: const Center(
-      child: Text(
-        'Logout',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
+    widget: null
   );
 
-  static final dashboard = DrawerItem(
-    title: 'Dashboard',
-    icon: Icons.dashboard,
-    widget: const Center(
-      child: Text(
-        'Dashboard',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
+  static final helpAndFaq = DrawerItem(
+    title: 'Help & FAQ',
+    icon: Icons.help,
+    widget: null
   );
 
-  static final search = DrawerItem(
-    title: 'Search',
-    icon: Icons.search,
-    widget: const Center(
-      child: Text(
-        'Search',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
+  static final pp = DrawerItem(
+    title: 'Privacy Policies',
+    icon: Icons.privacy_tip_sharp,
+    widget: null,
   );
 
   static final notifications = DrawerItem(
     title: 'Notifications',
     icon: Icons.notifications,
-    widget: const Center(
-      child: Text(
-        'Notifications',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
+    widget: null
   );
 
-  static final messages = DrawerItem(
-    title: 'Messages',
-    icon: Icons.message,
-    widget: const Center(
-      child: Text(
-        'Messages',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
+  static final contactUs = DrawerItem(
+    title: 'Contact Us',
+    icon: Icons.call,
+    widget: null
   );
 
-  static final bookmarks = DrawerItem(
-    title: 'Bookmarks',
-    icon: Icons.bookmark,
-    widget: const Center(
-      child: Text(
-        'Bookmarks',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  );
 
-  static final help = DrawerItem(
-    title: 'Help',
-    icon: Icons.help,
-    widget: const Center(
-      child: Text(
-        'Help',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  );
-
-  static final feedback = DrawerItem(
-    title: 'Feedback',
-    icon: Icons.feedback,
-    widget: const Center(
-      child: Text(
-        'Feedback',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  );
-
-  static final about = DrawerItem(
-    title: 'About',
-    icon: Icons.info,
-    widget: const Center(
-      child: Text(
-        'About',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  );
-
-  static final privacyPolicy = DrawerItem(
-    title: 'Privacy Policy',
-    icon: Icons.privacy_tip,
-    widget: const Center(
-      child: Text(
-        'Privacy Policy',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  );
 
   static final termsOfService = DrawerItem(
     title: 'Terms of Service',
     icon: Icons.article,
-    widget: const Center(
-      child: Text(
-        'Terms of Service',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
+    widget: null
   );
 
-  static final helpCenter = DrawerItem(
-    title: 'Help Center',
-    icon: Icons.help_center,
-    widget: const Center(
-      child: Text(
-        'Help Center',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  );
+
 
   static final all = [
     profile,
     home,
-    dashboard,
-    search,
     notifications,
-    messages,
-    bookmarks,
-    settings
+    settings,
+    pp,
+    termsOfService,
+    contactUs,
+    logout
   ];
 }
