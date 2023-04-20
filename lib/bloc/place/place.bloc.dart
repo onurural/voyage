@@ -17,7 +17,12 @@ class PlaceBloc extends Bloc<PlaceEvent, PlaceState> {
       }
       if (event is FetchHistoricPlace) {
         emit(PlaceLoadingState());
-        List<Place> places = await placeData.fetchPlace();
+        List<Place> places = await placeData.fetchPlaceByCategory('Historic');
+        emit(PlaceLoadedState(places));
+      }
+      if (event is FetchNaturalPlace) {
+        emit(PlaceLoadingState());
+        List<Place> places = await placeData.fetchPlaceByCategory('Natural');
         emit(PlaceLoadedState(places));
       }
     });
