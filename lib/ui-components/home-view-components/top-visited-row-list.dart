@@ -23,7 +23,7 @@ class TopVisitedRowList extends StatefulWidget {
 var globalId;
 
 class _TopVisitedRowListState extends State<TopVisitedRowList> {
-  final PlaceBloc _placeBloc = PlaceBloc(PlaceData());
+  final PlaceBloc _placeBloc = PlaceBloc();
   bool buttonViewed = false;
 
   final ScrollController _controller = ScrollController();

@@ -23,7 +23,7 @@ class MainConnector extends StatefulWidget {
 
 class _MainConnectorState extends State<MainConnector> {
   int _currentIndex = 0;
-  final PlaceBloc _placeBloc = PlaceBloc(PlaceData());
+  final PlaceBloc _placeBloc = PlaceBloc();
   List<Activity> activities = [];
 
   void _onItemTapped(int index) {

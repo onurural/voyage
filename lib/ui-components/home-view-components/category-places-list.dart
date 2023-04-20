@@ -22,7 +22,7 @@ class CategoryPlacesList extends StatefulWidget {
 }
 
 class _CategoryPlacesListState extends State<CategoryPlacesList> {
-  final PlaceBloc _placeBloc = PlaceBloc(PlaceData());
+  final PlaceBloc _placeBloc = PlaceBloc();
   bool buttonViewed = false;
   var globalId = '';
 
@@ -70,7 +70,7 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
   @override
   void initState() {
     super.initState();
-    _placeBloc.add(FetchPlace());
+    // _placeBloc.add(FetchPlace());
     _controller.addListener(_scrollListener);
 
     // generateList();

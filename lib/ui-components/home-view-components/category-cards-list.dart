@@ -20,7 +20,7 @@ class CategoryCardsList extends StatefulWidget {
 
 class _CategoryCardsListState extends State<CategoryCardsList>
     with TickerProviderStateMixin {
-  final PlaceBloc _placeBloc = PlaceBloc(PlaceData());
+  final PlaceBloc _placeBloc = PlaceBloc();
 
   late TabController _tabController;
   late AnimationController _animationController;
@@ -132,7 +132,7 @@ class _CategoryCardsListState extends State<CategoryCardsList>
             child: TabBar(
               onTap: (index) {
                 _animationController.forward(from: 0);
-                _placeBloc.add(FetchNaturalPlace());
+                // _placeBloc.add(FetchNaturalPlace());
               },
               indicatorSize: TabBarIndicatorSize.tab,
               indicator: BoxDecoration(
@@ -172,31 +172,4 @@ class _CategoryCardsListState extends State<CategoryCardsList>
       ),
     );
   }
-
-  // Widget _buildPlaceCard() {
-  //   return ListView.separated(
-  //       itemCount: 5,
-  //       separatorBuilder: (BuildContext context, int index) => const Divider(),
-  //       itemBuilder: (BuildContext context, int index) {
-  //         return BlocProvider(
-  //           create: (_) => _placeBloc,
-  //           child: BlocConsumer<PlaceBloc, PlaceState>(
-  //               listener: (context, state) {},
-  //               builder: (context, state) {
-  //                 if (state is PlaceLoadedState) {
-  //                   return Text(
-  //                       '${state.model[index].name} ${state.model[index].category}');
-  //                 }
-  //                 if (state is PlaceLoadingState) {
-  //                   return const CircularProgressIndicator();
-  //                 }
-  //                 if (state is PlaceErrorState) {
-  //                   return const Text('Error on display the widget');
-  //                 } else {
-  //                   return Text('Initial State ${state.toString()}');
-  //                 }
-  //               }),
-  //         );
-  //       });
-  // }
 }
