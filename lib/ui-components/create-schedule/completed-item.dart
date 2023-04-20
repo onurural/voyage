@@ -29,14 +29,7 @@ class _CompletedItemState extends State<CompletedItem> {
 
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          gradient: LinearGradient(
-            colors: [
-              Color.fromRGBO(44, 87, 116, 100),
-              Colors.grey,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+         color: Color.fromRGBO( 44, 87, 116, 100),
 
         ),
         padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),

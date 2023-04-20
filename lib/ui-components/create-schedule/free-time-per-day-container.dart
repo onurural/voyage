@@ -41,7 +41,7 @@ class _FreeTimePerDayContainerState extends State<FreeTimePerDayContainer> {
     ],
   );
   var deactivatedDesign = BoxDecoration(
-    color: const Color.fromRGBO(120, 160, 190, 1),
+    color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
     image: DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
@@ -56,29 +56,67 @@ class _FreeTimePerDayContainerState extends State<FreeTimePerDayContainer> {
     ],
   );
 
-  var buttonIcon = Icons.add_circle;
+
+  var buttonIcon = Icons.edit;
+String startText = " ";
+String endText = " ";
 
   void _showTimeRangePicker(BuildContext context) async {
+
+
     _startTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: Color.fromRGBO(44, 87, 116, 1),
+            colorScheme: ThemeData.light().colorScheme.copyWith(
+              primary: Color.fromRGBO(44, 87, 116, 1),
+              onPrimary: Colors.white,
+            ),
+            buttonTheme: ButtonThemeData(
+              textTheme: ButtonTextTheme.primary,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (_startTime != null) {
       _endTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor: Color.fromRGBO(44, 87, 116, 1),
+              colorScheme: ThemeData.light().colorScheme.copyWith(
+                primary: Color.fromRGBO(44, 87, 116, 1),
+                onPrimary: Colors.white,
+              ),
+              buttonTheme: ButtonThemeData(
+                textTheme: ButtonTextTheme.primary,
+              ),
+            ),
+            child: child!,
+          );
+        },
       );
     }
 
     if (_startTime != null && _endTime != null) {
       setState(() {
-        final start = _startTime.hour + _startTime.minute / 60;
+        final start = _startTime?.hour! + _startTime.minute / 60;
         final end = _endTime.hour + _endTime.minute / 60;
         _timeDifference = Duration(hours: end - start);
+        _startTime = start;
+        _endTime = end;
       });
     }
   }
+
 
   @override
   void initState() {
@@ -179,7 +217,7 @@ class _FreeTimePerDayContainerState extends State<FreeTimePerDayContainer> {
                     if (_startTime != null &&
                         _endTime != null) {
                       widget.isFinished = true;
-                      buttonIcon = Icons.check_circle;
+                      buttonIcon = Icons.done_outline_outlined;
 
                       widget._startTime = _startTime;
                       widget._endTime = _endTime;

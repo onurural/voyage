@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/home-view-components/category-places-list.dart';
@@ -36,7 +37,7 @@ void mapCategoryItemsWithAnimation(){
 
 
 
- var categories=[Category('test',const CategoryPlacesList(),Icons.explore),Category('test',const CategoryPlacesList(),Icons.explore),Category('test',const CategoryPlacesList(),Icons.explore),Category('test',const CategoryPlacesList(),Icons.explore),Category('test',const CategoryPlacesList(),Icons.explore),Category('test',const CategoryPlacesList(),Icons.explore),Category('test',const CategoryPlacesList(),Icons.explore),];
+ var categories=[Category('History',const CategoryPlacesList(),Icons.museum_outlined),Category('Nature',const CategoryPlacesList(),CupertinoIcons.tree),Category('Shopping',const CategoryPlacesList(),Icons.shopping_bag),Category('Sport',const CategoryPlacesList(),Icons.sports_volleyball),Category('Gastronomy',const CategoryPlacesList(),Icons.fastfood),Category('Health',const CategoryPlacesList(),Icons.spa_outlined),Category('Entertainment',const CategoryPlacesList(),Icons.theater_comedy),];
  List<CategoryCard> categoryCards=[] ;
 
  void fillInTheList(){

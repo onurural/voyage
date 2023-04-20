@@ -100,7 +100,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                       _endDate != null) {
                     widget.isFinished = true;
                     buttonIcon =
-                        Icons.check_circle;
+                        Icons.done_outline_outlined;
                     widget.unlockNext(
                         widget.index);
                     widget.onFinish(
@@ -154,7 +154,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
     ],
   );
   var deactivatedDesign = BoxDecoration(
-    color: const Color.fromRGBO(120, 160, 190, 1),
+    color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
     image: DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
@@ -169,13 +169,28 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
     ],
   );
 
-  var buttonIcon = Icons.add_circle;
+  var buttonIcon = Icons.edit;
 
   void _showDateRangePicker(BuildContext context) async {
     final dateRange = await showDateRangePicker(
       context: context,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: Color.fromRGBO(44, 87, 116, 1),
+            colorScheme: ThemeData.light().colorScheme.copyWith(
+              primary: Color.fromRGBO(44, 87, 116, 1),
+              onPrimary: Colors.white,
+            ),
+            buttonTheme: ButtonThemeData(
+              textTheme: ButtonTextTheme.primary,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (dateRange != null) {
@@ -185,6 +200,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +249,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                                         ),
                                         Icon(
                                           buttonIcon,
-                                          size: 25,
+                                          size:25,
                                           color: Colors.white,
                                         ),
                                       ],

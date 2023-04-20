@@ -16,7 +16,7 @@ class BudgetContainer extends StatefulWidget {
   BudgetContainer(
       this.locked, this.unlockNext, this.index, this.started, this.onFinish,
       {Key? key})
-   :
+      :
         super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class BudgetContainer extends StatefulWidget {
 }
 
 class _BudgetContainerState extends State<BudgetContainer> {
-  double _budgetValue = 1.0;
+  double _budgetValue = 5.0;
 
   var activeDesign = BoxDecoration(
     color: const Color.fromRGBO(44, 87, 116, 100),
@@ -38,7 +38,7 @@ class _BudgetContainerState extends State<BudgetContainer> {
     ],
   );
   var deactivatedDesign = BoxDecoration(
-    color: const Color.fromRGBO(120, 160, 190, 1),
+    color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
     image: DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
@@ -63,20 +63,19 @@ class _BudgetContainerState extends State<BudgetContainer> {
     }
   }
 
-  var buttonIcon = Icons.add_circle;
+  var buttonIcon = Icons.edit;
   var content;
   var shownIcon;
   Widget dollarIcon = const Icon(
     CupertinoIcons.money_dollar,
     color: Colors.white,
-    size: 20,
+    size: 30,
   );
   late List<Widget> dollarIcons;
 
   @override
   void initState() {
     super.initState();
-
 
     dollarIcons = [
       dollarIcon,
@@ -98,71 +97,83 @@ class _BudgetContainerState extends State<BudgetContainer> {
     content = Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-      Row(
-      children: [
-      Text(
-      getBudgetLabel(_budgetValue),
-      style: GoogleFonts.poppins(
-        textStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: Colors.white,
-        ),
-      ),
-    ),
-    const SizedBox(width: 8),
-    shownIcon,
-    ],
-    ),
-    const SizedBox(height: 16),
-    Slider(
-    value: _budgetValue,
-    min: 1,
-    max: 5,
-    divisions: 4,
-    onChanged:
-    (double value) {
-    setState(() {
-    _budgetValue = value;
-    shownIcon = dollarIcons[value.toInt() - 1];
-    });
-    },
-    ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  widget.onFinish(context, widget.index);
-                  widget.isFinished = true;
-                  buttonIcon = Icons.check_circle;
-
-                  widget.budgetValue = _budgetValue;
-                });
-                widget.unlockNext(widget.index);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(44, 87, 116, 100),
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment:MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                getBudgetLabel(_budgetValue),
+                style: GoogleFonts.poppins(
+                  textStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-              child: Center(
-                child: Text(
-                  'Apply',
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
+              const SizedBox(width: 8),
+              dollarIcons [4]
+            ],
+          ),
+          const SizedBox(height: 16),
+          SliderTheme(
+            data: SliderThemeData(
+              activeTrackColor: const Color.fromRGBO(44, 87, 116, 100),
+              inactiveTrackColor: Colors.grey.shade300,
+              thumbColor: const Color.fromRGBO(44, 87, 116, 100),
+              overlayColor: const Color.fromRGBO(44, 87, 116, 0.3),
+              trackHeight: 4.0,
+              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
+              overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
+            ),
+            child: Slider(
+              value: _budgetValue,
+              min: 1,
+              max: 5,
+              divisions: 4,
+              activeColor: const Color.fromRGBO(44, 87, 116, 100),
+              inactiveColor: Colors.grey.shade300,
+              onChanged: (double value) {
+                setState(() {
+                  _budgetValue = value;
+                  shownIcon = dollarIcons[value.toInt() - 1];
+                });
+              },
+            ),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                widget.onFinish(context, widget.index);
+                widget.isFinished = true;
+                buttonIcon = Icons.done_outline_outlined;
+                widget.budgetValue = _budgetValue;
+              });
+              widget.unlockNext(widget.index);
+            },
+            style: ElevatedButton.styleFrom(
+              primary: const Color.fromRGBO(44, 87, 116, 100),
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                'Apply',
+                style: GoogleFonts.poppins(
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-          ],
+          ),
+        ],
       ),
     );
   }
@@ -224,6 +235,7 @@ class _BudgetContainerState extends State<BudgetContainer> {
                                     ? CrossFadeState.showSecond
                                     : CrossFadeState.showFirst,
                                 duration: const Duration(milliseconds: 300),
+
                               );
                             },
                           ),

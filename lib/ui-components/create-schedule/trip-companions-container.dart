@@ -35,7 +35,7 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
     ],
   );
   var deactivatedDesign = BoxDecoration(
-    color: const Color.fromRGBO(120, 160, 190, 1),
+    color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
     image: DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
@@ -51,7 +51,7 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
   );
 
   String? _selectedCompanion;
-  var buttonIcon = Icons.add_circle;
+  var buttonIcon = Icons.edit;
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +162,7 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
                                   if (_selectedCompanion != null) {
                                     setState(() {
                                       widget.isFinished = true;
-                                      buttonIcon = Icons.check_circle;
+                                      buttonIcon = Icons.done_outline_outlined;
                                     });
                                     widget.unlockNext(widget.index);
                                     widget.onFinish(context, widget.index);

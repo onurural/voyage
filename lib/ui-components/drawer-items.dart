@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DrawerItem {
   final String title;
@@ -18,23 +19,30 @@ class DrawerItems {
    
     widget: Container(
       height: 120,
-      color: Colors.blue,
+
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children:  [
             CircleAvatar(
+              backgroundColor: Colors.transparent,
               radius: 30,
               backgroundImage: AssetImage('assets/Images/default_profile_picture.png'),
             ),
             SizedBox(height: 10),
             Text(
               'Obada Qasem',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )
+              )
+            ),
+            Divider(
+              color: Colors.white,
+              thickness: 3,
             ),
           ],
         ),

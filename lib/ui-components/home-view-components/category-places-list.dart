@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:voyage/bloc/place/place.bloc.dart';
 import 'package:voyage/bloc/place/place.event.dart';
 import 'package:voyage/bloc/place/place.state.dart';
@@ -11,6 +12,7 @@ import 'package:voyage/ui-components/home-view-components/place-big-card.dart';
 import 'package:voyage/ui-components/home-view-components/place-small-card.dart';
 import 'package:voyage/ui-components/place-components/hero_dialog_route.dart';
 import '../../views/show-more.view.dart';
+
 
 class CategoryPlacesList extends StatefulWidget {
   const CategoryPlacesList({Key? key}) : super(key: key);
@@ -164,7 +166,33 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> {
                 }
               }
               if (state is PlaceLoadingState) {
-                return const CircularProgressIndicator();
+                return  Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+
+                    ),
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: Container(
+                        width: double.infinity,
+                        height: 200,// Adjust the width to match your card
+
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                  ),
+                );
               }
               if (state is PlaceErrorState) {
                 return const Text('Error on display the widget');
