@@ -38,7 +38,7 @@ class _InterestContainerState extends State<InterestContainer> {
     ],
   );
   var deactivatedDesign = BoxDecoration(
-    color: const Color.fromRGBO(120, 160, 190, 1),
+    color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
     image: DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
@@ -53,7 +53,7 @@ class _InterestContainerState extends State<InterestContainer> {
     ],
   );
 
-  var buttonIcon = Icons.add_circle;
+  var buttonIcon = Icons.edit;
   var matrixes = [
     MatrixElement(title: 'Entertainment'),
     MatrixElement(title: 'Gastronomy'),
@@ -86,6 +86,7 @@ class _InterestContainerState extends State<InterestContainer> {
             onPressed: () {
               setState(() {
                 widget.isFinished = true;
+                buttonIcon = Icons.done_outline_outlined;
 
                 for (var element in matrixes) {
                   widget.preferences

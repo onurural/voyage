@@ -188,24 +188,7 @@ void _updateProgressValue() {
           child: Container(
             height: 70,
           padding: EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 8.0,
-                offset: Offset(0, 4),
-              ),
-            ],
-            gradient: LinearGradient(
-              colors: [
-                Colors.white.withOpacity(0.9),
-                Colors.white.withOpacity(0.7),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+
           child:   UniqueProgressIndicator(indicatorValue),
       ),
         ),
@@ -248,36 +231,46 @@ void _updateProgressValue() {
 
          ValueListenableBuilder(valueListenable: locked[5], builder: (context,locked,child){
            return ValueListenableBuilder(valueListenable: started[5], builder: (context,started,child){
-             return   _buildAnimatedCrossFade(Container(),  Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: ElevatedButton(
-                 onPressed: () {
-
-                 },
-                 style: ElevatedButton.styleFrom(
-                   primary: const Color.fromRGBO(
-                       44, 87, 116, 100),
-                   padding: const EdgeInsets
-                       .symmetric(
-                       vertical: 16),
-                   shape: RoundedRectangleBorder(
-                     borderRadius:
-                     BorderRadius.circular(5),
-                   ),
+             return   _buildAnimatedCrossFade(Container(),  Column(
+               children: [
+                 Divider(
+                   color:     Color.fromRGBO(211, 211, 211,30),
+                   thickness: 3,
                  ),
-                 child: Center(
-                   child: Text(
-                     'Create Your Schedule',
-                     style: GoogleFonts.poppins(
-                       textStyle: TextStyle(
-                         fontSize: 20,
-                         fontWeight: FontWeight.w700,
-                         color: Colors.white,
+                 Padding(
+                   padding: const EdgeInsets.fromLTRB( 8, 300, 8, 0),
+                   child: ElevatedButton(
+                     onPressed: () {
+
+                     },
+                     style: ElevatedButton.styleFrom(
+                       primary: Color.fromRGBO(24, 42, 64, 1),
+                       // other properties
+
+
+                     padding: const EdgeInsets
+                           .symmetric(
+                           vertical: 16),
+                       shape: RoundedRectangleBorder(
+                         borderRadius:
+                         BorderRadius.circular(30),
+                       ),
+                     ),
+                     child: Center(
+                       child: Text(
+                         'Create Your Schedule',
+                         style: GoogleFonts.poppins(
+                           textStyle: TextStyle(
+                             fontSize: 20,
+                             fontWeight: FontWeight.w700,
+                             color: Colors.white,
+                           ),
+                         ),
                        ),
                      ),
                    ),
                  ),
-               ),
+               ],
              ), started ==true );
            });
          })

@@ -10,6 +10,8 @@ import 'package:voyage/data/place.data.dart';
 import 'package:voyage/views/show-more.view.dart';
 import 'package:voyage/ui-components/place-components/hero_dialog_route.dart';
 import 'place-small-card.dart';
+import 'package:shimmer/shimmer.dart';
+
 
 class TopVisitedRowList extends StatefulWidget {
   const TopVisitedRowList({Key? key}) : super(key: key);
@@ -153,33 +155,58 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
           )
         ]));
   }
-  
+
   Widget _buildPlaceSmallCard() {
     return ListView.separated(
-      separatorBuilder: (_, __) => const Divider(),
-      shrinkWrap: true,
-      itemCount: 6,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: ((context, index) {
-      return BlocProvider(
-        create: (_) => _placeBloc,
-        child: BlocConsumer<PlaceBloc, PlaceState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            if (state is PlaceLoadedState) {
-                return PlaceSmallCard(state.model[index], globalId);
-            }
-            if (state is PlaceLoadingState) {
-                return  const CircularProgressIndicator();
-            }
-            if (state is PlaceErrorState) {
-              return const Text('Error on display the widget');
-            }
-            else {
-              return Text('Initial State ${state.toString()}');
-            }
-          }),
-        );
-    }));
+        separatorBuilder: (_, __) => const Divider(),
+        shrinkWrap: true,
+        itemCount: 6,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: ((context, index) {
+          return BlocProvider(
+            create: (_) => _placeBloc,
+            child: BlocConsumer<PlaceBloc, PlaceState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is PlaceLoadedState) {
+                    return PlaceSmallCard(state.model[index], globalId);
+                  }
+                  if (state is PlaceLoadingState) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 3,
+                              blurRadius: 5,
+                              offset:  const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.grey.shade100,
+                          child: Container(
+                            width: 250.0, // Adjust the width to match your card
+                            height: 184.0, // Adjust the height to match your card
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  if (state is PlaceErrorState) {
+                    return const Text('Error on display the widget');
+                  }
+                  else {
+                    return Text('Initial State ${state.toString()}');
+                  }
+                }),
+          );
+        }));
   }
+
 }
