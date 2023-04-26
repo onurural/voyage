@@ -24,6 +24,7 @@ class CategoryCardsList extends StatefulWidget {
 class _CategoryCardsListState extends State<CategoryCardsList>
     with TickerProviderStateMixin {
   final PlaceBloc _placeBloc = PlaceBloc();
+  
 
   late TabController _tabController;
   late AnimationController _animationController;
@@ -177,7 +178,7 @@ class _CategoryCardsListState extends State<CategoryCardsList>
                 SizedBox(
                   height: 250,
                   child:
-                      TabBarView(children: [historicPlaces(), historicPlaces(), historicPlaces(), historicPlaces(), historicPlaces()]),
+                      TabBarView(children: [place(), place(), place(), place(), place()]),
                 ),
               ],
             ),
@@ -187,7 +188,7 @@ class _CategoryCardsListState extends State<CategoryCardsList>
     );
   }
 
-  Widget historicPlaces() {
+  Widget place() {
     return SizedBox(
       height: 1000,
       child: ListView.builder(

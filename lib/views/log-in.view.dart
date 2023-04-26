@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:voyage/bloc/auth/auth.block.dart';
+import 'package:voyage/bloc/auth/auth.event.dart';
+import 'package:voyage/bloc/auth/auth.state.dart';
 import 'package:voyage/views/home-container.dart';
 import 'package:voyage/views/forget-password.view.dart';
 import 'package:voyage/views/main-connector.dart';
@@ -13,6 +17,7 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  final AuthBloc _authBloc = AuthBloc();
   var activeOrDoneColor = Colors.white;
   var hintTextColor = const Color.fromRGBO(117, 117, 117, 100);
   var borderColor = const Color.fromRGBO(117, 117, 117, 100);
@@ -41,7 +46,6 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     var openSans = GoogleFonts.openSans(
         textStyle: const TextStyle(
             color: Color.fromRGBO(87, 99, 108, 100),
@@ -49,12 +53,11 @@ class _LogInScreenState extends State<LogInScreen> {
             fontSize: 16,
             decoration: TextDecoration.none));
 
-
     var orangeOpenSans = GoogleFonts.openSans(
-                        fontSize: 20,
-                        color: const Color.fromRGBO(248, 132, 20, 100),
-                        decoration: TextDecoration.none,
-                        fontWeight: FontWeight.w700);
+        fontSize: 20,
+        color: const Color.fromRGBO(248, 132, 20, 100),
+        decoration: TextDecoration.none,
+        fontWeight: FontWeight.w700);
     return Scaffold(
       body: Center(
         child: Container(
@@ -115,7 +118,7 @@ class _LogInScreenState extends State<LogInScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-            Material(
+          Material(
               color: Colors.transparent,
               child: IconButton(
                   color: const Color.fromRGBO(87, 99, 108, 100),
@@ -167,171 +170,187 @@ class _LogInScreenState extends State<LogInScreen> {
 
   TextStyle poppins(FontWeight weight) {
     return GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 17,
-                  fontWeight: weight,
-                  letterSpacing: 1,
-                  decoration: TextDecoration.none);
+        color: Colors.white,
+        fontSize: 17,
+        fontWeight: weight,
+        letterSpacing: 1,
+        decoration: TextDecoration.none);
   }
 
   Material emailInput() {
     return Material(
-            color: Colors.transparent,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: TextField(
-                focusNode: _focusNodes[0],
-                keyboardType: TextInputType.emailAddress,
-                autofillHints: const [AutofillHints.email],
-                style: poppins(FontWeight.w800),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.mail),
-                  prefixIconColor: _focusNodes[0].hasFocus
-                      ? const Color.fromRGBO(37, 150, 190, 100)
-                      : Colors.white,
-                  filled: true,
-                  fillColor: Colors.transparent,
-                  hintText: 'E-mail address',
-                  hintStyle: poppins(FontWeight.w700),
-                  focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Colors.white,
-                    width: 2,
-                  )),
-                  focusedErrorBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromRGBO(37, 150, 190, 100), width: 2)),
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: borderColor,
-                      width: 2,
-                    ),
-                  ),
-                ),
+      color: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        child: TextField(
+          focusNode: _focusNodes[0],
+          keyboardType: TextInputType.emailAddress,
+          autofillHints: const [AutofillHints.email],
+          style: poppins(FontWeight.w800),
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.mail),
+            prefixIconColor: _focusNodes[0].hasFocus
+                ? const Color.fromRGBO(37, 150, 190, 100)
+                : Colors.white,
+            filled: true,
+            fillColor: Colors.transparent,
+            hintText: 'E-mail address',
+            hintStyle: poppins(FontWeight.w700),
+            focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(
+              color: Colors.white,
+              width: 2,
+            )),
+            focusedErrorBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: Color.fromRGBO(37, 150, 190, 100), width: 2)),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: borderColor,
+                width: 2,
               ),
             ),
-          );
+          ),
+        ),
+      ),
+    );
   }
 
   Material passwordInput() {
-     return Material(
-            color: Colors.transparent,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-              child: TextField(
-                controller: _passwordController,
-                obscureText: _obscureText,
-                focusNode: _focusNodes[1],
-                keyboardType: TextInputType.visiblePassword,
-                autofillHints: const [AutofillHints.password],
-                style: poppins(FontWeight.w800),
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
-                    icon: Icon(
-                      _obscureText ? Icons.visibility : Icons.visibility_off,
-                    ),
-                  ),
-                  suffixIconColor: _focusNodes[1].hasFocus
-                      ? const Color.fromRGBO(37, 150, 190, 100)
-                      : Colors.white,
-                  prefixIcon: const Icon(Icons.lock),
-                  prefixIconColor: _focusNodes[1].hasFocus
-                      ? const Color.fromRGBO(37, 150, 190, 100)
-                      : Colors.white,
-                  filled: true,
-                  fillColor: Colors.transparent,
-                  hintText: 'Password',
-                  hintStyle: poppins(FontWeight.w700),
-                  focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Colors.white,
-                    width: 2,
-                  )),
-                  focusedErrorBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromRGBO(37, 150, 190, 100), width: 2)),
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: borderColor,
-                      width: 2,
-                    ),
-                  ),
-                ),
+    return Material(
+      color: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+        child: TextField(
+          controller: _passwordController,
+          obscureText: _obscureText,
+          focusNode: _focusNodes[1],
+          keyboardType: TextInputType.visiblePassword,
+          autofillHints: const [AutofillHints.password],
+          style: poppins(FontWeight.w800),
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+              icon: Icon(
+                _obscureText ? Icons.visibility : Icons.visibility_off,
               ),
             ),
-          );
+            suffixIconColor: _focusNodes[1].hasFocus
+                ? const Color.fromRGBO(37, 150, 190, 100)
+                : Colors.white,
+            prefixIcon: const Icon(Icons.lock),
+            prefixIconColor: _focusNodes[1].hasFocus
+                ? const Color.fromRGBO(37, 150, 190, 100)
+                : Colors.white,
+            filled: true,
+            fillColor: Colors.transparent,
+            hintText: 'Password',
+            hintStyle: poppins(FontWeight.w700),
+            focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(
+              color: Colors.white,
+              width: 2,
+            )),
+            focusedErrorBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: Color.fromRGBO(37, 150, 190, 100), width: 2)),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: borderColor,
+                width: 2,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Padding forgetPassword() {
     return Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ForgetPasswordPage()),
-                  );
-                },
-                child: Text(
-                  'Forgotten Password?',
-                  style: GoogleFonts.openSans(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white),
-                ),
-              ),
-            ),
-          );
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+      child: Align(
+        alignment: Alignment.topRight,
+        child: MaterialButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ForgetPasswordPage()),
+            );
+          },
+          child: Text(
+            'Forgotten Password?',
+            style: GoogleFonts.openSans(
+                fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+          ),
+        ),
+      ),
+    );
   }
 
   Padding loginButton() {
     return Padding(
-            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-            child: Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(120, 148, 156, 100),
-                    borderRadius: BorderRadius.circular(25)),
-                child: MaterialButton(
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Log In',
-                            style: GoogleFonts.openSans(
-                                textStyle: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.w800)),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                            child: Icon(
-                              Icons.login_sharp,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          )
-                        ],
+      padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+      child: Container(
+          width: double.infinity,
+          height: 50,
+          decoration: BoxDecoration(
+              color: const Color.fromRGBO(120, 148, 156, 100),
+              borderRadius: BorderRadius.circular(25)),
+          child: BlocProvider(
+            create: (_) => _authBloc,
+            child: MaterialButton(
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Log In',
+                        style: GoogleFonts.openSans(
+                            textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 23,
+                                fontWeight: FontWeight.w800)),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MainConnector()),
-                      );
-                    })),
-          );
+                      BlocConsumer<AuthBloc, AuthState>(
+                          listener: (context, state) {
+                        if (state is AuthSuccessState) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeCon()),
+                          );
+                        } else if (state is AuthFailedState) {
+                          // Handle sign-up failure, e.g. show error message
+                        }
+                      }, builder: (context, state) {
+                        return const Padding(
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          child: Icon(
+                            Icons.login_sharp,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                  _authBloc.add(
+                      LogInRequest('onurural58@gmail.com', 'oNuR1915!'));
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const MainConnector()),
+                  // );
+                }),
+          )),
+    );
   }
 }

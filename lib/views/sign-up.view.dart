@@ -5,6 +5,7 @@ import 'package:voyage/bloc/auth/auth.block.dart';
 import 'package:voyage/bloc/auth/auth.event.dart';
 import 'package:voyage/bloc/auth/auth.state.dart';
 import 'package:voyage/data/auth.data.dart';
+import 'package:voyage/repository/auth.repository.dart';
 import 'package:voyage/views/home-container.dart';
 
 import 'log-in.view.dart';
@@ -17,6 +18,9 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
+  final AuthBloc _authBloc =  AuthBloc();
+
   var activeOrDoneColor = Colors.white;
   var hintTextColor = const Color.fromRGBO(117, 117, 117, 100);
   var borderColor = const Color.fromRGBO(117, 117, 117, 100);
@@ -325,9 +329,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   BlocProvider<StateStreamableSource<Object?>> registerButton() {
-    return BlocProvider<AuthBloc>(
-      create: (BuildContext context) => AuthBloc(authRepository: AuthData()),
-      child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
+    return BlocProvider(
+      create: (_) => _authBloc,
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
         if (state is AuthSuccessState) {
           Navigator.push(
             context,
@@ -336,7 +341,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         } else if (state is AuthFailedState) {
           // Handle sign-up failure, e.g. show error message
         }
-      }, builder: (context, state) {
+      }, 
+      builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
           child: Container(
@@ -362,9 +368,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   onPressed: () {
-                    context
-                        .read<AuthBloc>()
-                        .add(SignUpRequest('onurural57@gmail.com', 'onur123'));
+                    _authBloc.add(SignUpRequest('onurural58@gmail.com', 'oNuR1905!'));
                   })),
         );
       }),
