@@ -8,7 +8,11 @@ class Analytics {
      Future<void> sendAnalyticsPlaceViewEvent(Place place) async {
       await _analytics.logEvent(
       name: 'place_visited',
-      parameters: null,
+      parameters: {
+        'place_id' : place.placeId,
+        'place_name' : place.name,
+        'place_category' : place.category,
+      },
     );
   }
 

@@ -7,6 +7,9 @@ import 'package:voyage/bloc/place/place.event.dart';
 import 'package:voyage/bloc/place/place.state.dart';
 import 'package:voyage/data/place.data.dart';
 import 'package:voyage/ui-components/home-view-components/category-places-list.dart';
+import 'package:voyage/ui-components/home-view-components/place-big-card.dart';
+import 'package:voyage/ui-components/home-view-components/place-small-card.dart';
+import 'package:voyage/ui-components/home-view-components/place.card.dart';
 
 import 'category.dart';
 import 'category-card.dart';
@@ -95,9 +98,8 @@ class _CategoryCardsListState extends State<CategoryCardsList>
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-            create: (_) => _placeBloc,
-            child:
-            Column(
+      create: (_) => _placeBloc,
+      child: Column(
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -145,31 +147,68 @@ class _CategoryCardsListState extends State<CategoryCardsList>
               controller: _tabController,
             ),
           ),
-          SizedBox(
-            height: 1000,
-            child: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) {
-              return BlocConsumer<PlaceBloc, PlaceState>(
-                  listener: (context, state) {},
-                  builder: (context, state) {
-                    if (state is PlaceLoadedState) {
-                      return Text(
-                          '${state.model[index].name} ${state.model[index].category}');
-                    }
-                    if (state is PlaceLoadingState) {
-                      return const CircularProgressIndicator();
-                    }
-                    if (state is PlaceErrorState) {
-                      return const Text('Error on display the widget');
-                    } else {
-                      return Text('Initial State ${state.toString()}');
-                    }
-                  });
-            }),
+          DefaultTabController(
+            length: 5,
+            initialIndex: 0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TabBar(
+                    onTap: (value) {
+                      if (value == 0) {
+                        _placeBloc.add(FetchHistoricPlace());
+                      }
+                      if (value == 1) {
+                        _placeBloc.add(FetchNaturalPlace());
+                      }
+                      if (value == 2) {
+                        _placeBloc.add(FetchCityVibesPlace());
+                      }
+                      if (value == 3) {
+                        _placeBloc.add(FetchRuralPlace());
+                      }
+                      if (value == 4) {
+                        _placeBloc.add(FetchMediterrainPlace());
+                      }
+                    },
+                    labelColor: Colors.green,
+                    unselectedLabelColor: Colors.black,
+                    tabs: const [Tab(text: 'Historic'), Tab(text: 'Natural'), Tab(text: 'City Vibes'), Tab(text: 'Rural'), Tab(text: 'Mediterrain')]),
+                SizedBox(
+                  height: 250,
+                  child:
+                      TabBarView(children: [historicPlaces(), historicPlaces(), historicPlaces(), historicPlaces(), historicPlaces()]),
+                ),
+              ],
+            ),
           )
         ],
       ),
+    );
+  }
+
+  Widget historicPlaces() {
+    return SizedBox(
+      height: 1000,
+      child: ListView.builder(
+          itemCount: 1,
+          itemBuilder: (BuildContext context, int index) {
+            return BlocConsumer<PlaceBloc, PlaceState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is PlaceLoadedState) {
+                    return PlaceCard(state.model[index]);
+                  }
+                  if (state is PlaceLoadingState) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (state is PlaceErrorState) {
+                    return const Text('Error on display the widget');
+                  } else {
+                    return Text('Initial State ${state.toString()}');
+                  }
+                });
+          }),
     );
   }
 }

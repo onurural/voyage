@@ -35,7 +35,7 @@ class _MainConnectorState extends State<MainConnector> {
   @override
   void initState() {
     super.initState();
-    _placeBloc.add(FetchPlace());
+    // _placeBloc.add(FetchPlace());
     activities = List.generate(80, (index) {
       int day = index ~/ 10;
       int activityNumber = index % 10 + 1;
@@ -59,25 +59,20 @@ class _MainConnectorState extends State<MainConnector> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocProvider(
-        create: (_) => _placeBloc,
-        child: BlocBuilder<PlaceBloc, PlaceState>(
-          builder: (context, state) {
-            if (state is PlaceLoadedState) {
-              List<Place> places = state.model;
+      // List<Place> places = state.model;
               List<Schedule> schedules = [];
-              for (var place in places) {
-                schedules.add(Schedule(activities, place));
-              }
-              List<Widget> screens = [
+              // for (var place in places) {
+              //   schedules.add(Schedule(activities, place));
+              // }
+         List<Widget> screens = [
                 const HomeCon(),
                 SchedulesScreen(schedules),
                 const CreateScheduleScreen(),
-                SavedDocumentsScreen(),
+                const SavedDocumentsScreen(),
                 ProfilePage(),
               ];
-              return Column(
+    return Scaffold(
+      body:  Column(
                 children: [
                   Expanded(
                     child: IndexedStack(
@@ -87,17 +82,7 @@ class _MainConnectorState extends State<MainConnector> {
                   ),
                   NavBar(onTap: _onItemTapped),
                 ],
-              );
-            } else if (state is PlaceLoadingState) {
-              return const CircularProgressIndicator();
-            } else if (state is PlaceErrorState) {
-              return const Text('Error on display the widget');
-            } else {
-              return Text('Initial State ${state.toString()}');
-            }
-          },
-        ),
-      ),
+              )
     );
   }
 }
