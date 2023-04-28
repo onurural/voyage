@@ -169,7 +169,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
                 listener: (context, state) {},
                 builder: (context, state) {
                   if (state is PlaceLoadedState) {
-                    return PlaceSmallCard(state.model[index], globalId);
+                    return PlaceSmallCard(state.model[index],generateRandomString(5));
                   }
                   if (state is PlaceLoadingState) {
                     return Padding(
