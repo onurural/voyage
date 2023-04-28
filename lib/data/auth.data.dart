@@ -16,4 +16,9 @@ class AuthData implements AuthRepository {
     var credential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     return credential;
   }
+
+  String? getCurrentUserId()  {
+    var userId = _firebaseAuth.currentUser?.uid;
+    return userId;
+  }
 }

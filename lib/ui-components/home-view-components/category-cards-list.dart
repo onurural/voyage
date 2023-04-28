@@ -8,11 +8,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:voyage/bloc/place/place.bloc.dart';
 import 'package:voyage/bloc/place/place.event.dart';
 import 'package:voyage/bloc/place/place.state.dart';
-import 'package:voyage/data/place.data.dart';
 import 'package:voyage/ui-components/home-view-components/category-places-list.dart';
 import 'package:voyage/ui-components/home-view-components/place-big-card.dart';
-import 'package:voyage/ui-components/home-view-components/place-small-card.dart';
-import 'package:voyage/ui-components/home-view-components/place.card.dart';
 
 import 'category.dart';
 import 'category-card.dart';

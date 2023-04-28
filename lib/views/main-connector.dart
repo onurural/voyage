@@ -36,25 +36,25 @@ class _MainConnectorState extends State<MainConnector> {
   void initState() {
     super.initState();
     // _placeBloc.add(FetchPlace());
-    activities = List.generate(80, (index) {
-      int day = index ~/ 10;
-      int activityNumber = index % 10 + 1;
-      return Activity(
-        'Activity $activityNumber',
-        'Activity $activityNumber subtitle',
-        (activityNumber % 5) + 0.5,
-        'This is the description for activity $activityNumber.',
-        DateTime(2023, 4, day + 1, 9 + activityNumber % 3, 0),
-        DateTime(2023, 4, day + 1, 10 + activityNumber % 3, 0),
-        DateTime(2023, 4, day + 1),
-        [
-          'https://images.pexels.com/photos/158028/bellingrath-gardens-alabama-landscape-scenic-158028.jpeg?cs=srgb&dl=pexels-pixabay-158028.jpg&fm=jpg',
-          'https://wallpapercave.com/wp/wp2728594.jpg',
-          'https://w0.peakpx.com/wallpaper/479/311/HD-wallpaper-beautiful-park-in-berlin-r-path-r-park-lawn-trees.jpg',
-        ],
-        'https://www.google.com/maps/place/Location+$activityNumber',
-      );
-    });
+    // activities = List.generate(80, (index) {
+    //   int day = index ~/ 10;
+    //   int activityNumber = index % 10 + 1;
+    //   return Activity(
+    //     'Activity $activityNumber',
+    //     'Activity $activityNumber subtitle',
+    //     (activityNumber % 5) + 0.5,
+    //     'This is the description for activity $activityNumber.',
+    //     DateTime(2023, 4, day + 1, 9 + activityNumber % 3, 0),
+    //     DateTime(2023, 4, day + 1, 10 + activityNumber % 3, 0),
+    //     DateTime(2023, 4, day + 1),
+    //     [
+    //       'https://images.pexels.com/photos/158028/bellingrath-gardens-alabama-landscape-scenic-158028.jpeg?cs=srgb&dl=pexels-pixabay-158028.jpg&fm=jpg',
+    //       'https://wallpapercave.com/wp/wp2728594.jpg',
+    //       'https://w0.peakpx.com/wallpaper/479/311/HD-wallpaper-beautiful-park-in-berlin-r-path-r-park-lawn-trees.jpg',
+    //     ],
+    //     'https://www.google.com/maps/place/Location+$activityNumber',
+    //   );
+    // });
   }
 
   @override

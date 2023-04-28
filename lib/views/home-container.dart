@@ -132,7 +132,6 @@ class _HomeConState extends State<HomeCon> {
   }
 
   Widget getDrawerPage(){
-
     return ScreenViewer(openDrawer,item.title);
   }
 }

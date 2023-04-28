@@ -67,6 +67,16 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
 
   @override
   Widget build(BuildContext context) {
+    var poppins = GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ));
+    var openSans = GoogleFonts.openSans(
+                    textStyle: const TextStyle(
+                        color: Color.fromRGBO(87, 99, 108, 100),
+                        fontWeight: FontWeight.w600));
     return SizedBox(
         width: double.infinity,
         child: Column(children: [
@@ -76,12 +86,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
               padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
               child: Text(
                 'Top Visited Destinations',
-                style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                )),
+                style: poppins,
               ),
             ),
           ),
@@ -91,10 +96,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
               padding: const EdgeInsets.fromLTRB(22, 5, 0, 0),
               child: Text(
                 '30 locations world wide',
-                style: GoogleFonts.openSans(
-                    textStyle: const TextStyle(
-                        color: Color.fromRGBO(87, 99, 108, 100),
-                        fontWeight: FontWeight.w600)),
+                style: openSans,
               ),
             ),
           ),

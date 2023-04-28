@@ -24,6 +24,7 @@ class _LogInScreenState extends State<LogInScreen> {
   var iconColor = const Color.fromRGBO(117, 117, 117, 100);
   bool _obscureText = true;
   final _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
   final List<FocusNode> _focusNodes = [
     FocusNode(),
     FocusNode(),
@@ -58,6 +59,7 @@ class _LogInScreenState extends State<LogInScreen> {
         color: const Color.fromRGBO(248, 132, 20, 100),
         decoration: TextDecoration.none,
         fontWeight: FontWeight.w700);
+
     return Scaffold(
       body: Center(
         child: Container(
@@ -183,6 +185,7 @@ class _LogInScreenState extends State<LogInScreen> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: TextField(
+          controller: _emailController,
           focusNode: _focusNodes[0],
           keyboardType: TextInputType.emailAddress,
           autofillHints: const [AutofillHints.email],
@@ -323,10 +326,15 @@ class _LogInScreenState extends State<LogInScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const HomeCon()),
+                                builder: (context) => const MainConnector()),
                           );
                         } else if (state is AuthFailedState) {
-                          // Handle sign-up failure, e.g. show error message
+                          // TODO REMOVE THIS
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MainConnector()),
+                          );
                         }
                       }, builder: (context, state) {
                         return const Padding(
@@ -343,12 +351,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 ),
                 onPressed: () {
                   _authBloc.add(
-                      LogInRequest('onurural58@gmail.com', 'oNuR1915!'));
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => const MainConnector()),
-                  // );
+                      LogInRequest(_emailController.text, _passwordController.text));
                 }),
           )),
     );
