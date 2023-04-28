@@ -59,13 +59,11 @@ class _CategoryCardsListState extends State<CategoryCardsList>
   }
 
   var categories = [
-    Category('History', const CategoryPlacesList(), Icons.museum_outlined),
-    Category('Nature', const CategoryPlacesList(), CupertinoIcons.tree),
-    Category('Shopping', const CategoryPlacesList(), Icons.shopping_bag),
-    Category('Sport', const CategoryPlacesList(), Icons.sports_volleyball),
-    Category('Gastronomy', const CategoryPlacesList(), Icons.fastfood),
-    Category('Health', const CategoryPlacesList(), Icons.spa_outlined),
-    Category('Entertainment', const CategoryPlacesList(), Icons.theater_comedy),
+    Category('Historic', const CategoryPlacesList(), Icons.museum_outlined),
+    Category('Natural', const CategoryPlacesList(), CupertinoIcons.tree),
+    Category('City Vibes', const CategoryPlacesList(), CupertinoIcons.tree),
+    Category('Rural', const CategoryPlacesList(), Icons.shopping_bag),
+    Category('Medditerrain', const CategoryPlacesList(), Icons.sports_volleyball),
   ];
   List<CategoryCard> categoryCards = [];
 
@@ -164,10 +162,6 @@ class _CategoryCardsListState extends State<CategoryCardsList>
                 _placeBloc.add(FetchRuralPlace());
               } else if (value == 4) {
                 _placeBloc.add(FetchMediterrainPlace());
-              } else if (value == 5) {
-                _placeBloc.add(FetchMediterrainPlace());
-              } else if (value == 6) {
-                _placeBloc.add(FetchMediterrainPlace());
               }
             },
             labelColor: Colors.green,
@@ -177,9 +171,7 @@ class _CategoryCardsListState extends State<CategoryCardsList>
               categoryCards[1],
               categoryCards[2],
               categoryCards[3],
-              categoryCards[4],
-              categoryCards[5],
-              categoryCards[6]
+              categoryCards[4]
             ],
           ),
           SizedBox(
@@ -192,8 +184,6 @@ class _CategoryCardsListState extends State<CategoryCardsList>
                   place(),
                   place(),
                   place(),
-                  place(),
-                  place()
                 ]),
           )
         ],
@@ -205,14 +195,15 @@ class _CategoryCardsListState extends State<CategoryCardsList>
   Widget place() {
     return SizedBox(
       height: 1000,
-      child: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (BuildContext context, int index) {
-            return BlocConsumer<PlaceBloc, PlaceState>(
+      child:  BlocConsumer<PlaceBloc, PlaceState>(
                 listener: (context, state) {},
                 builder: (context, state) {
                   if (state is PlaceLoadedState) {
-                    return PlaceBigCard(state.model[index],generateRandomString(3));
+                    return ListView.builder(
+          itemCount: state.model.length,
+          itemBuilder: (BuildContext context, int index) {
+            return PlaceBigCard(state.model[index],generateRandomString(3));
+                  });
                   }
                   if (state is PlaceLoadingState) {
                     return  Padding(
@@ -248,8 +239,7 @@ class _CategoryCardsListState extends State<CategoryCardsList>
                   } else {
                     return Text('Initial State ${state.toString()}');
                   }
-                });
-          }),
+                })
     );
   }
 }
