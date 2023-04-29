@@ -28,6 +28,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthFailedState());
         }
       }
+        if (event is SaveUserToMongoDB) {
+        emit(SavingUserToMongoDB());
+        try {
+          await authRepository.saveUserToMongoDB(email: event.email, userId: event.userId, userName: event.userName);
+          emit(SavedUserToMongoDB());
+        } catch (e) {
+          emit(SavingUserToMongoDBError());
+        }
+      }
     });
   }
 }

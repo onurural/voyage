@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/bloc/auth/auth.block.dart';
 import 'package:voyage/bloc/auth/auth.event.dart';
 import 'package:voyage/bloc/auth/auth.state.dart';
-import 'package:voyage/views/home-container.dart';
 import 'package:voyage/views/forget-password.view.dart';
 import 'package:voyage/views/main-connector.dart';
 import 'package:voyage/views/sign-up.view.dart';
