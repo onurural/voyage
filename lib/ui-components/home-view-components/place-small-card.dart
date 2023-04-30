@@ -155,17 +155,17 @@ class _PlaceSmallCardState extends State<PlaceSmallCard> {
                             onTap: () {
                               analytics.sendAnalyticsPlaceViewEvent(widget.place);
                               
-                              // Navigator.of(context).push(
-                              //   HeroDialogRoute(
-                              //     builder: (context) =>
-                              //         Center(
-                              //           child: PlaceScreen(
-                              //               widget.place, widget.hero),
-                              //         ),
-                              //     settings:  const RouteSettings(),
-                              //     fullscreenDialog: true,
-                              //   ),
-                              // );
+                              Navigator.of(context).push(
+                                HeroDialogRoute(
+                                  builder: (context) =>
+                                      Center(
+                                        child: PlaceScreen(
+                                            widget.place, widget.hero),
+                                      ),
+                                  settings:  const RouteSettings(),
+                                  fullscreenDialog: true,
+                                ),
+                              );
                             },
                             child: Hero(
                               tag: widget.hero,

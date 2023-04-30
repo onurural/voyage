@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/place-components/description-box.dart';
 import 'package:voyage/models/place.dart';
+
 
 
 class PlaceScreen extends StatefulWidget {
@@ -28,8 +30,9 @@ class _PlaceScreenState extends State<PlaceScreen> {
   @override
   void initState() {
     super.initState();
-  }
 
+  }
+bool isButtonShown=true;
   Widget buildStar(BuildContext context, int index) {
     IconData starIcon;
     var rating = widget.place.rating ?? -1;
@@ -49,6 +52,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
+
       Container(
         decoration: widget.place.image != null ? BoxDecoration(
           image: DecorationImage(
@@ -56,11 +60,29 @@ class _PlaceScreenState extends State<PlaceScreen> {
             fit: BoxFit.cover,
           ),
         ): null,
-        child: BackdropFilter(
+        child: GestureDetector(
+          onTap:  (){
+    setState(() {
+    this.isButtonShown=false;
+    });
+    Navigator.pop(context);
+    },
+          child: BackdropFilter(
           filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(color: Colors.black.withOpacity(0.3)),
+            ),
         ),
       ),
+          Positioned(
+            top: 50,
+            left: 20,
+            child: Visibility(visible: this.isButtonShown,child: IconButton(onPressed: (){
+              setState(() {
+                this.isButtonShown=false;
+              });
+              Navigator.pop(context);
+            } , icon: Icon(Icons.arrow_back_ios,color: Colors.white,size: 30,)),)
+          ),
       Center(
           child: Padding(
               padding:  const EdgeInsets.all(10),
@@ -151,7 +173,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                             width: double.infinity,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount:  1, // TODO: Fetch more image from API 
+                              itemCount:  1, // TODO: Fetch more image from API
                               itemBuilder: (context, index) {
                                 index = index + 1;
                                 return Padding(
@@ -223,7 +245,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                             color: Colors.black,
                             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20))
                           ),
-                         
+
                           child: MaterialButton(
                             onPressed: () {},
                             child: Row(
