@@ -70,6 +70,8 @@ dependencies:
   flutter_settings_screens: ^0.3.3-null-safety+2
   flutter_animator: ^3.2.2
   logging: ^1.1.1
+  email_validator: ^2.0.1
+
 
 dev_dependencies:
   flutter_test:
