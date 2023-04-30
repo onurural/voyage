@@ -15,6 +15,7 @@ class Place {
   double? rating;
   int? userRatingsTotal;
   List<Reviews>? reviews;
+  String? category;
 
   Place(
       {this.sId,
@@ -29,7 +30,8 @@ class Place {
       this.formattedAddress,
       this.rating,
       this.userRatingsTotal,
-      this.reviews});
+      this.reviews,
+      this.category});
 
   Place.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -57,6 +59,7 @@ class Place {
         reviews!.add(Reviews.fromJson(v));
       });
     }
+    category = json['category'];
   }
 
   Map<String, dynamic> toJson() {
@@ -80,9 +83,10 @@ class Place {
     data['formatted_address'] = this.formattedAddress;
     data['rating'] = this.rating;
     data['user_ratings_total'] = this.userRatingsTotal;
-    if (this.reviews != null) {
+    if (reviews != null) {
       data['reviews'] = this.reviews!.map((v) => v.toJson()).toList();
     }
+    data['category'] = category;
     return data;
   }
 }

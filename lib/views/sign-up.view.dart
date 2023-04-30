@@ -5,7 +5,7 @@ import 'package:voyage/bloc/auth/auth.block.dart';
 import 'package:voyage/bloc/auth/auth.event.dart';
 import 'package:voyage/bloc/auth/auth.state.dart';
 import 'package:voyage/data/auth.data.dart';
-import 'package:voyage/views/home-container.dart';
+import 'package:voyage/views/main-connector.dart';
 
 import 'log-in.view.dart';
 
@@ -17,11 +17,25 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
+  final AuthBloc _authBloc =  AuthBloc();
+  final AuthData _authData = AuthData();
+
+   var poppins = GoogleFonts.poppins(
+        color: Colors.white,
+        fontSize: 17,
+        fontWeight: FontWeight.w800,
+        letterSpacing: 1,
+        decoration: TextDecoration.none);
+
+
   var activeOrDoneColor = Colors.white;
   var hintTextColor = const Color.fromRGBO(117, 117, 117, 100);
   var borderColor = const Color.fromRGBO(117, 117, 117, 100);
   var iconColor = const Color.fromRGBO(117, 117, 117, 100);
   bool _obscureText = true;
+  final _emailController= TextEditingController();
+  final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
   final List<FocusNode> _focusNodes = [
     FocusNode(),
@@ -150,16 +164,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Form form() {
-    var poppins = GoogleFonts.poppins(
-        color: Colors.white,
-        fontSize: 17,
-        fontWeight: FontWeight.w800,
-        letterSpacing: 1,
-        decoration: TextDecoration.none);
+   
     return Form(
         child: Column(
       children: [
-        usernameInputField(poppins),
+        usernameInputField(),
         emailInputField(),
         passwordInputField(),
         registerButton()
@@ -237,6 +246,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: Material(
         color: Colors.transparent,
         child: TextField(
+          controller: _emailController,
           focusNode: _focusNodes[0],
           keyboardType: TextInputType.emailAddress,
           autofillHints: const [AutofillHints.email],
@@ -280,12 +290,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Padding usernameInputField(TextStyle poppins) {
+  Padding usernameInputField() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
       child: Material(
         color: Colors.transparent,
         child: TextField(
+          controller: _userNameController,
           focusNode: _focusNodes[0],
           keyboardType: TextInputType.name,
           autofillHints: const [AutofillHints.username],
@@ -324,20 +335,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  BlocProvider<StateStreamableSource<Object?>> registerButton() {
-    return BlocProvider<AuthBloc>(
-      create: (BuildContext context) => AuthBloc(authRepository: AuthData()),
-      child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
-        if (state is AuthSuccessState) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeCon()),
-          );
-        } else if (state is AuthFailedState) {
-          // Handle sign-up failure, e.g. show error message
-        }
-      }, builder: (context, state) {
-        return Padding(
+  Widget registerButton() {
+    return Padding(
           padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
           child: Container(
               width: double.infinity,
@@ -345,30 +344,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
               decoration: BoxDecoration(
                   color: const Color.fromRGBO(120, 148, 156, 100),
                   borderRadius: BorderRadius.circular(25)),
-              child: MaterialButton(
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Register',
-                          style: GoogleFonts.openSans(
-                              textStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 23,
-                                  fontWeight: FontWeight.w800)),
-                        ),
-                      ],
+              child: BlocProvider(
+                create: (_) => _authBloc,
+                child: MaterialButton(
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Register',
+                            style: GoogleFonts.openSans(
+                                textStyle: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.w800)),
+                          ),
+                          BlocConsumer<AuthBloc, AuthState>(
+                            listener: (context, state) {
+                          if (state is AuthSuccessState) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MainConnector()),
+                            );
+                            var userId = _authData.getCurrentUserId();
+                            _authBloc.add(SaveUserToMongoDB(_emailController.text, userId!, _userNameController.text));
+                          } else if (state is AuthFailedState) {
+                            // TODO REMOVE THIS
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MainConnector()),
+                            );
+                          }
+                        }, builder: (context, state) {
+                          return const Padding(
+                            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: Icon(
+                              Icons.login_sharp,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          );
+                        }),
+                        ],
+                      ),
                     ),
-                  ),
-                  onPressed: () {
-                    context
-                        .read<AuthBloc>()
-                        .add(SignUpRequest('onurural57@gmail.com', 'onur123'));
-                  })),
+                    onPressed: () {
+                      _authBloc.add(SignUpRequest(_emailController.text, _passwordController.text));
+                    }),
+              )),
         );
-      }),
-    );
   }
 }
 

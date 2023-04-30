@@ -6,12 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/bloc/place/place.bloc.dart';
 import 'package:voyage/bloc/place/place.event.dart';
 import 'package:voyage/bloc/place/place.state.dart';
-import 'package:voyage/data/place.data.dart';
-import 'package:voyage/views/show-more.view.dart';
 import 'package:voyage/ui-components/place-components/hero_dialog_route.dart';
+import 'package:voyage/views/show-more.view.dart';
 import 'place-small-card.dart';
 import 'package:shimmer/shimmer.dart';
-
+import 'package:voyage/utility/page.enum.dart' as page;
 
 class TopVisitedRowList extends StatefulWidget {
   const TopVisitedRowList({Key? key}) : super(key: key);
@@ -23,10 +22,12 @@ class TopVisitedRowList extends StatefulWidget {
 var globalId;
 
 class _TopVisitedRowListState extends State<TopVisitedRowList> {
-  final PlaceBloc _placeBloc = PlaceBloc(PlaceData());
+  final PlaceBloc _placeBloc = PlaceBloc();
   bool buttonViewed = false;
+  int refreshCounter = 0;
+  final _controller = ScrollController();
 
-  final ScrollController _controller = ScrollController();
+
   String generateRandomString(int length) {
     final rand = Random();
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -39,27 +40,19 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
   }
 
   List<PlaceSmallCard> items = [];
-  void _scrollListener() {
-    if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_controller.position.outOfRange) {
-      setState(() {
-        buttonViewed = true;
-      });
-    }
-  }
+
+
 
   void generateList() {
     for (var i = 0; i <= 29; i++) {
       globalId = generateRandomString(3);
-      // items.add(PlaceSmallCard(testPlace, globalId));
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _placeBloc.add(FetchPlace());
-    _controller.addListener(_scrollListener);
+    _placeBloc.add(FetchPlace(page.Page.first));
     globalId = generateRandomString(5);
 
     generateList();
@@ -67,6 +60,16 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
 
   @override
   Widget build(BuildContext context) {
+    var poppins = GoogleFonts.poppins(
+        textStyle: const TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+    ));
+    var openSans = GoogleFonts.openSans(
+        textStyle: const TextStyle(
+            color: Color.fromRGBO(87, 99, 108, 100),
+            fontWeight: FontWeight.w600));
     return SizedBox(
         width: double.infinity,
         child: Column(children: [
@@ -76,12 +79,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
               padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
               child: Text(
                 'Top Visited Destinations',
-                style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                )),
+                style: poppins,
               ),
             ),
           ),
@@ -90,27 +88,17 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(22, 5, 0, 0),
               child: Text(
-                '30 locations world wide',
-                style: GoogleFonts.openSans(
-                    textStyle: const TextStyle(
-                        color: Color.fromRGBO(87, 99, 108, 100),
-                        fontWeight: FontWeight.w600)),
+                'Locations world wide',
+                style: openSans,
               ),
             ),
           ),
           SizedBox(
             width: double.infinity,
             height: 184,
-            child: ListView.builder(
-              itemCount: 10,
-              controller: _controller,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: _buildPlaceSmallCard(),
-                );
-              },
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: _buildPlaceSmallCard(),
             ),
           ),
           Padding(
@@ -119,14 +107,14 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
               firstChild: Container(),
               secondChild: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    HeroDialogRoute(
-                      builder: (context) =>
-                          Center(child: ShowMoreScreen(items, globalId)),
-                      settings: const RouteSettings(),
-                      fullscreenDialog: true,
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   HeroDialogRoute(
+                  //     builder: (context) =>
+                  //         Center(child: ShowMoreScreen(items, globalId)),
+                  //     settings: const RouteSettings(),
+                  //     fullscreenDialog: true,
+                  //   ),
+                  // );
                 },
                 child: Hero(
                   tag: globalId,
@@ -147,66 +135,78 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
                   ),
                 ),
               ),
-              crossFadeState: buttonViewed
-                  ? CrossFadeState.showSecond
-                  : CrossFadeState.showFirst,
-              duration: const Duration(milliseconds: 100),
-            ),
+          crossFadeState: buttonViewed
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 100),
+          ),
           )
         ]));
   }
 
-  Widget _buildPlaceSmallCard() {
-    return ListView.separated(
-        separatorBuilder: (_, __) => const Divider(),
-        shrinkWrap: true,
-        itemCount: 6,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: ((context, index) {
-          return BlocProvider(
-            create: (_) => _placeBloc,
-            child: BlocConsumer<PlaceBloc, PlaceState>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  if (state is PlaceLoadedState) {
-                    return PlaceSmallCard(state.model[index], globalId);
-                  }
-                  if (state is PlaceLoadingState) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 5,
-                              offset:  const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade100,
-                          child: Container(
-                            width: 250.0, // Adjust the width to match your card
-                            height: 184.0, // Adjust the height to match your card
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  if (state is PlaceErrorState) {
-                    return const Text('Error on display the widget');
-                  }
-                  else {
-                    return Text('Initial State ${state.toString()}');
-                  }
-                }),
-          );
-        }));
-  }
 
+  Widget _buildPlaceSmallCard() {
+    return BlocProvider(
+        create: (_) => _placeBloc,
+        child: BlocConsumer<PlaceBloc, PlaceState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is PlaceLoadedState) {
+                return ListView.builder(
+                  itemCount: state.model.length,
+                  controller: _controller
+                    ..addListener(() {
+                      if (_controller.offset ==
+                          _controller.position.maxScrollExtent) {
+                        if (refreshCounter < 8) {
+                          page.Page pageValue = page.Page.values
+                              .where(
+                                  (element) => element.index == refreshCounter)
+                              .first;
+                          refreshCounter++;
+                          _placeBloc.add(FetchPlace(pageValue));
+                        }
+                      }
+                    }),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return PlaceSmallCard(
+                        state.model[index], generateRandomString(5));
+                  },
+                );
+              }
+              if (state is PlaceLoadingState) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: Container(
+                        width: 250.0, // Adjust the width to match your card
+                        height: 184.0, // Adjust the height to match your card
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                  ),
+                );
+              }
+              if (state is PlaceErrorState) {
+                return const Text('Error on display the widget');
+              } else {
+                return Text('Initial State ${state.toString()}');
+              }
+            }));
+  }
 }
