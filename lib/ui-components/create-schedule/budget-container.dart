@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'custom-slider.dart';
+
 class BudgetContainer extends StatefulWidget {
   late double budgetValue;
   ValueNotifier<bool> locked;
   final void Function(int) unlockNext;
   int index;
-
   bool isFinished = false;
   ValueNotifier<bool> started;
 
@@ -24,8 +25,22 @@ class BudgetContainer extends StatefulWidget {
 }
 
 class _BudgetContainerState extends State<BudgetContainer> {
-  double _budgetValue = 5.0;
+  late Widget slider;
+  double _budgetValue = 1;
+  double value=1;
+  void _onSliderValueChanged(double value,double value2) {
+    setState(() {
+      _budgetValue = value;
 
+      value2= (slider as CustomSlider).value;
+      this.value=value2;
+      print(this.value);
+      changeIcon();
+
+
+
+    });
+  }
   var activeDesign = BoxDecoration(
     color: const Color.fromRGBO(44, 87, 116, 100),
     borderRadius: BorderRadius.circular(16),
@@ -65,17 +80,28 @@ class _BudgetContainerState extends State<BudgetContainer> {
 
   var buttonIcon = Icons.edit;
   var content;
-  var shownIcon;
+  late var shownIcon;
+  void changeIcon(){
+    setState(() {
+      shownIcon= dollarIcons[value.toInt() -1];
+    });
+  }
   Widget dollarIcon = const Icon(
     CupertinoIcons.money_dollar,
     color: Colors.white,
-    size: 30,
+    size: 25,
   );
   late List<Widget> dollarIcons;
 
   @override
   void initState() {
     super.initState();
+    slider= CustomSlider(
+       _budgetValue,
+         _onSliderValueChanged,
+      value
+
+    );
 
     dollarIcons = [
       dollarIcon,
@@ -91,9 +117,15 @@ class _BudgetContainerState extends State<BudgetContainer> {
             dollarIcon,
           ]),
     ];
+    shownIcon=dollarIcons[0];
 
-    shownIcon = dollarIcons[0];
 
+
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
     content = Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -113,35 +145,11 @@ class _BudgetContainerState extends State<BudgetContainer> {
                 ),
               ),
               const SizedBox(width: 8),
-              dollarIcons [4]
+              shownIcon
             ],
           ),
           const SizedBox(height: 16),
-          SliderTheme(
-            data: SliderThemeData(
-              activeTrackColor: const Color.fromRGBO(44, 87, 116, 100),
-              inactiveTrackColor: Colors.grey.shade300,
-              thumbColor: const Color.fromRGBO(44, 87, 116, 100),
-              overlayColor: const Color.fromRGBO(44, 87, 116, 0.3),
-              trackHeight: 4.0,
-              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
-              overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
-            ),
-            child: Slider(
-              value: _budgetValue,
-              min: 1,
-              max: 5,
-              divisions: 4,
-              activeColor: const Color.fromRGBO(44, 87, 116, 100),
-              inactiveColor: Colors.grey.shade300,
-              onChanged: (double value) {
-                setState(() {
-                  _budgetValue = value;
-                  shownIcon = dollarIcons[value.toInt() - 1];
-                });
-              },
-            ),
-          ),
+          slider,
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
@@ -149,7 +157,7 @@ class _BudgetContainerState extends State<BudgetContainer> {
                 widget.onFinish(context, widget.index);
                 widget.isFinished = true;
                 buttonIcon = Icons.done_outline_outlined;
-                widget.budgetValue = _budgetValue;
+                widget.budgetValue = value;
               });
               widget.unlockNext(widget.index);
             },
@@ -176,10 +184,6 @@ class _BudgetContainerState extends State<BudgetContainer> {
         ],
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
       valueListenable: widget.locked,
       builder: (context, isLocked, _) {

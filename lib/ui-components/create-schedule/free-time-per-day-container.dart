@@ -62,9 +62,7 @@ String startText = " ";
 String endText = " ";
 
   void _showTimeRangePicker(BuildContext context) async {
-
-
-    _startTime = await showTimePicker(
+    TimeOfDay? pickedStartTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
       builder: (BuildContext context, Widget? child) {
@@ -84,8 +82,8 @@ String endText = " ";
       },
     );
 
-    if (_startTime != null) {
-      _endTime = await showTimePicker(
+    if (pickedStartTime != null) {
+      TimeOfDay? pickedEndTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
         builder: (BuildContext context, Widget? child) {
@@ -104,18 +102,24 @@ String endText = " ";
           );
         },
       );
-    }
 
-    if (_startTime != null && _endTime != null) {
-      setState(() {
-        final start = _startTime?.hour! + _startTime.minute / 60;
-        final end = _endTime.hour + _endTime.minute / 60;
-        _timeDifference = Duration(hours: end - start);
-        _startTime = start;
-        _endTime = end;
-      });
+      if (pickedEndTime != null) {
+        setState(() {
+          final start = pickedStartTime.hour + pickedStartTime.minute / 60;
+          final end = pickedEndTime.hour + pickedEndTime.minute / 60;
+          _timeDifference = Duration(hours: (end - start).round());
+          _startTime = pickedStartTime;
+          _endTime = pickedEndTime;
+
+          // Update the text
+          startText = _startTime.format(context);
+          endText = _endTime.format(context);
+        });
+      }
     }
   }
+
+
 
 
   @override
@@ -189,9 +193,9 @@ String endText = " ";
                             44, 87, 116, 100)),
                     SizedBox(width: 8),
                     Text(
-                      _startTime == null || _endTime == null
+                      startText == " " || endText == " "
                           ? 'Select availability hours'
-                          : '${_startTime.format(context)} - ${_endTime.format(context)}',
+                          : '$startText - $endText',
                       style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                           color: Color.fromRGBO(
