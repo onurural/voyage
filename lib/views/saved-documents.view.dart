@@ -1,8 +1,8 @@
+// ignore_for_file: use_build_context_synchronously, unused_local_variable
+
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:animations/animations.dart';
 import 'package:document_scanner_flutter/configs/configs.dart';
 import 'package:document_scanner_flutter/document_scanner_flutter.dart';
 import 'package:file_picker/file_picker.dart';
@@ -32,7 +32,7 @@ class SavedDocumentsScreen extends StatefulWidget {
 class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
   late Directory appDirectory;
   List<File> files = [];
-  Set<File> selectedFiles = Set<File>();
+  Set<File> selectedFiles = <File>{};
   bool selectMode = false;
 
   @override
@@ -63,9 +63,9 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
             onPressed: selectedFiles.isEmpty
                 ? null
                 : () async {
-              selectedFiles.forEach((file) async {
+              for (var file in selectedFiles)  {
                 await file.delete();
-              });
+              }
               setState(() {
                 selectMode = false;
                 selectedFiles.clear();
@@ -128,50 +128,48 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(37, 154, 180, 100),
+        backgroundColor: const Color.fromRGBO(37, 154, 180, 100),
         title: const Text('Documents and Photos'),
         actions: _appBarActions(context),
           automaticallyImplyLeading: false
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          child: GridView.builder(
-            itemCount: files.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 0.6,
-            ),
-            itemBuilder: (context, index) {
-              File file = files[index];
-              return DocumentGridTile(
-                file: file,
-                refresh: loadFiles,
-                onTap: () => openViewer(context, file),
-                onLongPress: () {
-                  setState(() {
-                    selectMode = true;
-                    selectedFiles.add(file);
-                  });
-                },
-                selected: selectedFiles.contains(file),
-                onSelectChanged: (isSelected) {
-                  setState(() {
-                    if (isSelected) {
-                      selectedFiles.add(file);
-                    } else {
-                      selectedFiles.remove(file);
-                    }
-                    if (selectedFiles.isEmpty) {
-                      selectMode = false;
-                    }
-                  });
-                },
-              );
-            },
+        child: GridView.builder(
+          itemCount: files.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.6,
           ),
+          itemBuilder: (context, index) {
+            File file = files[index];
+            return DocumentGridTile(
+              file: file,
+              refresh: loadFiles,
+              onTap: () => openViewer(context, file),
+              onLongPress: () {
+                setState(() {
+                  selectMode = true;
+                  selectedFiles.add(file);
+                });
+              },
+              selected: selectedFiles.contains(file),
+              onSelectChanged: (isSelected) {
+                setState(() {
+                  if (isSelected) {
+                    selectedFiles.add(file);
+                  } else {
+                    selectedFiles.remove(file);
+                  }
+                  if (selectedFiles.isEmpty) {
+                    selectMode = false;
+                  }
+                });
+              },
+            );
+          },
         ),
       ),
       floatingActionButton: CustomFloatingActionButton(
@@ -184,7 +182,7 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
     final result = await showModalBottomSheet<String>(
       context: context,
       builder: (BuildContext context) {
-        return AddOptionsBottomSheet();
+        return const AddOptionsBottomSheet();
       },
     );
     if (result == 'photo') {
@@ -215,7 +213,7 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
       );
       if(newName!=null){
         File compressedImage = File(
-            '${appDirectory.path}/${newName}.jpg');
+            '${appDirectory.path}/$newName.jpg');
         await compressedImage.writeAsBytes(compressedImageData as List<int>);
         loadFiles();
       }
@@ -240,7 +238,7 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
       );
       if(newName!=null){
         await file.copy(
-            '${appDirectory.path}/${newName}${path.extension(file.path)}');
+            '${appDirectory.path}/$newName${path.extension(file.path)}');
         loadFiles();
       }
 
@@ -269,8 +267,8 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
 
   void _scanDocument(BuildContext context) async {
     var image = await DocumentScannerFlutter.launch(context, labelsConfig: {
-      ScannerLabelsConfig.ANDROID_NEXT_BUTTON_LABEL: "Next Step",
-      ScannerLabelsConfig.ANDROID_OK_LABEL: "OK"
+      ScannerLabelsConfig.ANDROID_NEXT_BUTTON_LABEL: 'Next Step',
+      ScannerLabelsConfig.ANDROID_OK_LABEL: 'OK'
 
     });
     if (image != null) {
@@ -289,7 +287,7 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
       );
       if(newName!=null){
         File compressedImage = File(
-            '${appDirectory.path}/${newName}.jpg');
+            '${appDirectory.path}/$newName.jpg');
         await compressedImage.writeAsBytes(compressedImageData as List<int>);
         loadFiles();
       }

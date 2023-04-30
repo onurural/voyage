@@ -1,23 +1,28 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey[200],
-        body: NotificationScreen(),
+        body: const NotificationScreen(),
       ),
     );
   }
 }
 
 class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({super.key});
+
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
 }
@@ -45,21 +50,21 @@ class _NotificationScreenState extends State<NotificationScreen> {
           background: Container(
             color: Colors.red,
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(left: 20),
-            child: Icon(Icons.delete, color: Colors.white),
+            padding: const EdgeInsets.only(left: 20),
+            child: const Icon(Icons.delete, color: Colors.white),
           ),
           secondaryBackground: Container(
             color: Colors.red,
             alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(right: 20),
-            child: Icon(Icons.delete, color: Colors.white),
+            padding: const EdgeInsets.only(right: 20),
+            child: const Icon(Icons.delete, color: Colors.white),
           ),
           child: AnimatedPadding(
-            padding: EdgeInsets.only(left: 0, right: 0),
-            duration: Duration(milliseconds: 300),
+            padding: const EdgeInsets.only(left: 0, right: 0),
+            duration: const Duration(milliseconds: 300),
             curve: Curves.easeIn,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: Colors.white,
@@ -72,10 +77,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(notifications[index].description),
-                    SizedBox(height: 4),
-                    Text(notifications[index].time, style: TextStyle(fontSize: 12, color: Colors.grey)),
+                    const SizedBox(height: 4),
+                    Text(notifications[index].time, style: const TextStyle(fontSize: 12, color: Colors.grey)),
                   ],
                 ),
               ),

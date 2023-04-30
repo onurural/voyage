@@ -1,5 +1,6 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:voyage/ui-components/schedule-screen-components/Activity.dart';
 import 'package:voyage/ui-components/schedule-screen-components/schedule.dart';
@@ -9,7 +10,7 @@ import 'package:voyage/ui-components/schedule-screen-components/activity-slide.d
 class ScheduleScreen extends StatefulWidget {
   final Schedule schedule;
 
-  ScheduleScreen({required this.schedule});
+  const ScheduleScreen({super.key, required this.schedule});
 
   @override
   _ScheduleScreenState createState() => _ScheduleScreenState();
@@ -51,11 +52,6 @@ class _ScheduleScreenState extends State<ScheduleScreen>
     Color primaryColor = const Color.fromRGBO(44, 87, 116, 1);
     Color secondaryColor = const Color.fromRGBO(235, 235, 235, 1);
 
-    TextStyle tabTextStyle = GoogleFonts.roboto(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: secondaryColor,
-    );
 
 
     return Scaffold(

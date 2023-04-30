@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, file_names
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -6,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/bloc/place/place.bloc.dart';
 import 'package:voyage/bloc/place/place.event.dart';
 import 'package:voyage/bloc/place/place.state.dart';
-import 'package:voyage/data/place.data.dart';
 import 'package:voyage/views/show-more.view.dart';
 import 'package:voyage/ui-components/place-components/hero_dialog_route.dart';
 import 'place-small-card.dart';

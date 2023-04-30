@@ -44,13 +44,13 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
             onTap: () {
-              if(item.title != "Log Out"){
+              if(item.title != 'Log Out'){
                 onSelectedItem(item);
               }
               else {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LogInScreen()),
+                  MaterialPageRoute(builder: (context) => const LogInScreen()),
                 );
               }
             },

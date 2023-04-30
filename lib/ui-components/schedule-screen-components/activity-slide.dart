@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -70,11 +72,6 @@ class _ActivitySlideState extends State<ActivitySlide>
   }
 
   Widget beautifulTimeContainer(DateTime beginTime, DateTime endTime) {
-    TextStyle timeTextStyle = GoogleFonts.roboto(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      color: Colors.blueGrey,
-    );
 
     return Container(
       decoration: BoxDecoration(

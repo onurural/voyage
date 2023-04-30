@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/create-schedule/budget-container.dart';
@@ -73,7 +72,7 @@ late double indicatorValue;
   finishedWidgets.addAll([
     AnimatedCrossFade(
       firstChild: Container(),
-      secondChild: CompletedItem("Date", onRestore, 0),
+      secondChild: CompletedItem('Date', onRestore, 0),
       crossFadeState: shownInRow.value[0]
           ? CrossFadeState.showSecond
           : CrossFadeState.showFirst,
@@ -81,7 +80,7 @@ late double indicatorValue;
     ),
     AnimatedCrossFade(
       firstChild: Container(),
-      secondChild:   CompletedItem("Free-Time", onRestore, 1),
+      secondChild:   CompletedItem('Free-Time', onRestore, 1),
       crossFadeState: shownInRow.value[1]
           ? CrossFadeState.showSecond
           : CrossFadeState.showFirst,
@@ -89,7 +88,7 @@ late double indicatorValue;
     ),
     AnimatedCrossFade(
       firstChild: Container(),
-      secondChild:      CompletedItem("Budget", onRestore, 2),
+      secondChild:      CompletedItem('Budget', onRestore, 2),
       crossFadeState: shownInRow.value[2]
           ? CrossFadeState.showSecond
           : CrossFadeState.showFirst,
@@ -97,7 +96,7 @@ late double indicatorValue;
     ),
     AnimatedCrossFade(
       firstChild: Container(),
-      secondChild:      CompletedItem("Trip Companions", onRestore, 3),
+      secondChild:      CompletedItem('Trip Companions', onRestore, 3),
       crossFadeState: shownInRow.value[3]
           ? CrossFadeState.showSecond
           : CrossFadeState.showFirst,
@@ -105,7 +104,7 @@ late double indicatorValue;
     ),
     AnimatedCrossFade(
       firstChild: Container(),
-      secondChild:     CompletedItem("Interests", onRestore, 4),
+      secondChild:     CompletedItem('Interests', onRestore, 4),
       crossFadeState: shownInRow.value[4]
           ? CrossFadeState.showSecond
           : CrossFadeState.showFirst,
@@ -168,12 +167,6 @@ late double indicatorValue;
       duration: const Duration(milliseconds: 300),
     );
   }
-void _updateProgressValue() {
-  setState(() {
-    indicatorValue += 0.2;
-
-  });
-}
 
   @override
   Widget build(BuildContext context) {
@@ -184,20 +177,20 @@ void _updateProgressValue() {
         child: Column(
           children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 60, 10, 20),
+          padding: const EdgeInsets.fromLTRB(10, 60, 10, 20),
           child: Container(
             height: 70,
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
 
           child:   UniqueProgressIndicator(indicatorValue),
       ),
         ),
 
-            Padding(
-              padding: const EdgeInsets.all(10),
+            const Padding(
+              padding: EdgeInsets.all(10),
               child: SearchBar([]),
             ),
-            Container(
+            SizedBox(
 
               width: MediaQuery.of(context).size.width,
               child: Wrap(
@@ -233,7 +226,7 @@ void _updateProgressValue() {
            return ValueListenableBuilder(valueListenable: started[5], builder: (context,started,child){
              return   _buildAnimatedCrossFade(Container(),  Column(
                children: [
-                 Divider(
+                 const Divider(
                    color:     Color.fromRGBO(211, 211, 211,30),
                    thickness: 3,
                  ),
@@ -244,7 +237,7 @@ void _updateProgressValue() {
 
                      },
                      style: ElevatedButton.styleFrom(
-                       primary: Color.fromRGBO(24, 42, 64, 1),
+                       backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
                        // other properties
 
 
@@ -260,7 +253,7 @@ void _updateProgressValue() {
                        child: Text(
                          'Create Your Schedule',
                          style: GoogleFonts.poppins(
-                           textStyle: TextStyle(
+                           textStyle: const TextStyle(
                              fontSize: 20,
                              fontWeight: FontWeight.w700,
                              color: Colors.white,

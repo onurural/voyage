@@ -55,7 +55,6 @@ class PlaceData extends PlaceRepository {
   @override
   Future<List<Place>> fetchPlaceByCategory(CATEGORY category) async {
     Uri url = Uri();
-    List<dynamic> data = [];
     switch (category) {
       case CATEGORY.historic:
          url = Uri.https(apiURL,

@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables, duplicate_ignore, must_be_immutable, file_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +27,7 @@ class DateBeginEndContainer extends StatefulWidget {
 }
 
 class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
+  // ignore: prefer_typing_uninitialized_variables
   var _startDate;
   var _endDate;
   Widget content(){
@@ -53,12 +55,12 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                     MainAxisAlignment
                         .spaceBetween,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.calendar_today,
                         color: Color.fromRGBO(
                             44, 87, 116, 100),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
                         _startDate == null ||
                             _endDate == null
@@ -70,7 +72,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                             _endDate)}',
                         style: GoogleFonts
                             .openSans(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             color: Color.fromRGBO(
                                 44, 87, 116, 100),
                             fontSize: 14,
@@ -79,8 +81,8 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 8),
-                      Icon(
+                      const SizedBox(width: 8),
+                      const Icon(
                         Icons.arrow_drop_down,
                         color: Color.fromRGBO(
                             44, 87, 116, 100),
@@ -114,7 +116,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(
+                backgroundColor: const Color.fromRGBO(
                     44, 87, 116, 100),
                 padding: const EdgeInsets
                     .symmetric(
@@ -128,7 +130,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                 child: Text(
                   'Apply',
                   style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
@@ -156,7 +158,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
   var deactivatedDesign = BoxDecoration(
     color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
-    image: DecorationImage(
+    image: const DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
       fit: BoxFit.cover,
     ),
@@ -179,12 +181,12 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Color.fromRGBO(44, 87, 116, 1),
+            primaryColor: const Color.fromRGBO(44, 87, 116, 1),
             colorScheme: ThemeData.light().colorScheme.copyWith(
-              primary: Color.fromRGBO(44, 87, 116, 1),
+              primary: const Color.fromRGBO(44, 87, 116, 1),
               onPrimary: Colors.white,
             ),
-            buttonTheme: ButtonThemeData(
+            buttonTheme: const ButtonThemeData(
               textTheme: ButtonTextTheme.primary,
             ),
           ),
@@ -222,7 +224,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: AnimatedContainer(
-                              duration: Duration(milliseconds: 300),
+                              duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
                               padding: const EdgeInsets.all(16.0),
                               decoration: (locked && !started)
@@ -240,7 +242,7 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                                         Text(
                                           'Trip Dates',
                                           style: GoogleFonts.poppins(
-                                            textStyle: TextStyle(
+                                            textStyle: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 20,
                                               fontWeight: FontWeight.w700,

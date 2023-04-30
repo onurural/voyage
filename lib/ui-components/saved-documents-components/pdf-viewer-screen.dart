@@ -1,6 +1,7 @@
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, file_names
+
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path/path.dart' as path;
@@ -10,7 +11,7 @@ class PDFViewerScreen extends StatefulWidget {
   final VoidCallback refresh;
 
 
-  PDFViewerScreen(this.file, this.refresh);
+  const PDFViewerScreen(this.file, this.refresh, {super.key});
 
   @override
   _PDFViewerScreenState createState() => _PDFViewerScreenState();
@@ -19,7 +20,6 @@ class PDFViewerScreen extends StatefulWidget {
 class _PDFViewerScreenState extends State<PDFViewerScreen> {
   int _currentPage = 1;
   int? _totalPages;
-  late PDFViewController _pdfController;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
         elevation: 0,
         title: Text(
           path.basenameWithoutExtension(widget.file.path),
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
             letterSpacing: 1.5,
@@ -37,7 +37,7 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.delete, color: Colors.white),
+            icon: const Icon(Icons.delete, color: Colors.white),
             onPressed: () async {
               await widget.file.delete();
               widget.refresh();
@@ -45,7 +45,7 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.edit, color: Colors.white),
+            icon: const Icon(Icons.edit, color: Colors.white),
             onPressed: () async {
               final newName = await showDialog<String>(
                 context: context,
@@ -76,12 +76,11 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
         },
         onViewCreated: (PDFViewController pdfViewController) {
           setState(() {
-            _pdfController = pdfViewController;
           });
         },
         onPageChanged: (page, total) {
           setState(() {
-            _currentPage = (page! + 1)!;
+            _currentPage = (page! + 1);
             _totalPages = total;
           });
         },
@@ -91,7 +90,7 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
           : FloatingActionButton(
         onPressed: () {},
         child: Text('$_currentPage/$_totalPages',
-            style: TextStyle(fontSize: 20)),
+            style: const TextStyle(fontSize: 20)),
       ),
     );
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:voyage/ui-components/nav-bar.dart';
 import 'package:voyage/ui-components/schedule-screen-components/Activity.dart';
@@ -38,7 +40,7 @@ class _MainConnectorState extends State<MainConnector> {
                 SchedulesScreen(schedules),
                 const CreateScheduleScreen(),
                 const SavedDocumentsScreen(),
-                ProfilePage(),
+                const ProfilePage(),
               ];
     return Scaffold(
       body:  Column(

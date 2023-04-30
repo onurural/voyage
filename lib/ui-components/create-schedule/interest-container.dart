@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names, must_be_immutable, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -40,7 +41,7 @@ class _InterestContainerState extends State<InterestContainer> {
   var deactivatedDesign = BoxDecoration(
     color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
-    image: DecorationImage(
+    image: const DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
       fit: BoxFit.cover,
     ),
@@ -127,7 +128,7 @@ class _InterestContainerState extends State<InterestContainer> {
           return Padding(
             padding: const EdgeInsets.all(10),
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               padding: const EdgeInsets.all(16.0),
               decoration: locked && !started ? deactivatedDesign : activeDesign,

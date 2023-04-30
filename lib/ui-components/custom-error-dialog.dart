@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,9 +24,9 @@ class CustomErrorDialog extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               colors: [Color.fromRGBO(44, 87, 116, 100),Colors.grey],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -35,7 +37,7 @@ class CustomErrorDialog extends StatelessWidget {
               BoxShadow(
                 color: Colors.black.withOpacity(0.2),
                 blurRadius: 8,
-                offset: Offset(0, 4),
+                offset: const Offset(0, 4),
               ),
             ],
           ),
@@ -43,26 +45,26 @@ class CustomErrorDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Icon(
+              const Icon(
                 Icons.error_outline_rounded,
                 color: Colors.white,
                 size: 32,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 errorText,
                 style: GoogleFonts.poppins(
-                  textStyle: TextStyle(fontSize: 16, color: Colors.white)
+                  textStyle: const TextStyle(fontSize: 16, color: Colors.white)
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Align(
                 alignment: Alignment.bottomRight,
                 child: TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text(
+                  child: const Text(
                     'OK',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),

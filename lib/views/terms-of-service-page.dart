@@ -1,8 +1,18 @@
+// ignore: file_names
+// ignore: file_names
+// ignore: file_names
+// ignore: file_names
+// ignore: file_names
+// ignore_for_file: file_names, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class TermsOfServicePage extends StatefulWidget {
+  const TermsOfServicePage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _TermsOfServicePageState createState() => _TermsOfServicePageState();
 }
 
@@ -12,23 +22,24 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
     return Scaffold(
       
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Center(
+              // ignore: deprecated_member_use
               child: TypewriterAnimatedTextKit(
-                text: ['Voyage Terms of Service'],
-                textStyle: TextStyle(
+                text: const ['Voyage Terms of Service'],
+                textStyle: const TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                 ),
-                speed: Duration(milliseconds: 200),
+                speed: const Duration(milliseconds: 200),
               ),
             ),
-            SizedBox(height: 20.0),
-            Text(
+            const SizedBox(height: 20.0),
+            const Text(
               'Welcome to Voyage! These Terms of Service ("Terms") govern your use of the Voyage application, website, and any other services provided by Voyage (collectively, the "Services").'
                   '\n\n1. Acceptance of Terms\n\n'
                   'By accessing or using our Services, you agree to be bound by these Terms. If you do not agree to these Terms, you must not access or use the Services.'

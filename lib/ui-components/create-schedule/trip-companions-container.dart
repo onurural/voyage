@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/custom-error-dialog.dart';
@@ -37,7 +38,7 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
   var deactivatedDesign = BoxDecoration(
     color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
-    image: DecorationImage(
+    image: const DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
       fit: BoxFit.cover,
     ),
@@ -66,7 +67,7 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
                 Padding(
                 padding: const EdgeInsets.all(10),
                 child: AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                   padding: const EdgeInsets.all(16.0),
                   decoration: (locked && !started)
@@ -103,11 +104,11 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
                           secondChild:  Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 12),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  gradient: LinearGradient(
+                                  gradient: const LinearGradient(
                                     colors:
                                     [
                                       Color.fromRGBO(44, 87, 116, 100),
@@ -120,12 +121,12 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
                                 child: Center(
                                   child: DropdownButton<String>(
                                     value: _selectedCompanion,
-                                    hint: Text(
+                                    hint: const Text(
                                       'Select trip companion',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 18),
                                     ),
-                                    icon: Icon(Icons.arrow_drop_down,
+                                    icon: const Icon(Icons.arrow_drop_down,
                                         color: Colors.white),
                                     onChanged: (newValue) {
                                       setState(() {
@@ -143,16 +144,16 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
                                             value: value,
                                             child: Text(value,
                                                 style: GoogleFonts.poppins(
-                                                    textStyle: TextStyle(
+                                                    textStyle: const TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 18))),
                                           );
                                         }).toList(),
-                                    dropdownColor: Color.fromRGBO(44, 87, 116, 100),
+                                    dropdownColor: const Color.fromRGBO(44, 87, 116, 100),
                                     style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
+                                        textStyle: const TextStyle(
                                             color: Colors.white, fontSize: 18)),
-                                    underline: SizedBox.shrink(),
+                                    underline: const SizedBox.shrink(),
                                   ),
                                 ),
                               ),
@@ -168,11 +169,11 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
                                     widget.onFinish(context, widget.index);
                                   } else {
                                     showErrorDialog(
-                                        context, "Please Select Your Companion");
+                                        context, 'Please Select Your Companion');
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary: const Color.fromRGBO(44, 87, 116, 100),
+                                  backgroundColor: const Color.fromRGBO(44, 87, 116, 100),
                                   padding: const EdgeInsets.symmetric(vertical: 16),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +23,7 @@ class BudgetContainer extends StatefulWidget {
         super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _BudgetContainerState createState() => _BudgetContainerState();
 }
 
@@ -34,7 +37,6 @@ class _BudgetContainerState extends State<BudgetContainer> {
 
       value2= (slider as CustomSlider).value;
       this.value=value2;
-      print(this.value);
       changeIcon();
 
 
@@ -55,7 +57,7 @@ class _BudgetContainerState extends State<BudgetContainer> {
   var deactivatedDesign = BoxDecoration(
     color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
-    image: DecorationImage(
+    image: const DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
       fit: BoxFit.cover,
     ),
@@ -162,7 +164,7 @@ class _BudgetContainerState extends State<BudgetContainer> {
               widget.unlockNext(widget.index);
             },
             style: ElevatedButton.styleFrom(
-              primary: const Color.fromRGBO(44, 87, 116, 100),
+              backgroundColor: const Color.fromRGBO(44, 87, 116, 100),
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
@@ -197,7 +199,7 @@ class _BudgetContainerState extends State<BudgetContainer> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                       padding: const EdgeInsets.all(16.0),
                       decoration: isLocked && !isStarted

@@ -1,7 +1,4 @@
 
-import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 
@@ -63,7 +60,7 @@ bool isButtonShown=true;
         child: GestureDetector(
           onTap:  (){
     setState(() {
-    this.isButtonShown=false;
+    isButtonShown=false;
     });
     Navigator.pop(context);
     },
@@ -76,12 +73,12 @@ bool isButtonShown=true;
           Positioned(
             top: 50,
             left: 20,
-            child: Visibility(visible: this.isButtonShown,child: IconButton(onPressed: (){
+            child: Visibility(visible: isButtonShown,child: IconButton(onPressed: (){
               setState(() {
-                this.isButtonShown=false;
+                isButtonShown=false;
               });
               Navigator.pop(context);
-            } , icon: Icon(Icons.arrow_back_ios,color: Colors.white,size: 30,)),)
+            } , icon: const Icon(Icons.arrow_back_ios,color: Colors.white,size: 30,)),)
           ),
       Center(
           child: Padding(

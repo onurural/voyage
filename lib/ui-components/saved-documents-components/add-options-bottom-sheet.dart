@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: library_private_types_in_public_api, file_names
+
 import 'package:flutter/material.dart';
 
 class AddOptionsBottomSheet extends StatefulWidget {
@@ -78,7 +79,7 @@ class _AddOptionsBottomSheetState extends State<AddOptionsBottomSheet>
         opacity: _animation,
         child: SlideTransition(
           position: Tween<Offset>(
-            begin: Offset(0, 0.5),
+            begin: const Offset(0, 0.5),
             end: Offset.zero,
           ).animate(_animation),
           child: Text(
@@ -95,7 +96,7 @@ class _AddOptionsBottomSheetState extends State<AddOptionsBottomSheet>
         opacity: _animation,
         child: SlideTransition(
           position: Tween<Offset>(
-            begin: Offset(0, 0.5),
+            begin: const Offset(0, 0.5),
             end: Offset.zero,
           ).animate(_animation),
           child: Icon(

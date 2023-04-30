@@ -1,10 +1,12 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 
 class UniqueProgressIndicator extends StatefulWidget {
   final double value;
 
-  UniqueProgressIndicator(this.value);
+  const UniqueProgressIndicator(this.value, {super.key});
 
   @override
   _UniqueProgressIndicatorState createState() => _UniqueProgressIndicatorState();

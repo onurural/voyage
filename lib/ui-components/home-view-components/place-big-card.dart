@@ -1,4 +1,5 @@
-import 'dart:convert';
+// ignore_for_file: file_names, prefer_typing_uninitialized_variables
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class PlaceBigCard extends StatefulWidget {
   final Place place;
   final String globlaId;
 
-  PlaceBigCard(this.place, this.globlaId, {super.key});
+  const PlaceBigCard(this.place, this.globlaId, {super.key});
 
   @override
   State<PlaceBigCard> createState() => _PlaceBigCardState();
@@ -71,7 +72,7 @@ class _PlaceBigCardState extends State<PlaceBigCard> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: 100,
+                  height: 200,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [

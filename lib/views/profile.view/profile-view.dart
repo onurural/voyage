@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,6 +7,8 @@ import '../../ui-components/profile-components/city-cards.dart';
 import '../../ui-components/profile-components/dashboard.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
@@ -18,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
            Column(
              children: [
                Container(
@@ -34,47 +37,45 @@ class _ProfilePageState extends State<ProfilePage> {
                        offset: const Offset(0, 2),
                      ),
                    ],
-                   image:  DecorationImage(
-                     image: AssetImage("assets/Images/3.jpeg"),
+                   image:  const DecorationImage(
+                     image: AssetImage('assets/Images/3.jpeg'),
                      fit: BoxFit.cover,
 
                    ) ,
                  )
                ),
-               SizedBox(height: 10),
+               const SizedBox(height: 10),
                Text(
                  'Your Name',
                  style: GoogleFonts.pacifico(
-                     textStyle:  TextStyle(fontSize: 24, fontWeight: FontWeight.w800)
+                     textStyle:  const TextStyle(fontSize: 24, fontWeight: FontWeight.w800)
                  ),
                ),
              ],
            ),
 
-            SizedBox(height: 20),
-            Container(
-              child: Column(
-                children: [
-                  SizedBox(height: 20),
-                  Text(
-                    "Interested Cities",
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        fontSize: 30,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                      ),
+            const SizedBox(height: 20),
+            Column(
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  'Interested Cities',
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontSize: 30,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
-                  CityCards(),
-                ],
-              ),
+                ),
+                CityCards(),
+              ],
             ),
-            Divider(
+            const Divider(
               color: 	Color.fromRGBO(211, 211, 211,100),
               thickness: 3,
             ),
-            Dashboard(),
+            const Dashboard(),
 
           ],
         ),

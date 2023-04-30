@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 import 'gradient-icon.dart';
@@ -31,7 +33,7 @@ class _NavBarState extends State<NavBar> {
             end: Alignment.bottomCenter)),
     const GradientIcon(
         icon: Icons.add_circle_outlined,
-        size: 40,
+        size: 50,
         gradient: LinearGradient(
             colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
             begin: Alignment.topCenter,
@@ -53,11 +55,11 @@ class _NavBarState extends State<NavBar> {
   ];
 
   final List<Widget> _icons = [
-    const Icon(Icons.home, color: Colors.white, size: 40),
-    const Icon(Icons.calendar_month_rounded, color: Colors.white, size: 40),
-    const Icon(Icons.add_circle_rounded, color: Colors.white, size: 40),
-    const Icon(Icons.document_scanner, color: Colors.white, size: 40),
-    const Icon(Icons.account_circle, color: Colors.white, size: 40),
+    const Icon(Icons.home, color: Color.fromRGBO(44, 87, 116, 100), size: 40),
+    const Icon(Icons.calendar_month_rounded, color: Color.fromRGBO(44, 87, 116, 100), size: 40),
+    const Icon(Icons.add_circle_rounded, color: Color.fromRGBO(44, 87, 116, 100), size: 50),
+    const Icon(Icons.document_scanner, color: Color.fromRGBO(44, 87, 116, 100), size: 40),
+    const Icon(Icons.account_circle, color: Color.fromRGBO(44, 87, 116, 100), size: 40),
   ];
 
   void selectScreen(int index) {
@@ -70,36 +72,35 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-          width: double.infinity,
-          decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Colors.black),
-              color: const Color.fromRGBO(44, 87, 116, 100),
-              borderRadius: BorderRadius.circular(25)),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              for (int i = 0; i < _icons.length; i++)
-                Expanded(
-                  child: MaterialButton(
-                    onPressed: () {
-                      selectScreen(i);
-                    },
-                    child: AnimatedCrossFade(
-                      firstChild: _icons[i],
-                      secondChild: _gradientIcons[i],
-                      crossFadeState: _selectedIndex == i
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
-                      duration: const Duration(milliseconds: 500),
-                    ),
+      child: Container(
+        decoration:
+        const BoxDecoration
+          (
+          color: Colors.white,
+        ),
+        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+        width: double.infinity,
+
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            for (int i = 0; i < _icons.length; i++)
+              Expanded(
+                child: MaterialButton(
+                  onPressed: () {
+                    selectScreen(i);
+                  },
+                  child: AnimatedCrossFade(
+                    firstChild: _icons[i],
+                    secondChild: _gradientIcons[i],
+                    crossFadeState: _selectedIndex == i
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 500),
                   ),
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );

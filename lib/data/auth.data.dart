@@ -36,7 +36,7 @@ class AuthData implements AuthRepository {
           'userName': userName
         });
       } catch (e) {
-        print(e.toString());
+        //print(e.toString());
       }
   }
 }
