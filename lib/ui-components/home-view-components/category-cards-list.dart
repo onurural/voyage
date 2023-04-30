@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -12,12 +10,12 @@ import 'package:voyage/bloc/place/place.event.dart';
 import 'package:voyage/bloc/place/place.state.dart';
 import 'package:voyage/ui-components/home-view-components/category-places-list.dart';
 import 'package:voyage/ui-components/home-view-components/place-big-card.dart';
-import 'package:voyage/utility/category.enum.dart';
-import 'package:voyage/utility/page.enum.dart' as page;
+
 import 'category.dart';
 import 'category-card.dart';
 
 class CategoryCardsList extends StatefulWidget {
+
   const CategoryCardsList({Key? key}) : super(key: key);
 
   @override
@@ -27,8 +25,7 @@ class CategoryCardsList extends StatefulWidget {
 class _CategoryCardsListState extends State<CategoryCardsList>
     with TickerProviderStateMixin {
   final PlaceBloc _placeBloc = PlaceBloc();
-  var refreshCounter = 1;
-  var _tabIndex = 0;
+
   String generateRandomString(int length) {
     final rand = Random();
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -39,7 +36,6 @@ class _CategoryCardsListState extends State<CategoryCardsList>
     }
     return result;
   }
-
   late TabController _tabController;
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -69,7 +65,6 @@ class _CategoryCardsListState extends State<CategoryCardsList>
     Category('Rural', const CategoryPlacesList(), Icons.shopping_bag),
     Category('Medditerrain', const CategoryPlacesList(), Icons.sports_volleyball),
   ];
-  
   List<CategoryCard> categoryCards = [];
 
   void fillInTheList() {
@@ -91,7 +86,7 @@ class _CategoryCardsListState extends State<CategoryCardsList>
     // TODO: implement initState
     super.initState();
     // fillInTheArray();
-    _placeBloc.add(FetchHistoricPlace(page.Page.first));
+    _placeBloc.add(FetchNaturalPlace());
     // fillInTheList();
     _tabController = TabController(length: categoryCards.length, vsync: this);
     _animationController = AnimationController(
@@ -102,6 +97,7 @@ class _CategoryCardsListState extends State<CategoryCardsList>
     fillInTheList();
     fillInTheArray();
     _tabController = TabController(length: categoryCards.length, vsync: this);
+
   }
 
   @override
@@ -126,10 +122,10 @@ class _CategoryCardsListState extends State<CategoryCardsList>
                 'Our Categories',
                 style: GoogleFonts.poppins(
                     textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                )),
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    )),
               ),
             ),
           ),
@@ -156,21 +152,16 @@ class _CategoryCardsListState extends State<CategoryCardsList>
             ),
             isScrollable: true,
             onTap: (value) {
-              _tabIndex = value;
               if (value == 0) {
-                return _placeBloc.add(FetchHistoricPlace(page.Page.first));
-              } 
-              if (value == 1) {
-                 return _placeBloc.add(FetchNaturalPlace(page.Page.first));
-              } 
-              if (value == 2) {
-                return _placeBloc.add(FetchCityVibesPlace(page.Page.first));
-              } 
-              if (value == 3) {
-                return _placeBloc.add(FetchRuralPlace(page.Page.first));
-              } 
-              if (value == 4) {
-                return _placeBloc.add(FetchMediterrainPlace(page.Page.first));
+                _placeBloc.add(FetchHistoricPlace());
+              } else if (value == 1) {
+                _placeBloc.add(FetchNaturalPlace());
+              } else if (value == 2) {
+                _placeBloc.add(FetchCityVibesPlace());
+              } else if (value == 3) {
+                _placeBloc.add(FetchRuralPlace());
+              } else if (value == 4) {
+                _placeBloc.add(FetchMediterrainPlace());
               }
             },
             labelColor: Colors.green,
@@ -185,100 +176,70 @@ class _CategoryCardsListState extends State<CategoryCardsList>
           ),
           SizedBox(
             height: 250,
-            child: TabBarView(controller: _tabController, children: [
-              place(),
-              place(),
-              place(),
-              place(),
-              place(),
-            ]),
+            child: TabBarView(
+                controller: _tabController,
+                children: [
+                  place(),
+                  place(),
+                  place(),
+                  place(),
+                  place(),
+                ]),
           )
         ],
       ),
     );
   }
 
-  Future<void> refresh() async {
-    if (refreshCounter < 2) {
-      page.Page pageValue = page.Page.values.where((element) => element.index == refreshCounter).first;
-      refreshCounter++;
-      CATEGORY category = CATEGORY.values.where((element) => element.index == _tabIndex).first;
-      await _updateCategory(category, pageValue);
-    }
-  }
-
-  Future<void> _updateCategory(CATEGORY category, page.Page pageValue) async {
-    switch (category) {
-      case CATEGORY.historic:
-        _placeBloc.add(FetchHistoricPlace(pageValue));
-        break;
-      case CATEGORY.cityVibes:
-        _placeBloc.add(FetchCityVibesPlace(pageValue));
-        break;
-      case CATEGORY.mediterrain:
-        _placeBloc.add(FetchMediterrainPlace(pageValue));
-        break;
-      case CATEGORY.natural:
-        _placeBloc.add(FetchNaturalPlace(pageValue));
-        break;
-      case CATEGORY.rural:
-        _placeBloc.add(FetchRuralPlace(pageValue));
-        break;
-      default:
-    }
-  }
 
   Widget place() {
-    return RefreshIndicator(
-        onRefresh: () async {
-          await refresh();
-        },
-        child: SizedBox(
-            height: 1000,
-            child: BlocConsumer<PlaceBloc, PlaceState>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  if (state is PlaceLoadedState) {
-                    return ListView.builder(
-                        itemCount: state.model.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return PlaceBigCard(
-                              state.model[index], generateRandomString(3));
-                        });
-                  }
-                  if (state is PlaceLoadingState) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 5,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+    return SizedBox(
+        height: 1000,
+        child:  BlocConsumer<PlaceBloc, PlaceState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is PlaceLoadedState) {
+                return ListView.builder(
+                    itemCount: state.model.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return PlaceBigCard(state.model[index],generateRandomString(3));
+                    });
+              }
+              if (state is PlaceLoadingState) {
+                return  Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
                         ),
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade100,
-                          child: Container(
-                            width: double.infinity,
-                            height: 200, // Adjust the width to match your card
+                      ],
 
-                            color: Colors.grey[300],
-                          ),
-                        ),
+                    ),
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: Container(
+                        width: double.infinity,
+                        height: 200,// Adjust the width to match your card
+
+                        color: Colors.grey[300],
                       ),
-                    );
-                  }
-                  if (state is PlaceErrorState) {
-                    return const Text('Error on display the widget');
-                  } else {
-                    return Text('Initial State ${state.toString()}');
-                  }
-                })));
+                    ),
+                  ),
+                );
+              }
+              if (state is PlaceErrorState) {
+                return const Text('Error on display the widget');
+              } else {
+                return Text('Initial State ${state.toString()}');
+              }
+            })
+    );
   }
 }

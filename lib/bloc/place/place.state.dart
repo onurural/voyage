@@ -1,4 +1,5 @@
-import 'package:voyage/models/place.dart';
+import '../../models/place.dart';
+
 
 abstract class PlaceState {}
 
