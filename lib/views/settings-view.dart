@@ -1,12 +1,16 @@
+// ignore_for_file: file_names
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,47 +19,45 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SettingsPage(),
+      home: const SettingsPage(),
     );
   }
 }
 
 class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               FadeIn(child: _buildAnimatedText()),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               _buildSettingsCategory(
                 'Profile Settings',
                 children: [
                   _buildSettingItem(
                     title: 'Change Email',
                     onTap: () {
-                      print('Change Email');
                     },
                   ),
                   _buildSettingItem(
                     title: 'Change Username',
                     onTap: () {
-                      print('Change Username');
                     },
                   ),
                   _buildSettingItem(
                     title: 'Change Password',
                     onTap: () {
-                      print('Change Password');
                     },
                   ),
                   _buildSettingItem(
                     title: 'Change Phone Number',
                     onTap: () {
-                      print('Change Phone Number');
                     },
                   ),
                 ],
@@ -66,13 +68,11 @@ class SettingsPage extends StatelessWidget {
                   _buildSettingItem(
                     title: 'Clear Cache',
                     onTap: () {
-                      print('Clear Cache');
                     },
                   ),
                   _buildSettingItem(
                     title: 'Notifications',
                     onTap: () {
-                      print('Notifications');
                     },
                   ),
                 ],
@@ -97,7 +97,6 @@ class SettingsPage extends StatelessWidget {
             TypewriterAnimatedText('Settings'),
           ],
           onTap: () {
-            print("Settings");
           },
         ),
       ),
@@ -113,7 +112,7 @@ class SettingsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Text(
               title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
           ),
           Column(children: children),
@@ -126,7 +125,7 @@ class SettingsPage extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
         ),
@@ -135,9 +134,9 @@ class SettingsPage extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios_rounded,
               size: 16,
             ),

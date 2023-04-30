@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,7 +10,7 @@ class CompletedItem extends StatefulWidget {
   int index;
 
 
-  CompletedItem(this.title, this.onRestore, this.index);
+  CompletedItem(this.title, this.onRestore, this.index, {super.key});
 
   @override
   State<CompletedItem> createState() => _CompletedItemState();
@@ -29,10 +30,10 @@ class _CompletedItemState extends State<CompletedItem> {
 
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-         color: Color.fromRGBO( 44, 87, 116, 100),
+         color: const Color.fromRGBO( 44, 87, 116, 100),
 
         ),
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         child: Text(
           widget.title,
           style: GoogleFonts.poppins(

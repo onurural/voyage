@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,7 +20,7 @@ class RenameDialog extends StatefulWidget {
 
 class _RenameDialogState extends State<RenameDialog> {
   late TextEditingController _controller;
-  var errorText=Text("Please Provide A Name for The Document",style: GoogleFonts.poppins(
+  var errorText=Text('Please Provide A Name for The Document',style: GoogleFonts.poppins(
 
   ),);
   @override
@@ -45,9 +46,9 @@ class _RenameDialogState extends State<RenameDialog> {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               colors: [Color.fromRGBO(44, 87, 116, 100), Colors.grey],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -58,7 +59,7 @@ class _RenameDialogState extends State<RenameDialog> {
               BoxShadow(
                 color: Colors.black.withOpacity(0.2),
                 blurRadius: 8,
-                offset: Offset(0, 4),
+                offset: const Offset(0, 4),
               ),
             ],
           ),
@@ -69,14 +70,14 @@ class _RenameDialogState extends State<RenameDialog> {
               TextField(
                 controller: _controller,
                 decoration: InputDecoration(labelText: 'New name' ,labelStyle: GoogleFonts.poppins(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,
                     fontWeight: FontWeight.w500
                   )
                 )),
               ),
-              AnimatedCrossFade(firstChild: Container(), secondChild: errorText , crossFadeState: errorAppeared ? CrossFadeState.showSecond : CrossFadeState.showFirst, duration: Duration(milliseconds: 250)),
+              AnimatedCrossFade(firstChild: Container(), secondChild: errorText , crossFadeState: errorAppeared ? CrossFadeState.showSecond : CrossFadeState.showFirst, duration: const Duration(milliseconds: 250)),
 
 
               Row(
@@ -85,7 +86,7 @@ class _RenameDialogState extends State<RenameDialog> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(
+                    child: const Text(
                       'Cancel',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
@@ -102,7 +103,7 @@ class _RenameDialogState extends State<RenameDialog> {
                      });
                      }
                     },
-                    child: Text(
+                    child: const Text(
                       'Apply',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),

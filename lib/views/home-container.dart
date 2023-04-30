@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:voyage/ui-components/drawer-items.dart';
 import 'package:voyage/ui-components/drawer.widget.dart';
@@ -30,7 +32,6 @@ class _HomeConState extends State<HomeCon> {
       xOffset=300;
       yOffset=150;
       scaleFactor=0.6;
-      bool isDragging=false;
       isDrawerOpen=true;
 
     });
@@ -64,7 +65,7 @@ class _HomeConState extends State<HomeCon> {
 
   Widget buildDrawer() {
     return SafeArea(
-      child: Container(
+      child: SizedBox(
         width: xOffset,
 
         child: DrawerWidget(onSelectedItem: (DrawerItem value) {

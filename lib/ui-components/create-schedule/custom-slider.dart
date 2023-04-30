@@ -1,12 +1,15 @@
+// ignore_for_file: must_be_immutable, library_private_types_in_public_api, file_names
+
 import 'package:flutter/material.dart';
 
 class CustomSlider extends StatefulWidget {
   late final double initialValue;
   final Function(double,double) onChanged;
+  // ignore: prefer_typing_uninitialized_variables
   late var value;
 
 
-  CustomSlider(this.initialValue, this.onChanged, this.value);
+  CustomSlider(this.initialValue, this.onChanged, this.value, {super.key});
 
   @override
   _CustomSliderState createState() => _CustomSliderState();

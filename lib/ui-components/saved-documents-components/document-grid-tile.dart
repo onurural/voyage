@@ -1,8 +1,9 @@
+// ignore_for_file: library_private_types_in_public_api, file_names
+
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:animations/animations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:pdf_render/pdf_render.dart';
@@ -35,8 +36,8 @@ class DocumentGridTile extends StatefulWidget {
 
 class _DocumentGridTileState extends State<DocumentGridTile> {
   late Future<Image> thumbnailFuture;
-  Icon uncheckedIcon=Icon(Icons.check_circle_outline,color: Colors.white,size: 30,);
-  Icon checkedIcon=Icon(Icons.check_circle_rounded,color: Colors.white,size: 30,);
+  Icon uncheckedIcon=const Icon(Icons.check_circle_outline,color: Colors.white,size: 30,);
+  Icon checkedIcon=const Icon(Icons.check_circle_rounded,color: Colors.white,size: 30,);
   @override
   void initState() {
     super.initState();
@@ -80,7 +81,7 @@ class _DocumentGridTileState extends State<DocumentGridTile> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 4,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -88,7 +89,7 @@ class _DocumentGridTileState extends State<DocumentGridTile> {
                   header: GridTileBar(
                     title: Text(
                       path.basenameWithoutExtension(widget.file.path),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -141,7 +142,7 @@ class _DocumentGridTileState extends State<DocumentGridTile> {
                   borderRadius: BorderRadius.circular(50),
                   color: Colors.black.withOpacity(0.5),
                 ),
-                child: AnimatedCrossFade(firstChild: checkedIcon ,secondChild: uncheckedIcon, crossFadeState: widget.selected ? CrossFadeState.showFirst : CrossFadeState.showSecond, duration: Duration(milliseconds: 200), )
+                child: AnimatedCrossFade(firstChild: checkedIcon ,secondChild: uncheckedIcon, crossFadeState: widget.selected ? CrossFadeState.showFirst : CrossFadeState.showSecond, duration: const Duration(milliseconds: 200), )
                 ),
               ),
 

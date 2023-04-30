@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables, file_names, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/custom-error-dialog.dart';
 
 class FreeTimePerDayContainer extends StatefulWidget {
-  late var _startTime;
-  late var _endTime;
-  late var _timeDifference;
   ValueNotifier<bool> locked;
 
   final void Function(int) unlockNext;
@@ -27,7 +25,6 @@ class FreeTimePerDayContainer extends StatefulWidget {
 class _FreeTimePerDayContainerState extends State<FreeTimePerDayContainer> {
   var _startTime;
   var _endTime;
-  var _timeDifference;
 
   var activeDesign = BoxDecoration(
     color: const Color.fromRGBO(44, 87, 116, 100),
@@ -43,7 +40,7 @@ class _FreeTimePerDayContainerState extends State<FreeTimePerDayContainer> {
   var deactivatedDesign = BoxDecoration(
     color: const Color.fromRGBO(80, 120, 150, 1), // Darker color values
     borderRadius: BorderRadius.circular(16),
-    image: DecorationImage(
+    image: const DecorationImage(
       image: AssetImage('assets/Images/snowflake.png'),
       fit: BoxFit.cover,
     ),
@@ -58,8 +55,8 @@ class _FreeTimePerDayContainerState extends State<FreeTimePerDayContainer> {
 
 
   var buttonIcon = Icons.edit;
-String startText = " ";
-String endText = " ";
+String startText = ' ';
+String endText = ' ';
 
   void _showTimeRangePicker(BuildContext context) async {
     TimeOfDay? pickedStartTime = await showTimePicker(
@@ -68,12 +65,12 @@ String endText = " ";
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Color.fromRGBO(44, 87, 116, 1),
+            primaryColor: const Color.fromRGBO(44, 87, 116, 1),
             colorScheme: ThemeData.light().colorScheme.copyWith(
-              primary: Color.fromRGBO(44, 87, 116, 1),
+              primary: const Color.fromRGBO(44, 87, 116, 1),
               onPrimary: Colors.white,
             ),
-            buttonTheme: ButtonThemeData(
+            buttonTheme: const ButtonThemeData(
               textTheme: ButtonTextTheme.primary,
             ),
           ),
@@ -83,18 +80,19 @@ String endText = " ";
     );
 
     if (pickedStartTime != null) {
+      // ignore: use_build_context_synchronously
       TimeOfDay? pickedEndTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
         builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
-              primaryColor: Color.fromRGBO(44, 87, 116, 1),
+              primaryColor: const Color.fromRGBO(44, 87, 116, 1),
               colorScheme: ThemeData.light().colorScheme.copyWith(
-                primary: Color.fromRGBO(44, 87, 116, 1),
+                primary: const Color.fromRGBO(44, 87, 116, 1),
                 onPrimary: Colors.white,
               ),
-              buttonTheme: ButtonThemeData(
+              buttonTheme: const ButtonThemeData(
                 textTheme: ButtonTextTheme.primary,
               ),
             ),
@@ -105,9 +103,6 @@ String endText = " ";
 
       if (pickedEndTime != null) {
         setState(() {
-          final start = pickedStartTime.hour + pickedStartTime.minute / 60;
-          final end = pickedEndTime.hour + pickedEndTime.minute / 60;
-          _timeDifference = Duration(hours: (end - start).round());
           _startTime = pickedStartTime;
           _endTime = pickedEndTime;
 
@@ -139,7 +134,7 @@ String endText = " ";
         Padding(
         padding: const EdgeInsets.all(10),
         child: AnimatedContainer(
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
     curve: Curves.easeInOut,
     padding: const EdgeInsets.all(16.0),
     decoration: (locked && !started)
@@ -182,22 +177,22 @@ String endText = " ";
                   borderRadius: BorderRadius.circular(12),
                   color: Colors.white,
                 ),
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     horizontal: 16, vertical: 12),
                 child: Row(
                   mainAxisAlignment:
                   MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.access_time,
+                    const Icon(Icons.access_time,
                         color: Color.fromRGBO(
                             44, 87, 116, 100)),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
-                      startText == " " || endText == " "
+                      startText == ' ' || endText == ' '
                           ? 'Select availability hours'
                           : '$startText - $endText',
                       style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           color: Color.fromRGBO(
                               44, 87, 116, 100),
                           fontSize: 16,
@@ -205,8 +200,8 @@ String endText = " ";
                         ),
                       ),
                     ),
-                    SizedBox(width: 8),
-                    Icon(Icons.arrow_drop_down,
+                    const SizedBox(width: 8),
+                    const Icon(Icons.arrow_drop_down,
                         color: Color.fromRGBO(
                             44, 87, 116, 100)),
                   ],
@@ -223,20 +218,17 @@ String endText = " ";
                       widget.isFinished = true;
                       buttonIcon = Icons.done_outline_outlined;
 
-                      widget._startTime = _startTime;
-                      widget._endTime = _endTime;
-                      widget._timeDifference = _timeDifference;
                       widget.unlockNext(widget.index);
                       widget.onFinish(
                           context, widget.index);
                     } else {
                       showErrorDialog(context,
-                          "Please Select The Beginning and Ending Time for your trip ");
+                          'Please Select The Beginning and Ending Time for your trip ');
                     }
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: const Color.fromRGBO(
+                  backgroundColor: const Color.fromRGBO(
                       44, 87, 116, 100),
                   padding: const EdgeInsets.symmetric(
                       vertical: 16),

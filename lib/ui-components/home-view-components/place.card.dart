@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/models/place.dart';
-import 'package:voyage/ui-components/place-components/hero_dialog_route.dart';
-import 'package:voyage/views/place.view.dart';
 
 class PlaceCard extends StatelessWidget {
   final Place place;

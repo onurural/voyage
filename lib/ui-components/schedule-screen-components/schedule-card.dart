@@ -1,4 +1,5 @@
-import 'dart:convert';
+
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -10,7 +11,7 @@ class ScheduleCard extends StatefulWidget {
   final Schedule schedule;
   final double? maxHeight;
 
-  ScheduleCard(this.schedule, {Key? key, this.maxHeight}) : super(key: key);
+  const ScheduleCard(this.schedule, {Key? key, this.maxHeight}) : super(key: key);
 
   @override
   State<ScheduleCard> createState() => _ScheduleCardState();

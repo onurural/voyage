@@ -13,7 +13,6 @@ class MapsWidget extends StatefulWidget {
 
 class _MapsWidgetState extends State<MapsWidget> {
   final LatLng _center = const LatLng(37.7749, -122.4194);
-  GoogleMapController? _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +27,5 @@ class _MapsWidgetState extends State<MapsWidget> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    _controller = controller;
   }
 }

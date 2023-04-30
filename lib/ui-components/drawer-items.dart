@@ -1,5 +1,6 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DrawerItem {
@@ -17,30 +18,30 @@ class DrawerItem {
 class DrawerItems {
   static final profile = DrawerItem(
    
-    widget: Container(
+    widget: SizedBox(
       height: 120,
 
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children:  [
-            CircleAvatar(
+            const CircleAvatar(
               backgroundColor: Colors.transparent,
               radius: 30,
               backgroundImage: AssetImage('assets/Images/default_profile_picture.png'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Obada Qasem',
               style: GoogleFonts.poppins(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 )
               )
             ),
-            Divider(
+            const Divider(
               color: Colors.white,
               thickness: 3,
             ),

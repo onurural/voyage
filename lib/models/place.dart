@@ -43,7 +43,7 @@ class Place {
     icon = json['icon'];
     photoReference = json['photo_reference'];
     placeId = json['placeId'];
-    image = json['image'] != null ? new PlaceImage.fromJson(json['image']) : null;
+    image = json['image'] != null ?  PlaceImage.fromJson(json['image']) : null;
     if (json['address_component'] != null) {
       addressComponent = <AddressComponent>[];
       json['address_component'].forEach((v) {
@@ -63,28 +63,28 @@ class Place {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['formatted_adress'] = this.formattedAdress;
-    if (this.geometry != null) {
-      data['geometry'] = this.geometry!.toJson();
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
+    data['formatted_adress'] = formattedAdress;
+    if (geometry != null) {
+      data['geometry'] = geometry!.toJson();
     }
-    data['icon'] = this.icon;
-    data['photo_reference'] = this.photoReference;
-    data['placeId'] = this.placeId;
-    if (this.image != null) {
-      data['image'] = this.image!.toJson();
+    data['icon'] = icon;
+    data['photo_reference'] = photoReference;
+    data['placeId'] = placeId;
+    if (image != null) {
+      data['image'] = image!.toJson();
     }
-    if (this.addressComponent != null) {
+    if (addressComponent != null) {
       data['address_component'] =
-          this.addressComponent!.map((v) => v.toJson()).toList();
+          addressComponent!.map((v) => v.toJson()).toList();
     }
-    data['formatted_address'] = this.formattedAddress;
-    data['rating'] = this.rating;
-    data['user_ratings_total'] = this.userRatingsTotal;
+    data['formatted_address'] = formattedAddress;
+    data['rating'] = rating;
+    data['user_ratings_total'] = userRatingsTotal;
     if (reviews != null) {
-      data['reviews'] = this.reviews!.map((v) => v.toJson()).toList();
+      data['reviews'] = reviews!.map((v) => v.toJson()).toList();
     }
     data['category'] = category;
     return data;
@@ -99,20 +99,20 @@ class Geometry {
 
   Geometry.fromJson(Map<String, dynamic> json) {
     location = json['location'] != null
-        ? new Location.fromJson(json['location'])
+        ? Location.fromJson(json['location'])
         : null;
     viewport = json['viewport'] != null
-        ? new Viewport.fromJson(json['viewport'])
+        ? Viewport.fromJson(json['viewport'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.location != null) {
-      data['location'] = this.location!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (location != null) {
+      data['location'] = location!.toJson();
     }
-    if (this.viewport != null) {
-      data['viewport'] = this.viewport!.toJson();
+    if (viewport != null) {
+      data['viewport'] = viewport!.toJson();
     }
     return data;
   }
@@ -130,9 +130,9 @@ class Location {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lng'] = this.lng;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['lat'] = lat;
+    data['lng'] = lng;
     return data;
   }
 }
@@ -145,20 +145,20 @@ class Viewport {
 
   Viewport.fromJson(Map<String, dynamic> json) {
     northeast = json['northeast'] != null
-        ? new Location.fromJson(json['northeast'])
+        ? Location.fromJson(json['northeast'])
         : null;
     southwest = json['southwest'] != null
-        ? new Location.fromJson(json['southwest'])
+        ? Location.fromJson(json['southwest'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.northeast != null) {
-      data['northeast'] = this.northeast!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (northeast != null) {
+      data['northeast'] = northeast!.toJson();
     }
-    if (this.southwest != null) {
-      data['southwest'] = this.southwest!.toJson();
+    if (southwest != null) {
+      data['southwest'] = southwest!.toJson();
     }
     return data;
   }
@@ -176,9 +176,9 @@ class PlaceImage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['image'] = this.image;
-    data['contentType'] = this.contentType;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['image'] = image;
+    data['contentType'] = contentType;
     return data;
   }
 }
@@ -197,10 +197,10 @@ class AddressComponent {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['long_name'] = this.longName;
-    data['short_name'] = this.shortName;
-    data['types'] = this.types;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['long_name'] = longName;
+    data['short_name'] = shortName;
+    data['types'] = types;
     return data;
   }
 }
@@ -243,17 +243,17 @@ class Reviews {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['author_name'] = this.authorName;
-    data['author_url'] = this.authorUrl;
-    data['language'] = this.language;
-    data['original_language'] = this.originalLanguage;
-    data['profile_photo_url'] = this.profilePhotoUrl;
-    data['rating'] = this.rating;
-    data['relative_time_description'] = this.relativeTimeDescription;
-    data['text'] = this.text;
-    data['time'] = this.time;
-    data['translated'] = this.translated;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['author_name'] = authorName;
+    data['author_url'] = authorUrl;
+    data['language'] = language;
+    data['original_language'] = originalLanguage;
+    data['profile_photo_url'] = profilePhotoUrl;
+    data['rating'] = rating;
+    data['relative_time_description'] = relativeTimeDescription;
+    data['text'] = text;
+    data['time'] = time;
+    data['translated'] = translated;
     return data;
   }
 }

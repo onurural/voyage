@@ -1,6 +1,7 @@
+// ignore_for_file: use_build_context_synchronously, file_names
+
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:voyage/ui-components/saved-documents-components/rename-dialog.dart';
@@ -10,7 +11,7 @@ class ImageViewerScreen extends StatefulWidget {
   final VoidCallback refresh;
 
 
-  ImageViewerScreen(this.file, this.refresh);
+  const ImageViewerScreen(this.file, this.refresh, {super.key});
 
   @override
   State<ImageViewerScreen> createState() => _ImageViewerScreenState();
@@ -25,7 +26,7 @@ class _ImageViewerScreenState extends State<ImageViewerScreen> {
         elevation: 0,
         title: Text(
           path.basenameWithoutExtension(widget.file.path),
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
             letterSpacing: 1.5,
@@ -33,7 +34,7 @@ class _ImageViewerScreenState extends State<ImageViewerScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.delete, color: Colors.white),
+            icon: const Icon(Icons.delete, color: Colors.white),
             onPressed: () async {
               await widget.file.delete();
               widget.refresh();
@@ -41,7 +42,7 @@ class _ImageViewerScreenState extends State<ImageViewerScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.edit, color: Colors.white),
+            icon: const Icon(Icons.edit, color: Colors.white),
             onPressed: () async {
               final newName = await showDialog<String>(
                 context: context,

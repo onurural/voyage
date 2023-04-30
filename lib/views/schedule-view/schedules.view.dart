@@ -1,13 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:voyage/models/place.dart';
 import 'package:voyage/ui-components/schedule-screen-components/schedule-card.dart';
 import 'package:voyage/ui-components/schedule-screen-components/schedule.dart';
 
 class SchedulesScreen extends StatefulWidget {
   final List<Schedule> schedules;
 
-  SchedulesScreen(this.schedules);
+  // ignore: prefer_const_constructors_in_immutables
+  SchedulesScreen(this.schedules, {super.key});
 
   @override
   State<SchedulesScreen> createState() => _SchedulesScreenState();

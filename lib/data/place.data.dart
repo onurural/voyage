@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:voyage/utility/category.enum.dart';
+import 'package:voyage/category.enum.dart';
 import 'package:voyage/models/place.dart';
 import 'package:voyage/repository/place.repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
-import 'package:voyage/utility/page.enum.dart';
 
 const apiURL = 'service1-dot-voyage-368821.lm.r.appspot.com';
 const placeEndpoint = '/place';
@@ -22,24 +21,19 @@ class PlaceData extends PlaceRepository {
   List<Place> naturalPlaces = [];
   List<Place> mediterrainPlaces = [];
 
-  final pages = [6, 12, 18, 24, 30, 36, 42, 48];
-  var _lastPageNumber = -1;
-  final categories = ['Historic', 'Natural', 'City Vibes', 'Rural', 'Mediterrain'];
 
   @override
-  Future<List<Place>> fetchPlace(Page pageNumber) async {
-    
-    if (_lastPageNumber != pageNumber.index) {
-      var newPlaces = await _fetchPlaceFromServer(pageNumber);
-     places.addAll(newPlaces);
+  Future<List<Place>> fetchPlace() async {
+    if (places.isEmpty) {
+     places = await _fetchPlaceFromServer();
+     return places; 
     }
-    _lastPageNumber = pageNumber.index;
     return places;
   }
 
-  Future<List<Place>> _fetchPlaceFromServer(Page pageNumber) async {
+  Future<List<Place>> _fetchPlaceFromServer() async {
     try {
-        var url = Uri.https(apiURL, placeEndpoint, {'page' : '${pages[pageNumber.index]}'});
+        var url = Uri.https(apiURL, placeEndpoint);
         List<dynamic> data = [];
         final response = await http.get(url);
         if (response.statusCode == 200) {
@@ -59,37 +53,49 @@ class PlaceData extends PlaceRepository {
 
 
   @override
-  Future<List<Place>> fetchPlaceByCategory(CATEGORY category, Page pageNumber) async {
-    var selectedCategory = categories[category.index];
-    
-    Uri url = Uri.https(apiURL, '$placeEndpoint$categoryEndpoint', {
-      'name': selectedCategory,
-      'page': '${pageNumber.index}'
-    });
-    
-    var newPlace = await _fetchPlaceByCategoryFromServer(url);
-        
+  Future<List<Place>> fetchPlaceByCategory(CATEGORY category) async {
+    Uri url = Uri();
     switch (category) {
       case CATEGORY.historic:
-      historicPlaces.addAll(newPlace);
-      return historicPlaces;
-        
+         url = Uri.https(apiURL,
+        '$placeEndpoint$categoryEndpoint', {'name': 'Historic'});
+        if (historicPlaces.isEmpty) {
+          historicPlaces = await _fetchPlaceByCategoryFromServer(url);
+          return historicPlaces;
+        }
+        return historicPlaces;
       case CATEGORY.rural:
-        ruralPlaces.addAll(newPlace);
+        url = Uri.https(apiURL,
+        '$placeEndpoint$categoryEndpoint', {'name': 'Rural'});
+        if (ruralPlaces.isEmpty) {
+          ruralPlaces = await _fetchPlaceByCategoryFromServer(url);
+          return ruralPlaces;
+        }
         return ruralPlaces;
-
       case CATEGORY.natural:
-        naturalPlaces.addAll(newPlace);
+         url = Uri.https(apiURL,
+        '$placeEndpoint$categoryEndpoint', {'name': 'Natural'});
+        if (naturalPlaces.isEmpty) {
+          naturalPlaces = await _fetchPlaceByCategoryFromServer(url);
+          return naturalPlaces;
+        }
         return naturalPlaces;
-
       case CATEGORY.cityVibes:
-      cityVibesPlaces.addAll(newPlace);
+         url = Uri.https(apiURL,
+        '$placeEndpoint$categoryEndpoint', {'name': 'City Vibes'});
+        if (cityVibesPlaces.isEmpty) {
+          cityVibesPlaces = await _fetchPlaceByCategoryFromServer(url);
+          return cityVibesPlaces;
+        }
         return cityVibesPlaces;
-
       case CATEGORY.mediterrain:
-       mediterrainPlaces.addAll(newPlace);
+         url = Uri.https(apiURL,
+        '$placeEndpoint$categoryEndpoint', {'name': 'Mediterrain'});
+           if (mediterrainPlaces.isEmpty) {
+          mediterrainPlaces = await _fetchPlaceByCategoryFromServer(url);
+          return mediterrainPlaces;
+        }
         return mediterrainPlaces;
-
       default:
     }
     throw Exception('Enum is not found');

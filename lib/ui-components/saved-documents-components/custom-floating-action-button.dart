@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, file_names
+
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
@@ -54,7 +56,7 @@ class _CustomFloatingActionButtonState
               return CustomPaint(
                 painter: GlowingPainter(
                   progress: _animation.value,
-                  color: Color.fromRGBO(37, 154, 180, 100).withOpacity(0.3),
+                  color: const Color.fromRGBO(37, 154, 180, 100).withOpacity(0.3),
                 ),
                 size: Size(56 + _animation.value * 40, 56 + _animation.value * 40),
               );
@@ -69,7 +71,7 @@ class _CustomFloatingActionButtonState
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color.fromRGBO(37, 154, 180, 100).withOpacity(0.9),
+                  const Color.fromRGBO(37, 154, 180, 100).withOpacity(0.9),
                  Colors.grey
                 ],
               ),
@@ -78,7 +80,7 @@ class _CustomFloatingActionButtonState
                   color: Colors.black.withOpacity(0.3),
                   spreadRadius: 1,
                   blurRadius: 8,
-                  offset: Offset(0, 4),
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),

@@ -1,5 +1,7 @@
 
 
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:voyage/ui-components/drawer-app-bar.dart';
 
@@ -27,21 +29,21 @@ class ScreenViewer extends StatefulWidget {
 class _ScreenViewerState extends State<ScreenViewer> {
 Widget activeScreen(){
  switch(widget.index){
-   case "Home":
-     return HomePage();
-   case "Notifications":
-     return NotificationScreen();
-   case "Settings":
-     return SettingsPage();
-   case "Privacy Policies":
-     return PrivacyPolicyPage();
-   case "Terms of Service":
-     return TermsOfServicePage();
-   case "Contact Us":
-     return ContactUsPage();
+   case 'Home':
+     return const HomePage();
+   case 'Notifications':
+     return const NotificationScreen();
+   case 'Settings':
+     return const SettingsPage();
+   case 'Privacy Policies':
+     return const PrivacyPolicyPage();
+   case 'Terms of Service':
+     return const TermsOfServicePage();
+   case 'Contact Us':
+     return const ContactUsPage();
 
    default :
-     return HomePage();
+     return const HomePage();
 
 
  }
