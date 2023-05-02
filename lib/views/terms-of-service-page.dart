@@ -1,10 +1,3 @@
-// ignore: file_names
-// ignore: file_names
-// ignore: file_names
-// ignore: file_names
-// ignore: file_names
-// ignore_for_file: file_names, duplicate_ignore
-
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -22,20 +15,20 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
     return Scaffold(
       
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20.0),
+            SizedBox(height: 20.0),
             Center(
               // ignore: deprecated_member_use
               child: TypewriterAnimatedTextKit(
-                text: const ['Voyage Terms of Service'],
+                text: ['Voyage Terms of Service'],
                 textStyle: const TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                 ),
-                speed: const Duration(milliseconds: 200),
+                speed: Duration(milliseconds: 200),
               ),
             ),
             const SizedBox(height: 20.0),
