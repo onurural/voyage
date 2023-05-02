@@ -12,6 +12,7 @@ import 'package:voyage/views/show-more.view.dart';
 import 'package:voyage/ui-components/place-components/hero_dialog_route.dart';
 import 'place-small-card.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:voyage/utility/page.enum.dart' as page;
 
 
 class TopVisitedRowList extends StatefulWidget {
@@ -59,7 +60,7 @@ class _TopVisitedRowListState extends State<TopVisitedRowList> {
   @override
   void initState() {
     super.initState();
-    _placeBloc.add(FetchPlace());
+    _placeBloc.add(FetchPlace(page.Page.first));
     _controller.addListener(_scrollListener);
     globalId = generateRandomString(5);
 

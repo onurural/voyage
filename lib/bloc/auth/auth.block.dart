@@ -37,6 +37,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(SavingUserToMongoDBError());
         }
       }
+      if (event is GetUserCredential) {
+        emit(CredentialLoadingState());
+        try {
+          var user = await authRepository.getUserCredential(userId: event.userId);
+          emit(CredentialSuccessState(user));  
+        } catch (e) {
+          emit(CredentialErrorState(e.toString()));
+        }
+        
+      }
     });
   }
 }

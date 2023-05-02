@@ -2,9 +2,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage/bloc/place/place.event.dart';
 import 'package:voyage/bloc/place/place.state.dart';
-import 'package:voyage/category.enum.dart';
 import 'package:voyage/data/place.data.dart';
 import 'package:voyage/models/place.dart';
+import 'package:voyage/utility/category.enum.dart';
 
 class PlaceBloc extends Bloc<PlaceEvent, PlaceState> {
   final PlaceData placeData = PlaceData();

@@ -1,7 +1,12 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:voyage/bloc/auth/auth.block.dart';
+import 'package:voyage/bloc/auth/auth.event.dart';
+import 'package:voyage/bloc/auth/auth.state.dart';
+import 'package:voyage/data/auth.data.dart';
 
 import '../../ui-components/profile-components/city-cards.dart';
 import '../../ui-components/profile-components/dashboard.dart';
@@ -14,6 +19,15 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final AuthBloc _authBloc = new AuthBloc();
+  final AuthData _authData = new AuthData();
+
+  @override
+  void initState() {
+    super.initState();
+    var userId = _authData.getCurrentUserId();
+    _authBloc.add(GetUserCredential(userId!));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,31 +59,53 @@ class _ProfilePageState extends State<ProfilePage> {
                  )
                ),
                const SizedBox(height: 10),
-               Text(
-                 'Your Name',
-                 style: GoogleFonts.pacifico(
-                     textStyle:  const TextStyle(fontSize: 24, fontWeight: FontWeight.w800)
+               BlocProvider(
+                create: (_) => _authBloc,
+                 child: BlocConsumer<AuthBloc, AuthState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is CredentialSuccessState) {
+                      return  Text(
+                     '${state.model.userName}',
+                     style: GoogleFonts.pacifico(
+                         textStyle:  const TextStyle(fontSize: 24, fontWeight: FontWeight.w800)
+                     ),
+                      );
+                    }
+                    if (state is CredentialLoadingState) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (state is CredentialFailedState) {
+                      return const Text('Failed to login please try again');
+                    }
+                    if (state is CredentialErrorState) {
+                      return const Text('Error while getting user credential');
+                    }
+                    return const Text('State not found');
+                  },
                  ),
                ),
              ],
            ),
 
             const SizedBox(height: 20),
-            Column(
-              children: [
-                const SizedBox(height: 20),
-                Text(
-                  'Interested Cities',
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w800,
+            Container(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    'Interested Cities',
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        fontSize: 30,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
-                ),
-                CityCards(),
-              ],
+                  CityCards(),
+                ],
+              ),
             ),
             const Divider(
               color: 	Color.fromRGBO(211, 211, 211,100),

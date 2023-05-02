@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:voyage/category.enum.dart';
 import 'package:voyage/models/place.dart';
 import 'package:voyage/repository/place.repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
+import 'package:voyage/utility/category.enum.dart';
 
 const apiURL = 'service1-dot-voyage-368821.lm.r.appspot.com';
 const placeEndpoint = '/place';
