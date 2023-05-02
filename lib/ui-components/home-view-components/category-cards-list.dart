@@ -65,10 +65,9 @@ class _CategoryCardsListState extends State<CategoryCardsList>
     Category('Natural', const CategoryPlacesList(), CupertinoIcons.tree),
     Category('City Vibes', const CategoryPlacesList(), CupertinoIcons.tree),
     Category('Rural', const CategoryPlacesList(), Icons.shopping_bag),
-    Category(
-        'Medditerrain', const CategoryPlacesList(), Icons.sports_volleyball),
+    Category('Medditerrain', const CategoryPlacesList(), Icons.sports_volleyball),
   ];
-
+  
   List<CategoryCard> categoryCards = [];
 
   void fillInTheList() {
@@ -158,16 +157,16 @@ class _CategoryCardsListState extends State<CategoryCardsList>
               _tabIndex = value;
               if (value == 0) {
                 return _placeBloc.add(FetchHistoricPlace(page.Page.first));
-              }
+              } 
               if (value == 1) {
-                return _placeBloc.add(FetchNaturalPlace(page.Page.first));
-              }
+                 return _placeBloc.add(FetchNaturalPlace(page.Page.first));
+              } 
               if (value == 2) {
                 return _placeBloc.add(FetchCityVibesPlace(page.Page.first));
-              }
+              } 
               if (value == 3) {
                 return _placeBloc.add(FetchRuralPlace(page.Page.first));
-              }
+              } 
               if (value == 4) {
                 return _placeBloc.add(FetchMediterrainPlace(page.Page.first));
               }
@@ -184,15 +183,13 @@ class _CategoryCardsListState extends State<CategoryCardsList>
           ),
           SizedBox(
             height: 250,
-            child: TabBarView(
-                controller: _tabController,
-                children: [
-                  place(),
-                  place(),
-                  place(),
-                  place(),
-                  place(),
-                ]),
+            child: TabBarView(controller: _tabController, children: [
+              place(),
+              place(),
+              place(),
+              place(),
+              place(),
+            ]),
           )
         ],
       ),
@@ -201,12 +198,9 @@ class _CategoryCardsListState extends State<CategoryCardsList>
 
   Future<void> refresh() async {
     if (refreshCounter < 2) {
-      page.Page pageValue = page.Page.values
-          .where((element) => element.index == refreshCounter)
-          .first;
+      page.Page pageValue = page.Page.values.where((element) => element.index == refreshCounter).first;
       refreshCounter++;
-      CATEGORY category =
-          CATEGORY.values.where((element) => element.index == _tabIndex).first;
+      CATEGORY category = CATEGORY.values.where((element) => element.index == _tabIndex).first;
       await _updateCategory(category, pageValue);
     }
   }
