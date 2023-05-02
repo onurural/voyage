@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,9 +5,8 @@ import 'package:voyage/bloc/auth/auth.block.dart';
 import 'package:voyage/bloc/auth/auth.event.dart';
 import 'package:voyage/bloc/auth/auth.state.dart';
 import 'package:voyage/data/auth.data.dart';
-
-import '../../ui-components/profile-components/city-cards.dart';
-import '../../ui-components/profile-components/dashboard.dart';
+import 'package:voyage/ui-components/profile-components/city-cards.dart';
+import 'package:voyage/ui-components/profile-components/dashboard.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

@@ -15,20 +15,20 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
     return Scaffold(
       
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Center(
               // ignore: deprecated_member_use
               child: TypewriterAnimatedTextKit(
-                text: ['Voyage Terms of Service'],
+                text: const ['Voyage Terms of Service'],
                 textStyle: const TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                 ),
-                speed: Duration(milliseconds: 200),
+                speed: const Duration(milliseconds: 200),
               ),
             ),
             const SizedBox(height: 20.0),

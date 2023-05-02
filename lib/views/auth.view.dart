@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../ui-components/auth-components/forget-password-widget.dart';
-import '../ui-components/auth-components/log-in-widget.dart';
-import '../ui-components/auth-components/sign-up-widget.dart';
+import 'package:voyage/ui-components/auth-components/forget-password-widget.dart';
+import 'package:voyage/ui-components/auth-components/log-in-widget.dart';
+import 'package:voyage/ui-components/auth-components/sign-up-widget.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
