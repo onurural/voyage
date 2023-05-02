@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SearchBarView extends StatelessWidget {
-  const SearchBarView({Key? key}) : super(key: key);
+   const SearchBarView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const TextField(
+    return  const TextField(
       decoration: InputDecoration(
           labelText: 'Search',
           hintText: 'Search',

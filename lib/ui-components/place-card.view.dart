@@ -4,7 +4,7 @@ class PlaceCardView extends StatelessWidget {
   final String title;
 
 
-  const PlaceCardView(this.title, {super.key});
+   const PlaceCardView(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
