@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../ui-components/auth-components/forget-password-widget.dart';
 import '../ui-components/auth-components/log-in-widget.dart';
 import '../ui-components/auth-components/sign-up-widget.dart';
-
-
-
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -34,7 +30,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   void _navigateTo(int pageIndex) {
     _pageController.animateToPage(
       pageIndex,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
@@ -43,18 +39,75 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: PageView(
-          controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            SignupWidget( (index) => _navigateTo(index.toInt())),
-
-            LoginWidget( (index) => _navigateTo(index.toInt())),
-            ForgotPasswordWidget( ( index) => _navigateTo(index.toInt())),
-
-          ],
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.blue,
+                Colors.blue.shade200,
+              ],
+            ),
+          ),
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: Image.asset(
+                    'assets/Images/Logo.png',
+                    width: 120,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: CustomPaint(
+                  painter: _BackgroundShapePainter(),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    child: PageView(
+                      controller: _pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        SignupWidget((index) => _navigateTo(index.toInt())),
+                        LoginWidget((index) => _navigateTo(index.toInt())),
+                        ForgotPasswordWidget((index) => _navigateTo(index.toInt())),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+}
+
+class _BackgroundShapePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint();
+    paint.color = Colors.white;
+    paint.style = PaintingStyle.fill;
+
+    var path = Path();
+    path.moveTo(0, 0);
+    path.quadraticBezierTo(size.width * 0.5, size.height * 0.25, size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }

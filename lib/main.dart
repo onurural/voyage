@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:voyage/views/auth.dart';
-import 'package:voyage/views/log-in.view.dart';
-//import 'package:voyage/views/main-connector.dart';
+
+
 
 import 'firebase_options.dart';
 
