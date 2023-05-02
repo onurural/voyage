@@ -6,9 +6,6 @@ import '../ui-components/auth-components/forget-password-widget.dart';
 import '../ui-components/auth-components/log-in-widget.dart';
 import '../ui-components/auth-components/sign-up-widget.dart';
 
-
-
-
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
 
@@ -45,10 +42,9 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       body: SafeArea(
         child: PageView(
           controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             SignupWidget( (index) => _navigateTo(index.toInt())),
-
             LoginWidget( (index) => _navigateTo(index.toInt())),
             ForgotPasswordWidget( ( index) => _navigateTo(index.toInt())),
 
