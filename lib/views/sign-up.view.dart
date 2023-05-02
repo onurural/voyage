@@ -393,7 +393,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: () {
                       _authBloc.add(SignUpRequest(_emailController.text, _passwordController.text));
                     }),
-              )),
+              )
+              ),
         );
   }
 }
