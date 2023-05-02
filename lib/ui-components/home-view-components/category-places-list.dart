@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +21,6 @@ class CategoryPlacesList extends StatefulWidget {
 }
 
 class _CategoryPlacesListState extends State<CategoryPlacesList> with AutomaticKeepAliveClientMixin {
-  final PlaceBloc _placeBloc = PlaceBloc();
   bool buttonViewed = false;
   var globalId = '';
 
@@ -78,7 +79,7 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> with AutomaticK
           width: double.infinity,
           height: 500,
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: _buildPlaceCard(),
           ),
         ),
