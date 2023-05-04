@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class MatrixElement extends StatefulWidget {
   final String title;
-   double rate=0;
+   double rate=1;
   bool isChanged = false;
 
   MatrixElement({required this.title, Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class MatrixElement extends StatefulWidget {
 }
 
 class _MatrixElementState extends State<MatrixElement> {
-  double rate = 0;
+  double rate = 1;
   late List<IconData> icons;
   late List<String> labels;
   late Color activeTrackColor;
@@ -33,47 +33,50 @@ class _MatrixElementState extends State<MatrixElement> {
     super.initState();
     icons = [
       Icons.sentiment_very_dissatisfied,
-      Icons.sentiment_dissatisfied,
-      Icons.sentiment_neutral,
-      Icons.sentiment_satisfied,
+      // Icons.sentiment_dissatisfied,
+      // Icons.sentiment_neutral,
+      // Icons.sentiment_satisfied,
       Icons.sentiment_very_satisfied,
     ];
     labels = [
-      'Very Dissatisfied',
-      'Dissatisfied',
-      'Neutral',
-      'Satisfied',
-      'Very Satisfied',
+      // 'Very Dissatisfied',
+      // 'Dissatisfied',
+      // 'Neutral',
+      // 'Satisfied',
+      // 'Very Satisfied',
+      'Not Wanted',
+      'Wanted'
+
     ];
     activeTrackColor = Colors.blue;
     inactiveTrackColor = Colors.grey;
     thumbColor = Colors.blue;
     overlayColor = Colors.transparent;
-    shownIcon = icons[2];
-    shownLabel = labels[2];
+    shownIcon = icons[1];
+    shownLabel = labels[1];
     gradientDecorations = [
       const LinearGradient(
           colors: [Colors.red, Colors.grey],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight),
-      const LinearGradient(
-          colors: [Colors.redAccent, Colors.grey],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight),
-      const LinearGradient(
-          colors: [Colors.amber, Colors.grey],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight),
-      const LinearGradient(
-          colors: [Colors.lightGreen, Colors.grey],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight),
+      // const LinearGradient(
+      //     colors: [Colors.redAccent, Colors.grey],
+      //     begin: Alignment.centerLeft,
+      //     end: Alignment.centerRight),
+      // const LinearGradient(
+      //     colors: [Colors.amber, Colors.grey],
+      //     begin: Alignment.centerLeft,
+      //     end: Alignment.centerRight),
+      // const LinearGradient(
+      //     colors: [Colors.lightGreen, Colors.grey],
+      //     begin: Alignment.centerLeft,
+      //     end: Alignment.centerRight),
       const LinearGradient(
           colors: [Colors.green, Colors.grey],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight),
     ];
-    selectedGradient = gradientDecorations[2];
+    selectedGradient = gradientDecorations[1];
   }
 
   @override
@@ -138,7 +141,7 @@ class _MatrixElementState extends State<MatrixElement> {
                       ),
                       child: Slider(
                         value: rate,
-                        min: -1,
+                        min: 0,
                         max: 1,
                         divisions: icons.length - 1,
                         onChanged: (double value) {
@@ -146,10 +149,10 @@ class _MatrixElementState extends State<MatrixElement> {
                             widget.isChanged = true;
                             rate = value;
                             widget.rate = rate;
-                            int index = ((rate + 1) * 2).toInt();
-                            shownIcon = icons[index];
-                            shownLabel = labels[index];
-                            selectedGradient = gradientDecorations[index];
+                            // int index = ((rate + 1) * 2).toInt();
+                            shownIcon = icons[value.toInt()];
+                            shownLabel = labels[value.toInt()];
+                            selectedGradient = gradientDecorations[value.toInt()];
                           });
                         },
                       ),

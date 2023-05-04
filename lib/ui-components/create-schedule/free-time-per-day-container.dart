@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/custom-error-dialog.dart';
 
 class FreeTimePerDayContainer extends StatefulWidget {
+  late TimeOfDay beginTime;
+  late TimeOfDay endTime;
   ValueNotifier<bool> locked;
 
   final void Function(int) unlockNext;
@@ -217,7 +219,8 @@ String endText = ' ';
                         _endTime != null) {
                       widget.isFinished = true;
                       buttonIcon = Icons.done_outline_outlined;
-
+                      widget.beginTime=_startTime;
+                      widget.endTime=_endTime;
                       widget.unlockNext(widget.index);
                       widget.onFinish(
                           context, widget.index);
