@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:voyage/ui-components/custom-error-dialog.dart';
 
-import '../../bloc/auth/auth.block.dart';
+import '../../bloc/auth/auth.bloc.dart';
 import '../../bloc/auth/auth.event.dart';
 import '../../bloc/auth/auth.state.dart';
 import '../../data/auth.data.dart';

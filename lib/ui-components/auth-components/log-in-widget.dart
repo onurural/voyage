@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:voyage/ui-components/custom-error-dialog.dart';
 
-import '../../bloc/auth/auth.block.dart';
+import '../../bloc/auth/auth.bloc.dart';
 import '../../bloc/auth/auth.event.dart';
 import '../../bloc/auth/auth.state.dart';
 import '../../views/main-connector.dart';

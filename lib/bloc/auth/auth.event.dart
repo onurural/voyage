@@ -23,8 +23,3 @@ class SaveUserToMongoDB extends AuthEvent {
     final String userId;
     SaveUserToMongoDB(this.email, this.userId, this.userName);
 }
-
-class GetUserCredential extends AuthEvent {
-    final String userId;
-    GetUserCredential(this.userId);
-}
