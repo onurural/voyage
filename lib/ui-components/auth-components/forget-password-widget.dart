@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class ForgotPasswordWidget extends StatefulWidget {
@@ -35,7 +36,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Forgot Password', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+             Text('Forgot Password', style: GoogleFonts.poppins(textStyle: (TextStyle(fontSize: 32, fontWeight: FontWeight.bold))),),
             const SizedBox(height: 40),
             Form(
               key: _formKey,
@@ -46,10 +47,13 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                     decoration: InputDecoration(
                       labelText: 'Email',
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                        borderSide: BorderSide(color: const Color.fromRGBO(80, 120, 150, 1), width: 2.0),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                        borderSide: BorderSide(color: const Color.fromRGBO(80, 120, 150, 1), width: 2.0),
+                      ),
+                      errorBorder:   OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red,width: 2.0),
                       ),
                     ),
                     onChanged: (value) => _email = value.trim(),
@@ -71,9 +75,17 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
               child: const Text('Back to Login'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
+            MaterialButton(
+
               onPressed: _onResetPasswordButtonPressed,
-              child: const Text('Reset Password'),
+              child: Container(child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:  Text('Reset Password' , style: GoogleFonts.poppins(textStyle:TextStyle(
+                  color: Colors.white,
+
+                ) ),),
+              ), decoration: (BoxDecoration (color: const Color.fromRGBO(80, 120, 150, 1),)),),
+
             ),
           ],
         ),
