@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:voyage/bloc/auth/auth.block.dart';
+import 'package:voyage/bloc/auth/auth.bloc.dart';
 import 'package:voyage/bloc/auth/auth.event.dart';
 import 'package:voyage/bloc/auth/auth.state.dart';
 import 'package:voyage/views/forget-password.view.dart';

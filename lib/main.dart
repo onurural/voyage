@@ -4,7 +4,6 @@ import 'package:voyage/views/auth.view.dart';
 
 
 
-
 import 'firebase_options.dart';
 
 Future<void> main() async {

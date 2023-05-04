@@ -1,18 +1,11 @@
-
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:voyage/models/interested-city.dart';
 
 class CityCards extends StatelessWidget {
-  final List<String> cities = [
-    'New York',
-    'Los Angeles',
-    'Chicago',
-// Add more city names here
-  ];
+  final List<InterestedCity> cities;
 
-   CityCards({super.key});
+  const CityCards({super.key, required this.cities});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +31,7 @@ class CityCards extends StatelessWidget {
               ),
             ],
           ),
-          child: Text(city,
+          child: Text(city.placeNameStringValue ?? 'null',
               style: GoogleFonts.poppins(
                   textStyle: const TextStyle(
                     color: Colors.white,
