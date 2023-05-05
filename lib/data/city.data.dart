@@ -1,27 +1,37 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:voyage/models/autocomplete-prediction.dart';
 import 'package:voyage/repository/city.repository.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 class CityData implements CityRepository {
   @override
-  Future<List<String>> fetchCities(String query) async {
-    final apiKey = '48d84f3ef5msh886f23848ca2383p1b7a13jsnd16b3aad5029';
-    final url =
-        'https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=$query&sort=name&limit=10';
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
-        'X-RapidAPI-Key': apiKey,
-      },
-    );
+  Future<List<Predictions>?> fetchCities(String query) async {
+    var apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final List<dynamic> cityData = data['data'];
-      return cityData.map((city) => city['name'] as String).toList();
-    } else {
-      throw Exception('Failed to load cities');
+    try {
+      var url = Uri.https('maps.googleapis.com', '/maps/api/place/autocomplete/json', 
+      {
+        'input': query,
+        'key': apiKey
+      });
+
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+         if (response.body.isNotEmpty) {
+          final Map<String, dynamic> decodedPrediction = json.decode(response.body);
+          AutocompletePrediction prediction = AutocompletePrediction.fromJson(decodedPrediction);
+          return prediction.predictions;
+        }
+        return null; 
+      }
+      throw HttpException('Unexpected status code: ${response.statusCode}');
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
     }
   }
 }

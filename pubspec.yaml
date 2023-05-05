@@ -71,6 +71,7 @@ dependencies:
   flutter_animator: ^3.2.2
   logging: ^1.1.1
   email_validator: ^2.0.1
+  flutter_dotenv: ^5.0.2
 
 
 
@@ -100,6 +101,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - .env
     - assets/Images/Logo.png
     - assets/Images/ContainerBackgroundImage.jpg
     - assets/Images/1.jpeg

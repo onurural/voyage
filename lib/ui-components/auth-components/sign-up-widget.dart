@@ -44,7 +44,7 @@ class _SignupWidgetState extends State<SignupWidget> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        print('No image selected.');
+        debugPrint('No image selected.');
       }
     });
   }

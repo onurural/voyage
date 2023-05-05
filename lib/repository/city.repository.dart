@@ -1,6 +1,5 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+ import '../models/autocomplete-prediction.dart';
 
- abstract class CityRepository {
-  Future<List<String>> fetchCities(String query);
+abstract class CityRepository {
+  Future<List<Predictions>?> fetchCities(String query);
 }

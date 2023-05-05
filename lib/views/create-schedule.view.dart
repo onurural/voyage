@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:voyage/bloc/autocomplete/autocomplete.bloc.dart';
 import 'package:voyage/ui-components/create-schedule/budget-container.dart';
 import 'package:voyage/ui-components/create-schedule/cities-search-bar.dart';
 import 'package:voyage/ui-components/create-schedule/completed-item.dart';
 import 'package:voyage/ui-components/create-schedule/create-schedule-process-indicator.dart';
 import 'package:voyage/ui-components/create-schedule/date-begin-end-container.dart';
 import 'package:voyage/ui-components/create-schedule/free-time-per-day-container.dart';
+import 'package:voyage/ui-components/create-schedule/interest-container.dart';
+import 'package:voyage/ui-components/create-schedule/trip-companions-container.dart';
 import 'package:voyage/ui-components/custom-error-dialog.dart';
-import 'package:voyage/ui-components/home-view-components/search-bar.dart';
 import 'package:voyage/views/select-place.view.dart';
 
-import '../bloc/city-search-bar/city_bloc.dart';
-import '../data/city.data.dart';
-import '../ui-components/create-schedule/interest-container.dart';
-import '../ui-components/create-schedule/trip-companions-container.dart';
+
+
+
 
 class CreateScheduleScreen extends StatefulWidget {
   const CreateScheduleScreen({Key? key}) : super(key: key);
@@ -33,6 +34,7 @@ class _CreateScheduleScreenState extends State<CreateScheduleScreen> with Ticker
     }
   }
 List<int> correctingIssuesList=[0,0,0,0,0];
+
 
 
 var finishedTitles=['Date','Free-Time','Budget','Trip Companions','Interests'];
@@ -202,9 +204,9 @@ var searchBar=SearchBarView();
         ),
 
              Padding(
-              padding: EdgeInsets.all(10),
-              child: BlocProvider<CityBloc>(
-                create: (context) => CityBloc(CityData()),
+              padding: const EdgeInsets.all(10),
+              child: BlocProvider<AutocompleteBloc>(
+                create: (context) => AutocompleteBloc(),
                 child: searchBar,
               ),
             ),
