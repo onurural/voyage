@@ -16,6 +16,7 @@ class CityData implements CityRepository {
       var url = Uri.https('maps.googleapis.com', '/maps/api/place/autocomplete/json', 
       {
         'input': query,
+        'types': '(cities)',
         'key': apiKey
       });
 
