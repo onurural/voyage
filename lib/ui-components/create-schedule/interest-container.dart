@@ -91,7 +91,7 @@ class _InterestContainerState extends State<InterestContainer> {
 
                 for (var element in matrixes) {
                   widget.preferences
-                      .putIfAbsent(element.title, () => element.rate);
+                      .putIfAbsent(element.title.toLowerCase(), () => element.rate);
                 }
                 widget.isFinished = true;
                 widget.unlockNext(widget.index);

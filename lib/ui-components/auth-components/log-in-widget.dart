@@ -9,6 +9,7 @@ import '../../bloc/auth/auth.bloc.dart';
 import '../../bloc/auth/auth.event.dart';
 import '../../bloc/auth/auth.state.dart';
 import '../../views/main-connector.dart';
+import 'package:flutter/material.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function(double) onNavigate;
@@ -53,7 +54,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               children: [
                 Text(
                   'Log In',
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                       textStyle: const TextStyle(
                           color: Colors.white,
                           fontSize: 23,
@@ -98,7 +99,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-    const Text('Login', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+     Text('Log In', style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 32, fontWeight: FontWeight.bold))),
     const SizedBox(height: 40),
     Form(
     key: _formKey,
@@ -108,12 +109,16 @@ class _LoginWidgetState extends State<LoginWidget> {
     keyboardType: TextInputType.emailAddress,
     decoration: InputDecoration(
     labelText: 'Email',
+    labelStyle: GoogleFonts.poppins(),
     focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.blue, width: 2.0),
+    borderSide: BorderSide(color: const Color.fromRGBO(80, 120, 150, 1), width: 2.0),
     ),
     enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.blue, width: 2.0),
+    borderSide: BorderSide(color:const Color.fromRGBO(80, 120, 150, 1), width: 2.0),
     ),
+      errorBorder:   OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.red,width: 2.0),
+      ),
     ),
     onChanged: (value) => _email = value.trim(),
     validator: (value) {
@@ -130,13 +135,16 @@ class _LoginWidgetState extends State<LoginWidget> {
         obscureText: true,
         decoration: InputDecoration(
           labelText: 'Password',
+          labelStyle: GoogleFonts.poppins(),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 2.0),
+            borderSide: BorderSide(color: const Color.fromRGBO(80, 120, 150, 1), width: 2.0),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 2.0),
+            borderSide: BorderSide(color:const Color.fromRGBO(80, 120, 150, 1),width: 2.0),
           ),
-        ),
+          errorBorder:   OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.red,width: 2.0),
+        ),),
         onChanged: (value) => _password = value,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -144,6 +152,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           } else if (value.length < 6) {
             return 'Password must be at least 6 characters';
           }
+
           return null;
         },
       ),
@@ -169,7 +178,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         width: double.infinity,
         height: 50,
         decoration: BoxDecoration(
-          color: Colors.blue,
+          color: const Color.fromRGBO(80, 120, 150, 1),
           borderRadius: BorderRadius.circular(5),
         ),
         child: logInButton(),

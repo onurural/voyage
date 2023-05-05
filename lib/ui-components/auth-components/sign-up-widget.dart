@@ -29,6 +29,9 @@ class _SignupWidgetState extends State<SignupWidget> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
+  String _firstName = '';
+  String _lastName = '';
+
   final AuthBloc _authBloc = AuthBloc();
   final AuthData _authData = AuthData();
   File? _image;
@@ -41,7 +44,7 @@ class _SignupWidgetState extends State<SignupWidget> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        print('No image selected.');
+        debugPrint('No image selected.');
       }
     });
   }
@@ -60,7 +63,7 @@ class _SignupWidgetState extends State<SignupWidget> {
     return BlocProvider(
       create: (_) => _authBloc,
       child: MaterialButton(
-          color: Colors.blue,
+          color: const Color.fromRGBO(80, 120, 150, 1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -68,13 +71,19 @@ class _SignupWidgetState extends State<SignupWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Register',
-                  style: GoogleFonts.openSans(
-                      textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 23,
-                          fontWeight: FontWeight.w800)),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      'Register',
+                      style: GoogleFonts.poppins(
+                          textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 23,
+                              fontWeight: FontWeight.w800)),
+                    ),
+                  ),
                 ),
                 BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
@@ -124,6 +133,47 @@ class _SignupWidgetState extends State<SignupWidget> {
       key: _formKey,
       child: Column(
         children: [
+          Container(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      labelText: 'First Name',
+                      labelStyle: TextStyle(fontSize: 18),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      _firstName = value;
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        labelText: 'Last Name',
+                        labelStyle: TextStyle(fontSize: 18),
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {
+                        _lastName = value;
+                      },
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
@@ -168,10 +218,10 @@ class _SignupWidgetState extends State<SignupWidget> {
               TextButton.icon(
                 onPressed: getImage,
                 icon: Icon(Icons.photo_camera),
-                label: Text("Upload Picture"),
+                label: Text("Upload Profile Picture"),
               ),
               _image == null
-                  ? Text('No image selected.')
+                  ? Text('No image.', style: TextStyle(color : Colors.blueGrey),)
                   : Image.file(_image!, height: 50, width: 50),
             ],
           ),

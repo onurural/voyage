@@ -52,7 +52,7 @@ dependencies:
   equatable: ^2.0.5
   firebase_analytics: ^10.2.1
   get_it: ^7.2.0
-  flutter_staggered_grid_view: ^0.6.2
+  flutter_staggered_grid_view: ^0.4.0
   fl_chart: ^0.36.0
   file_picker: ^5.2.7
   flutter_native_image: ^0.0.6+1
@@ -71,6 +71,10 @@ dependencies:
   flutter_animator: ^3.2.2
   logging: ^1.1.1
   email_validator: ^2.0.1
+  flutter_dotenv: ^5.0.2
+
+
+
 
 
 
@@ -97,6 +101,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - .env
     - assets/Images/Logo.png
     - assets/Images/ContainerBackgroundImage.jpg
     - assets/Images/1.jpeg

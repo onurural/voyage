@@ -143,7 +143,7 @@ class _CategoryPlacesListState extends State<CategoryPlacesList> with AutomaticK
       itemCount: 6,
       itemBuilder: ((context, index) {
         return BlocProvider(
-          create: (context) => PlaceBloc(), // Create a new instance of PlaceBloc for each item
+          create: (context) => PlaceBloc(),
           child: BlocConsumer<PlaceBloc, PlaceState>(
             listener: (context, state) {},
             builder: (context, state) {

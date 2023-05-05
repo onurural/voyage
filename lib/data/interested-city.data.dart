@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:voyage/models/interested-city.dart';
 import 'package:http/http.dart' as http;
 import 'package:voyage/repository/interested-city.repository.dart';
@@ -31,7 +32,7 @@ class InterestedCityData implements InterestedCityRepository {
       }
       throw HttpException('Unexpected status code: ${response.statusCode}');
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       rethrow;
     }
   }

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:voyage/bloc/autocomplete/autocomplete.bloc.dart';
 import 'package:voyage/ui-components/create-schedule/budget-container.dart';
+import 'package:voyage/ui-components/create-schedule/cities-search-bar.dart';
 import 'package:voyage/ui-components/create-schedule/completed-item.dart';
 import 'package:voyage/ui-components/create-schedule/create-schedule-process-indicator.dart';
 import 'package:voyage/ui-components/create-schedule/date-begin-end-container.dart';
 import 'package:voyage/ui-components/create-schedule/free-time-per-day-container.dart';
-import 'package:voyage/ui-components/home-view-components/search-bar.dart';
+import 'package:voyage/ui-components/create-schedule/interest-container.dart';
+import 'package:voyage/ui-components/create-schedule/trip-companions-container.dart';
+import 'package:voyage/ui-components/custom-error-dialog.dart';
+import 'package:voyage/views/select-place.view.dart';
 
-import '../ui-components/create-schedule/interest-container.dart';
-import '../ui-components/create-schedule/trip-companions-container.dart';
+
+
+
 
 class CreateScheduleScreen extends StatefulWidget {
   const CreateScheduleScreen({Key? key}) : super(key: key);
@@ -19,7 +26,17 @@ class CreateScheduleScreen extends StatefulWidget {
 
 class _CreateScheduleScreenState extends State<CreateScheduleScreen> with TickerProviderStateMixin {
 
+  bool doubleToBool(double value) {
+    if (value == 0.0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 List<int> correctingIssuesList=[0,0,0,0,0];
+
+
+
 var finishedTitles=['Date','Free-Time','Budget','Trip Companions','Interests'];
 late double indicatorValue;
   void unlockNext(index) {
@@ -56,7 +73,7 @@ late double indicatorValue;
     });
   }
 
-
+var searchBar=SearchBarView();
 
   List<Widget> finishedWidgets =[];
   List<Widget> listWidgets = [];
@@ -186,9 +203,12 @@ late double indicatorValue;
       ),
         ),
 
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: SearchBar([]),
+             Padding(
+              padding: const EdgeInsets.all(10),
+              child: BlocProvider<AutocompleteBloc>(
+                create: (context) => AutocompleteBloc(),
+                child: searchBar,
+              ),
             ),
             SizedBox(
 
@@ -234,11 +254,45 @@ late double indicatorValue;
                    padding: const EdgeInsets.fromLTRB( 8, 300, 8, 0),
                    child: ElevatedButton(
                      onPressed: () {
-
+                       if (searchBar.cityName.isNotEmpty) {
+                         Navigator.push(
+                             context,
+                             MaterialPageRoute(builder: (context) =>
+                                 SelectPlaceScreen(cityName: searchBar.cityName,
+                                   entertainment: doubleToBool((listWidgets[4] as InterestContainer)
+                                       .preferences['entertainment']! ),
+                                   gastronomy:  doubleToBool((listWidgets[4] as InterestContainer)
+                                       .preferences['gastronomy']!),
+                                   health:  doubleToBool((listWidgets[4] as InterestContainer)
+                                       .preferences['health']!),
+                                   shopping: doubleToBool((listWidgets[4] as InterestContainer)
+                                       .preferences['shopping']!),
+                                   history: doubleToBool((listWidgets[4] as InterestContainer)
+                                       .preferences['history']!),
+                                   nature:  doubleToBool((listWidgets[4] as InterestContainer)
+                                       .preferences['nature']!),
+                                   sport: doubleToBool((listWidgets[4] as InterestContainer)
+                                       .preferences['sport']!),
+                                   beginDate: (listWidgets[0] as DateBeginEndContainer)
+                                       .startDate,
+                                   endDate: (listWidgets[0] as DateBeginEndContainer)
+                                       .endDate,
+                                   beginTime: (listWidgets[1] as FreeTimePerDayContainer)
+                                       .beginTime,
+                                   endTime: (listWidgets[1] as FreeTimePerDayContainer)
+                                       .endTime,
+                                   budget: (listWidgets[2] as BudgetContainer)
+                                       .budgetValue,
+                                   companion: (listWidgets[3] as TripCompanionsContainer)
+                                       .companion,)));
+                       }
+                       else{
+                         showErrorDialog(context, "Please Select a City");
+                       }
                      },
                      style: ElevatedButton.styleFrom(
                        backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
-                       // other properties
+
 
 
                      padding: const EdgeInsets
@@ -272,4 +326,5 @@ late double indicatorValue;
       ),
     );
   }
+
 }

@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:voyage/models/user.dart';
 import 'package:voyage/repository/user.repository.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +29,7 @@ class UserData implements UserRepository {
       }
       throw HttpException('Unexpected status code: ${response.statusCode}');
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       rethrow;
     }
   }

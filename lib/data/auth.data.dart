@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:voyage/repository/auth.repository.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,7 +38,7 @@ class AuthData implements AuthRepository {
           'userName': userName
         });
       } catch (e) {
-        //print(e.toString());
+        debugPrint(e.toString());
       }
   }
   

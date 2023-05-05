@@ -5,6 +5,8 @@ import 'package:voyage/ui-components/home-view-components/category-cards-list.da
 import 'package:voyage/ui-components/home-view-components/search-bar.dart';
 import 'package:voyage/ui-components/home-view-components/top-visited-row-list.dart';
 
+import '../../bloc/place/place.bloc.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -16,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   double _containerHeight = 300;
   final double _maxContainerHeight = 600;
   final double _minContainerHeight = 150;
+  final placeBloc = PlaceBloc();
 
   late double xOffset;
   late double yOffset;

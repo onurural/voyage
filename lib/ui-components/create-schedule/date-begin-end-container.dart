@@ -11,6 +11,8 @@ class DateBeginEndContainer extends StatefulWidget {
 
   int index;
   bool isFinished = false;
+  late DateTime startDate;
+  late DateTime endDate;
   ValueNotifier<bool> started;
   final Function(BuildContext, int) onFinish;
   DateBeginEndContainer(
@@ -103,6 +105,8 @@ class _DateBeginEndContainerState extends State<DateBeginEndContainer> {
                     widget.isFinished = true;
                     buttonIcon =
                         Icons.done_outline_outlined;
+                    widget.startDate=_startDate;
+                    widget.endDate=_endDate;
                     widget.unlockNext(
                         widget.index);
                     widget.onFinish(

@@ -38,49 +38,63 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Colors.blue,
-                Colors.blue.shade200,
+                const Color.fromRGBO(80, 120, 150, 1),
+                Colors.blueGrey,
+
+
+                Colors.transparent,
               ],
             ),
           ),
-          child: Stack(
+          child: Column(
             children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 40),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                child: Align(
+                  alignment: Alignment.topCenter,
                   child: Image.asset(
                     'assets/Images/Logo.png',
-                    width: 120,
+                    width: 200,
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.center,
-                child: CustomPaint(
-                  painter: _BackgroundShapePainter(),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 35),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.7,
-                    child: PageView(
-                      controller: _pageController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        SignupWidget((index) => _navigateTo(index.toInt())),
-                        LoginWidget((index) => _navigateTo(index.toInt())),
-                        ForgotPasswordWidget((index) => _navigateTo(index.toInt())),
-                      ],
+                    child: ClipPath(
+                      clipper: _BackgroundShapeClipper(),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: PageView(
+                          controller: _pageController,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            SignupWidget((index) => _navigateTo(index.toInt())),
+                            LoginWidget((index) => _navigateTo(index.toInt())),
+                            ForgotPasswordWidget((index) => _navigateTo(index.toInt())),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
+
             ],
           ),
         ),
@@ -89,13 +103,9 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   }
 }
 
-class _BackgroundShapePainter extends CustomPainter {
+class _BackgroundShapeClipper extends CustomClipper<Path> {
   @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint();
-    paint.color = Colors.white;
-    paint.style = PaintingStyle.fill;
-
+  Path getClip(Size size) {
     var path = Path();
     path.moveTo(0, 0);
     path.quadraticBezierTo(size.width * 0.5, size.height * 0.25, size.width, 0);
@@ -103,11 +113,11 @@ class _BackgroundShapePainter extends CustomPainter {
     path.lineTo(0, size.height);
     path.close();
 
-    canvas.drawPath(path, paint);
+    return path;
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
     return false;
   }
 }

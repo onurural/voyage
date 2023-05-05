@@ -7,6 +7,7 @@ import 'package:voyage/ui-components/custom-error-dialog.dart';
 class TripCompanionsContainer extends StatefulWidget {
   ValueNotifier<bool> locked;
   final void Function(int) unlockNext;
+  late final companion;
 
 
   int index;
@@ -167,6 +168,7 @@ class _TripCompanionsContainerState extends State<TripCompanionsContainer> {
                                     });
                                     widget.unlockNext(widget.index);
                                     widget.onFinish(context, widget.index);
+                                    widget.companion=_selectedCompanion;
                                   } else {
                                     showErrorDialog(
                                         context, 'Please Select Your Companion');
