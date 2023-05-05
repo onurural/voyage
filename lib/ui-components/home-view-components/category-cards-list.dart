@@ -69,7 +69,7 @@ class _CategoryCardsListState extends State<CategoryCardsList>
     Category('Rural', const CategoryPlacesList(), Icons.shopping_bag),
     Category('Medditerrain', const CategoryPlacesList(), Icons.sports_volleyball),
   ];
-  
+
   List<CategoryCard> categoryCards = [];
 
   void fillInTheList() {
@@ -126,10 +126,10 @@ class _CategoryCardsListState extends State<CategoryCardsList>
                 'Our Categories',
                 style: GoogleFonts.poppins(
                     textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                )),
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    )),
               ),
             ),
           ),
@@ -159,16 +159,16 @@ class _CategoryCardsListState extends State<CategoryCardsList>
               _tabIndex = value;
               if (value == 0) {
                 return _placeBloc.add(FetchHistoricPlace(page.Page.first));
-              } 
+              }
               if (value == 1) {
-                 return _placeBloc.add(FetchNaturalPlace(page.Page.first));
-              } 
+                return _placeBloc.add(FetchNaturalPlace(page.Page.first));
+              }
               if (value == 2) {
                 return _placeBloc.add(FetchCityVibesPlace(page.Page.first));
-              } 
+              }
               if (value == 3) {
                 return _placeBloc.add(FetchRuralPlace(page.Page.first));
-              } 
+              }
               if (value == 4) {
                 return _placeBloc.add(FetchMediterrainPlace(page.Page.first));
               }
@@ -184,8 +184,8 @@ class _CategoryCardsListState extends State<CategoryCardsList>
             ],
           ),
           SizedBox(
-            height: 250,
-            child: TabBarView(controller: _tabController, children: [
+            height: 600,
+            child: TabBarView(physics: NeverScrollableScrollPhysics(),controller: _tabController, children: [
               place(),
               place(),
               place(),
@@ -247,32 +247,35 @@ class _CategoryCardsListState extends State<CategoryCardsList>
                         });
                   }
                   if (state is PlaceLoadingState) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 5,
-                              offset: const Offset(0, 2),
+                    return ListView.builder(
+                        itemCount: 5,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 3,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.grey.shade300,
+                                highlightColor: Colors.grey.shade100,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 200,
+                                  color: Colors.grey[300],
+                                ),
+                              ),
                             ),
-                          ],
-                        ),
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade100,
-                          child: Container(
-                            width: double.infinity,
-                            height: 200, // Adjust the width to match your card
-
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                      ),
-                    );
+                          );
+                        });
                   }
                   if (state is PlaceErrorState) {
                     return const Text('Error on display the widget');

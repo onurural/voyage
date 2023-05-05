@@ -130,13 +130,17 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            AnimatedContainer(
-              height: _containerHeight,
-              duration: const Duration(milliseconds: 300),
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-            ),
+            // GestureDetector(
+            //   behavior: HitTestBehavior.translucent,
+            //   child: AnimatedContainer(
+            //
+            //     height: _containerHeight,
+            //     duration: const Duration(milliseconds: 300),
+            //     decoration: const BoxDecoration(
+            //       color: Colors.transparent,
+            //     ),
+            //   ),
+            // ),
           ],
         ),),
     );

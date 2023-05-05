@@ -5,13 +5,14 @@
 import 'package:flutter/material.dart';
 import 'package:voyage/ui-components/drawer-app-bar.dart';
 
-import 'package:voyage/views/home-view/home.view.dart';
+
 import 'package:voyage/views/notifications.view.dart';
 import 'package:voyage/views/privacy-policy.view.dart';
 import 'package:voyage/views/settings-view.dart';
 import 'package:voyage/views/terms-of-service-page.dart';
 
 import '../../views/contact-us-page.dart';
+import '../../views/home-view/home.view.dart';
 
 
 
