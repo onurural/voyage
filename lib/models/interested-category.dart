@@ -9,8 +9,8 @@ class InterestedCategory {
       this.count});
 
   InterestedCategory.fromJson(Map<String, dynamic> json) {
-    clickledUserIdStringValue = json['clickled_user_id_string_value'];
-    placeCategoryStringValue = json['place_category_string_value'];
+    clickledUserIdStringValue = json['user_id'];
+    placeCategoryStringValue = json['category'];
     count = json['count'];
   }
 

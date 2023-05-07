@@ -90,7 +90,7 @@ class _CategoryStatisticsState extends State<CategoryStatistics>
                     tooltipBgColor: Colors.transparent,
                     getTooltipItem: (group, groupIndex, rod, rodIndex) {
                       return BarTooltipItem(
-                        '${state.categories[group.x.toInt()].count}\n${(rod.y * 100).toStringAsFixed(0)}%',
+                        '${state.categories[group.x.toInt()].placeCategoryStringValue}\n${(rod.y * 100).toStringAsFixed(0)}%',
                         GoogleFonts.poppins(
                             textStyle: const TextStyle(
                                 color: Color.fromRGBO(44, 87, 116, 100),
@@ -115,7 +115,7 @@ class _CategoryStatisticsState extends State<CategoryStatistics>
                     x: index,
                     barRods: [
                       BarChartRodData(
-                        y: category.count! * _animation.value,
+                        y: (category.count! * 0.1) * _animation.value,
                         colors: [
                           const Color.fromRGBO(44, 87, 116, 100),
                           Colors.grey

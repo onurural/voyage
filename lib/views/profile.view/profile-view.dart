@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:voyage/bloc/interested-category/interested-category.bloc.dart';
 import 'package:voyage/bloc/interested-cities/interested-cities.bloc.dart';
 import 'package:voyage/bloc/interested-cities/interested-cities.event.dart';
 import 'package:voyage/bloc/interested-cities/interested-cities.state.dart';
