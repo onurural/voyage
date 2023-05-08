@@ -68,7 +68,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                           MaterialPageRoute(
                               builder: (context) => const MainConnector()),
                         );
-                      } else if (state is AuthFailedState) {
+                      }  
+                      if (state is AuthFailedState) {
                         showErrorDialog(context,
                             'The Email or the password is not correct');
                       }

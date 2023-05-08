@@ -6,14 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:voyage/models/user.dart';
 import 'package:voyage/repository/user.repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:voyage/utility/constants.dart';
 
 
 class UserData implements UserRepository {
 
-  static const apiURL = 'service1-dot-voyage-368821.lm.r.appspot.com';
-  static const userEndpoint = '/user';
-  static const interestedCitiesEndpoint = '/interested-cities';
-  static const interestedCategoriesEndpoint = '/interested-categories';
+
   static const queryParameter = 'userId';
 
     @override

@@ -6,14 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:voyage/models/interested-city.dart';
 import 'package:http/http.dart' as http;
 import 'package:voyage/repository/interested-city.repository.dart';
+import 'package:voyage/utility/constants.dart';
 
 
 class InterestedCityData implements InterestedCityRepository {
 
-  static const apiURL = 'service1-dot-voyage-368821.lm.r.appspot.com';
-  static const userEndpoint = '/user';
-  static const interestedCitiesEndpoint = '/interested-cities';
-  static const interestedCategoriesEndpoint = '/interested-categories';
+
   static const queryParameter = 'userId';
   
 

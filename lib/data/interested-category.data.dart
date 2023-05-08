@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:voyage/models/interested-category.dart';
 import 'package:http/http.dart' as http;
 import 'package:voyage/repository/interested-category.repository.dart';
-
+import 'package:voyage/utility/constants.dart';
 
 class InterestedCategoryData implements InterestedCategoryRepository {
 
-  static const apiURL = 'service1-dot-voyage-368821.lm.r.appspot.com';
-  static const userEndpoint = '/user';
-  static const interestedCategoriesEndpoint = '/interested-categories';
+
   static const queryParameter = 'userId';
   
 

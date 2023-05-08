@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:voyage/repository/auth.repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:voyage/utility/constants.dart';
 
 
 class AuthData implements AuthRepository {
   final _firebaseAuth = FirebaseAuth.instance;
 
-  static const apiURL = 'service1-dot-voyage-368821.lm.r.appspot.com';
-  static const endpoint = '/user';
+  
   
   @override
   Future<UserCredential> login({required String email, required String password}) async {
@@ -31,7 +31,7 @@ class AuthData implements AuthRepository {
   @override
   Future<void> saveUserToMongoDB({required String email, required String userId, required String userName}) async {
         try {
-        var url = Uri.https(apiURL, endpoint);
+        var url = Uri.https(apiURL, userEndpoint);
         await http.post(url, body: {
           'email': email,
           'userId': userId, 

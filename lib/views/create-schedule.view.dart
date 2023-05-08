@@ -14,9 +14,6 @@ import 'package:voyage/ui-components/custom-error-dialog.dart';
 import 'package:voyage/views/select-place.view.dart';
 
 
-
-
-
 class CreateScheduleScreen extends StatefulWidget {
   const CreateScheduleScreen({Key? key}) : super(key: key);
 
@@ -48,10 +45,6 @@ late double indicatorValue;
       correctingIssuesList[index]+=1;
       locked[index+1].value=false;
       started[index+1].value=true;
-
-
-
-
     });
 
   }
@@ -127,11 +120,6 @@ var searchBar=SearchBarView();
           : CrossFadeState.showFirst,
       duration: const Duration(milliseconds: 1500),
     ),
-
-
-
-
-
 
   ]);
   }
