@@ -14,7 +14,7 @@ class SchedulesScreen extends StatefulWidget {
 }
 
 class _SchedulesScreenState extends State<SchedulesScreen> with SingleTickerProviderStateMixin {
- late AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -34,30 +34,30 @@ class _SchedulesScreenState extends State<SchedulesScreen> with SingleTickerProv
   @override
   Widget build(BuildContext context) {
     return Container(
-              padding: const EdgeInsets.all(8),
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-          childAspectRatio: 1.0, // Adjust this value to change the aspect ratio
-        ),
-        itemCount: widget.schedules.length,
-        itemBuilder: (BuildContext context, int index) {
-          final random = Random();
-          return AnimatedOpacity(
-            duration: Duration(milliseconds: random.nextInt(800) + 400),
-            opacity: _controller.value,
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: random.nextInt(800) + 400),
-              curve: Curves.easeInOut,
-              child: IntrinsicHeight(
-                child: ScheduleCard(widget.schedules[index], maxHeight: 300), // Add maxHeight to the ScheduleCard
-              ),
-            ),
-          );
-        },
-      ),
+      padding: const EdgeInsets.all(8),
+      // child: GridView.builder(
+      //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //     crossAxisCount: 2,
+      //     crossAxisSpacing: 5,
+      //     mainAxisSpacing: 5,
+      //     childAspectRatio: 1.0, // Adjust this value to change the aspect ratio
+      //   ),
+      //   itemCount: widget.schedules.length,
+      //   itemBuilder: (BuildContext context, int index) {
+      //     final random = Random();
+      //     return AnimatedOpacity(
+      //       duration: Duration(milliseconds: random.nextInt(800) + 400),
+      //       opacity: _controller.value,
+      //       child: AnimatedContainer(
+      //         duration: Duration(milliseconds: random.nextInt(800) + 400),
+      //         curve: Curves.easeInOut,
+      //         child: IntrinsicHeight(
+      //           child: ScheduleCard(widget.schedules[index], maxHeight: 300), // Add maxHeight to the ScheduleCard
+      //         ),
+      //       ),
+      //     );
+      //   },
+      // ),
     );
   }
 }

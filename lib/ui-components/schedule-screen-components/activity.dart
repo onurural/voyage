@@ -1,17 +1,28 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+class Activity {
+  static int idCounter = 0;
 
-class Activity{
-  DateTime beginTime;
-  DateTime endTime;
-  DateTime day;
-  var title;
-  var subtitle;
-  double rate;
-  var description;
-  List photos;
-  var googleMapsLink;
+  int? id;
+  DateTime? beginTime;
+  DateTime? endTime;
+  DateTime? day;
+  String? title;
+  String? category;
+  double? rate;
+  String? description;
+  List? photos;
+  String? googleMapsLink;
+  Duration? duration;
 
-  Activity(this.title,this.subtitle,this.rate,this.description,this.beginTime,this.endTime,this.day,this.photos,this.googleMapsLink);
-
-
+  Activity({
+    required this.beginTime,
+    required this.endTime,
+    required this.day,
+    required this.title,
+    required this.category,
+    required this.rate,
+    required this.description,
+    required this.photos,
+    required this.googleMapsLink,
+    required this.duration,
+  }) : id = idCounter++;
 }

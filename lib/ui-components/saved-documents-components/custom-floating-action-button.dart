@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 
 class CustomFloatingActionButton extends StatefulWidget {
   final VoidCallback onPressed;
+  final IconData icon;
 
   const CustomFloatingActionButton({
     Key? key,
     required this.onPressed,
+    required this.icon
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class _CustomFloatingActionButtonState
   @override
   void initState() {
     super.initState();
+
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
@@ -72,7 +75,7 @@ class _CustomFloatingActionButtonState
                 end: Alignment.bottomRight,
                 colors: [
                   const Color.fromRGBO(37, 154, 180, 100).withOpacity(0.9),
-                 Colors.grey
+                  Colors.grey
                 ],
               ),
               boxShadow: [
@@ -84,9 +87,9 @@ class _CustomFloatingActionButtonState
                 ),
               ],
             ),
-            child: const Center(
+            child:  Center(
               child: Icon(
-                Icons.add,
+                widget.icon,
                 color: Colors.white,
               ),
             ),

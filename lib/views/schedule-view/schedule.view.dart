@@ -26,7 +26,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
     // Sort activities by day
 
     for (Activity activity in widget.schedule.activities) {
-      final day = DateTime(activity.beginTime.year, activity.beginTime.month, activity.beginTime.day);
+      final day = DateTime(activity.beginTime!.year, activity.beginTime!.month, activity.beginTime!.day);
       if (activitiesByDay.containsKey(day)) {
         activitiesByDay[day]!.add(activity);
       } else {
@@ -115,8 +115,8 @@ class _ScheduleScreenState extends State<ScheduleScreen>
       body: TabBarView(
         controller: _tabController,
         children: activitiesByDay.values.map((activities) {
-          activities.sort((a, b) => a.beginTime.compareTo(b.day));
-          activities.sort((a, b) => a.beginTime.compareTo(b.beginTime));
+          activities.sort((a, b) => a.beginTime!.compareTo(b.day!));
+          activities.sort((a, b) => a.beginTime!.compareTo(b.beginTime!));
 
 
           return ListView.builder(

@@ -206,9 +206,9 @@ class _ActivitySlideState extends State<ActivitySlide>
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(widget.activity.title, style: titleStyle),
+                          Text(widget.activity.title!, style: titleStyle),
                           const SizedBox(height: 5),
-                          Text(widget.activity.subtitle, style: subtitleStyle),
+                          Text(widget.activity.category!, style: subtitleStyle),
                         ],
                       ),
                       Column(
@@ -217,7 +217,7 @@ class _ActivitySlideState extends State<ActivitySlide>
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               RatingBarIndicator(
-                                rating: widget.activity.rate,
+                                rating: widget.activity.rate!,
                                 itemBuilder: (context, index) => const Icon(
                                   Icons.star,
                                   color: Colors.amber,
@@ -238,8 +238,8 @@ class _ActivitySlideState extends State<ActivitySlide>
                               ),
                             ],
                           ),
-                          beautifulTimeContainer(widget.activity.beginTime,
-                              widget.activity.endTime)
+                          beautifulTimeContainer(widget.activity.beginTime!,
+                              widget.activity.endTime!)
                         ],
                       ),
                     ],
@@ -272,25 +272,25 @@ class _ActivitySlideState extends State<ActivitySlide>
                               enlargeCenterPage: true,
                             ),
                             items: widget.activity.photos
-                                .map((photo) => Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.25),
-                                            spreadRadius: 1,
-                                            blurRadius: 8,
-                                            offset: const Offset(0, 4),
-                                          ),
-                                        ],
-                                        image: DecorationImage(
-                                          image: NetworkImage(photo),
-                                          fit: BoxFit.cover,
-                                          alignment: Alignment.center,
-                                        ),
-                                      ),
-                                    ))
+                                ?.map((photo) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                    Colors.black.withOpacity(0.25),
+                                    spreadRadius: 1,
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                                image: DecorationImage(
+                                  image: AssetImage(photo),
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment.center,
+                                ),
+                              ),
+                            ))
                                 .toList(),
                           ),
                         ),
@@ -340,7 +340,7 @@ class _ActivitySlideState extends State<ActivitySlide>
                         AnimatedCrossFade(
                           firstChild: Container(),
                           secondChild:
-                              DescriptionBox(widget.activity.description),
+                          DescriptionBox(widget.activity.description!),
                           crossFadeState: isDescShowed
                               ? CrossFadeState.showSecond
                               : CrossFadeState.showFirst,

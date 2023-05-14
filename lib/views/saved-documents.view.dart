@@ -43,37 +43,37 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
   List<Widget> _appBarActions(BuildContext context) {
     return [
 
-        Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.select_all),
-            onPressed: () {
-              if (selectedFiles.length == files.length) {
-                selectedFiles.clear();
-              } else {
-                selectedFiles = files.toSet();
-              }
-              setState(() {});
-            },
-          ),
+      Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(Icons.select_all),
+          onPressed: () {
+            if (selectedFiles.length == files.length) {
+              selectedFiles.clear();
+            } else {
+              selectedFiles = files.toSet();
+            }
+            setState(() {});
+          },
         ),
+      ),
 
-        Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: selectedFiles.isEmpty
-                ? null
-                : () async {
-              for (var file in selectedFiles)  {
-                await file.delete();
-              }
-              setState(() {
-                selectMode = false;
-                selectedFiles.clear();
-              });
-              loadFiles();
-            },
-          ),
+      Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: selectedFiles.isEmpty
+              ? null
+              : () async {
+            for (var file in selectedFiles)  {
+              await file.delete();
+            }
+            setState(() {
+              selectMode = false;
+              selectedFiles.clear();
+            });
+            loadFiles();
+          },
         ),
+      ),
       Builder(
         builder: (context) => IconButton(
           icon: const Icon(Icons.drive_file_rename_outline_sharp),
@@ -128,9 +128,9 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(37, 154, 180, 100),
-        title: const Text('Documents and Photos'),
-        actions: _appBarActions(context),
+          backgroundColor: const Color.fromRGBO(37, 154, 180, 100),
+          title: const Text('Documents and Photos'),
+          actions: _appBarActions(context),
           automaticallyImplyLeading: false
       ),
       body: Padding(
@@ -173,7 +173,7 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
         ),
       ),
       floatingActionButton: CustomFloatingActionButton(
-        onPressed: () => _addFile(context),
+        onPressed: () => _addFile(context), icon: Icons.add,
       ),
     );
   }
@@ -196,10 +196,10 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
 
   Future<void> _addPhoto(BuildContext context) async {
     final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       Uint8List? compressedImageData =
-          await FlutterImageCompress.compressWithFile(
+      await FlutterImageCompress.compressWithFile(
         pickedImage.path,
         quality: 80,
       );
@@ -273,7 +273,7 @@ class _SavedDocumentsScreenState extends State<SavedDocumentsScreen> {
     });
     if (image != null) {
       Uint8List? compressedImageData =
-          await FlutterImageCompress.compressWithFile(
+      await FlutterImageCompress.compressWithFile(
         image.path,
         quality: 80,
       );
