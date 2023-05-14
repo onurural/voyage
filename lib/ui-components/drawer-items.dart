@@ -1,7 +1,11 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../bloc/user/user.bloc.dart';
+import '../bloc/user/user.state.dart';
 
 class DrawerItem {
   final String title;
@@ -16,8 +20,9 @@ class DrawerItem {
 }
 
 class DrawerItems {
+  static final UserBloc userBloc = UserBloc();
   static final profile = DrawerItem(
-   
+
     widget: SizedBox(
       height: 120,
 
@@ -30,16 +35,33 @@ class DrawerItems {
               radius: 30,
               backgroundImage: AssetImage('assets/Images/default_profile_picture.png'),
             ),
-            const SizedBox(height: 10),
-            Text(
-              'Obada Qasem',
-              style: GoogleFonts.poppins(
-                textStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                )
-              )
+            const SizedBox(height: 8),
+            BlocProvider(
+              create: (_) => userBloc,
+              child: BlocConsumer<UserBloc, UserState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is CredentialSuccessState) {
+                    return Text(
+                      '${state.model.userName?.replaceAll("_", " ")}',
+                      style: GoogleFonts.pacifico(
+                          textStyle: const TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w800)),
+                    );
+                  }
+                  if (state is CredentialLoadingState) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (state is CredentialFailedState) {
+                    return const Text('Failed to login please try again');
+                  }
+                  if (state is CredentialErrorState) {
+                    return const Text(
+                        'Error while getting user credential');
+                  }
+                  return const Text('State not found');
+                },
+              ),
             ),
             const Divider(
               color: Colors.white,

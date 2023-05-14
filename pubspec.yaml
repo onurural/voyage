@@ -72,6 +72,7 @@ dependencies:
   logging: ^1.1.1
   email_validator: ^2.0.1
   flutter_dotenv: ^5.0.2
+  liquid_progress_indicator: ^0.4.0
 
 
 

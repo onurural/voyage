@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     builder: (context, state) {
                       if (state is CredentialSuccessState) {
                         return Text(
-                          '${state.model.userName}',
+                          '${state.model.userName?.replaceAll("_", " ")}',
                           style: GoogleFonts.pacifico(
                               textStyle: const TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.w800)),

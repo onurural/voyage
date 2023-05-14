@@ -41,6 +41,11 @@ class AuthData implements AuthRepository {
         debugPrint(e.toString());
       }
   }
+  @override
+  Future<void> forgotPassword({required String email}) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   
 
 }

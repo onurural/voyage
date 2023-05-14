@@ -10,7 +10,7 @@ class Activity {
   double? rate;
   String? description;
   List? photos;
-  String? googleMapsLink;
+  String? placeID;
   Duration? duration;
 
   Activity({
@@ -22,7 +22,7 @@ class Activity {
     required this.rate,
     required this.description,
     required this.photos,
-    required this.googleMapsLink,
+    required this.placeID,
     required this.duration,
   }) : id = idCounter++;
 }

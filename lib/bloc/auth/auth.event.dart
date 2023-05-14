@@ -23,3 +23,7 @@ class SaveUserToMongoDB extends AuthEvent {
     final String userId;
     SaveUserToMongoDB(this.email, this.userId, this.userName);
 }
+class ForgotPasswordRequest extends AuthEvent {
+  final String email;
+  ForgotPasswordRequest(this.email);
+}

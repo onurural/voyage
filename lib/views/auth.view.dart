@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:voyage/bloc/auth/auth.bloc.dart';
 
 import '../ui-components/auth-components/forget-password-widget.dart';
 import '../ui-components/auth-components/log-in-widget.dart';
@@ -14,7 +16,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   late PageController _pageController;
-
+  AuthBloc authBloc=AuthBloc();
   @override
   void initState() {
     super.initState();
@@ -86,7 +88,15 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                           children: [
                             SignupWidget((index) => _navigateTo(index.toInt())),
                             LoginWidget((index) => _navigateTo(index.toInt())),
-                            ForgotPasswordWidget((index) => _navigateTo(index.toInt())),
+                  BlocProvider(
+                    create: (BuildContext context) => authBloc, // You are creating bloc here
+                    child: Builder( // Use Builder to get the context with the bloc provided above
+                      builder: (context) {
+                        final authBloc = BlocProvider.of<AuthBloc>(context); // Get the bloc from the context
+                        return ForgotPasswordWidget((index) => _navigateTo(index.toInt()));
+                      },
+                    ),
+                  )
                           ],
                         ),
                       ),

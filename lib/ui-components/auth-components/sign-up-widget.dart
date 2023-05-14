@@ -93,8 +93,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                           MaterialPageRoute(
                               builder: (context) => const MainConnector()),
                         );
-                        var userId = _authData.getCurrentUserId();
-                        _authBloc.add(SaveUserToMongoDB(_email, userId!, _password));
+                        // var userId = _authData.getCurrentUserId();
+                        _authBloc.add(SaveUserToMongoDB(_email, _firstName.replaceAll(" ", "_")+"_"+_lastName.replaceAll(" ", "_"), _password));
                       } else if (state is AuthFailedState) {
                         showErrorDialog(context,
                             'It looks like the email is existed please use another email address');

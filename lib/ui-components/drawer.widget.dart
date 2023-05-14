@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/drawer-items.dart';
+import 'package:voyage/views/auth.view.dart';
 import 'package:voyage/views/log-in.view.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -50,7 +51,7 @@ class DrawerWidget extends StatelessWidget {
               else {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LogInScreen()),
+                  MaterialPageRoute(builder: (context) => const AuthScreen()),
                 );
               }
             },

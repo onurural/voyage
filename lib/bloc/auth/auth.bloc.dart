@@ -37,6 +37,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(SavingUserToMongoDBError());
         }
       }
+      if (event is ForgotPasswordRequest) {
+        emit(AuthLoadingState());
+        try {
+          await authRepository.forgotPassword(email: event.email);
+          emit(AuthSuccessState());
+        } catch (e) {
+          emit(AuthFailedState());
+        }
+      }
     });
   }
 }

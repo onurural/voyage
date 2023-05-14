@@ -285,7 +285,7 @@ class _ActivitySlideState extends State<ActivitySlide>
                                   ),
                                 ],
                                 image: DecorationImage(
-                                  image: AssetImage(photo),
+                                  image: NetworkImage(photo),
                                   fit: BoxFit.cover,
                                   alignment: Alignment.center,
                                 ),
