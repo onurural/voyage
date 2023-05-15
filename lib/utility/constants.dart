@@ -8,3 +8,4 @@ const activityEndpoint = '/activities';
 const placesToTravelEndpoint = '/places-to-travel';
 const restaurantsEndpoint = '/restaurants';
 const entertainmentEndpoint = '/entertainment';
+const scheduleEndpoint = '/schedule';

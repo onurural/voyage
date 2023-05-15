@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:voyage/ui-components/schedule-screen-components/Activity.dart';
+import 'package:voyage/models/activity.dart';
 import 'package:voyage/ui-components/select-place-componenets/select-entertainment-card.dart';
 import 'package:voyage/ui-components/select-place-componenets/select-place-to-travel.dart';
 import 'package:voyage/ui-components/select-place-componenets/select-restaurant-card.dart';
@@ -72,7 +72,7 @@ void removeFromActivities(Activity activity){
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ManageActivitiesScreen(activities: activities, beginDate: widget.beginDate, endDate: widget.endDate, beginTime: widget.beginTime, endTime: widget.endTime),
+              builder: (context) => ManageActivitiesScreen(cityName: widget.cityName, activities: activities, beginDate: widget.beginDate, endDate: widget.endDate, beginTime: widget.beginTime, endTime: widget.endTime)
             ),
           );
         }

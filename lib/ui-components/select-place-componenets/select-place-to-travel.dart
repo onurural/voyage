@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shimmer/shimmer.dart';
 import 'dart:math' as math;
 
 import 'package:voyage/bloc/places-to-travel/place-to-travel.bloc.dart';
 import 'package:voyage/bloc/places-to-travel/place-to-travel.event.dart';
 import 'package:voyage/bloc/places-to-travel/place-to-travel.state.dart';
-
-import '../../bloc/photos-fetcher/photos-fetcher-bloc.dart';
-import '../../data/photos-fetcher.data.dart';
-import '../schedule-screen-components/Activity.dart';
-import 'InnerActivityCard.dart';
+import 'package:voyage/models/activity.dart';
+import 'package:voyage/ui-components/select-place-componenets/inner-place-to-travel-card.dart';
 
 class SelectPlaceToTravelCard extends StatefulWidget {
   String cityName;
@@ -90,10 +84,8 @@ class _SelectPlaceToTravelCard extends State<SelectPlaceToTravelCard>
         scrollDirection: Axis.horizontal,
         itemCount: state.model.length,
         itemBuilder: (context, index) {
-          Activity temp=Activity(beginTime: null, endTime: null, day: null, title: '${state.model[index].name}', category: 'Must To See', rate: double.parse( '${state.model[index].rating}'), description: 'desc', photos: null, placeID: '${state.model[index].name}', duration: null);
-          return  BlocProvider(create: (context) => PhotosFetcherBloc(data: PhotosFetcherData()),
-            child:  InnerActivityCard(temp,widget.addActivity,widget.removeActivity),
-          );
+          Activity temp=Activity(beginTime: null, endTime: null, day: null, title: '${state.model[index].name}', category: 'Must To See', rate: double.parse( '${state.model[index].rating}'), description: 'desc', photos: state.model[index].photos, placeID: '${state.model[index].name}', duration: null);
+          return  InnerPlaceToTravelActivityCard(state.model[index], temp,widget.addActivity,widget.removeActivity);
         },
       ),
     );

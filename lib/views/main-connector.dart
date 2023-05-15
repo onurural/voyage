@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:voyage/models/activity.dart';
 import 'package:voyage/ui-components/nav-bar.dart';
-import 'package:voyage/ui-components/schedule-screen-components/Activity.dart';
-import 'package:voyage/ui-components/schedule-screen-components/schedule.dart';
+import 'package:voyage/models/schedule.dart';
 import 'package:voyage/views/profile.view/profile-view.dart';
 import 'package:voyage/views/saved-documents.view.dart';
 import 'package:voyage/views/schedule-view/schedules.view.dart';
@@ -37,7 +37,7 @@ class _MainConnectorState extends State<MainConnector> {
               List<Schedule> schedules = [];
          List<Widget> screens = [
                 const HomeCon(),
-                SchedulesScreen(schedules),
+                SchedulesScreen(),
                 const CreateScheduleScreen(),
                 const SavedDocumentsScreen(),
                 const ProfilePage(),

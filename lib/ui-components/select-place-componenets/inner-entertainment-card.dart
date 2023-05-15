@@ -1,27 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:voyage/bloc/photos-fetcher/photos-fetcher-bloc.dart';
-import 'package:voyage/bloc/photos-fetcher/photos-fetcher-state.dart';
+import 'package:voyage/models/activity.dart';
+import 'package:voyage/models/entertainment.dart';
 import 'dart:math' as math;
-import '../../bloc/photos-fetcher/photos-fetcher-event.dart';
-import '../schedule-screen-components/Activity.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class InnerActivityCard extends StatefulWidget {
+
+
+class InnerEntertainmentActivityCard extends StatefulWidget {
+  Entertainment entertainment;
   Activity activity;
   final Function(Activity) addActivity;
   final Function(Activity) removeActivity;
 
-  InnerActivityCard(this.activity, this.addActivity, this.removeActivity);
+  InnerEntertainmentActivityCard(this.entertainment, this.activity, this.addActivity, this.removeActivity);
 
   @override
-  State<InnerActivityCard> createState() => _InnerActivityCardState();
+  State<InnerEntertainmentActivityCard> createState() => _InnerActivityCardState();
 }
 
-class _InnerActivityCardState extends State<InnerActivityCard>
+class _InnerActivityCardState extends State<InnerEntertainmentActivityCard>
     with SingleTickerProviderStateMixin {
   late Animation<double> _scaleAnimation;
   late Animation<Color?> _colorAnimation;
@@ -49,50 +49,16 @@ class _InnerActivityCardState extends State<InnerActivityCard>
         _rotationAngle = _animationController.value * 2 * math.pi;
       });
     });
-
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      BlocProvider.of<PhotosFetcherBloc>(context)
-          .add(FetchImages(widget.activity.placeID!));
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PhotosFetcherBloc, PhotosFetchersState>(
-      builder: (context, state) {
-        if (state is PhotosFetcherLoaded) {
-          widget.activity.photos = state.images;
-          return buildInnerActivityCard(context);
-        } 
-        if (state is PhotosFetcherError) {
-          return Text('Error: ${state.message}');
-        }
-        if (state is PhotosFetcherInitial) {
-          return const Text('Initial State');
-        }
-        if (state is PhotosFetcherLoaded) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: Shimmer.fromColors(
-              baseColor: Colors.grey.shade300,
-              highlightColor: Colors.grey.shade100,
-              child: Container(
-                width: 250 // Adjust the width to match your card
-                 ,decoration: BoxDecoration(
-                  borderRadius:  BorderRadius.circular(10),
-                color: Colors.grey[300],
-              ),
-
-              ),
-            ),
-          );
-        }
-        return  const Text('Unrecognized State');
-      },
-    );
+    return buildInnerActivityCard(context);
   }
 
   Widget buildInnerActivityCard(BuildContext context) {
+    var photoReference = widget.entertainment.photos?[0].photoReference;
+    var apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
     return Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ScaleTransition(
@@ -118,9 +84,7 @@ class _InnerActivityCardState extends State<InnerActivityCard>
                   Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(widget.activity.photos!.isEmpty
-                            ? 'default_image_url'
-                            : widget.activity.photos![0]),
+                        image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?photo_reference=$photoReference&maxheight=400&maxwidth=400&key=$apiKey'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -235,7 +199,7 @@ class _InnerActivityCardState extends State<InnerActivityCard>
                                       child: Icon(
                                         Icons.add_box_outlined,
                                         color: _selected
-                                            ? Color.fromRGBO(37, 154, 180, 100)
+                                            ? const Color.fromRGBO(37, 154, 180, 100)
                                             : Colors.white,
                                         size: 25,
                                       ),

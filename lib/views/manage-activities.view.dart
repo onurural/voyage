@@ -2,14 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:voyage/data/auth.data.dart';
+import 'package:voyage/models/activity.dart';
+
+
+import 'package:voyage/models/schedule.dart';
+import 'package:voyage/ui-components/manage-activities-components/time-slot-column.dart';
+import 'package:voyage/ui-components/manage-activities-components/to-manage-tile.dart';
 import 'package:voyage/views/schedule-view/schedule.view.dart';
 
-import '../ui-components/manage-activities-components/time-slot-column.dart';
-import '../ui-components/manage-activities-components/to-manage-tile.dart';
-import '../ui-components/schedule-screen-components/Activity.dart';
-import '../ui-components/schedule-screen-components/schedule.dart';
 
 class ManageActivitiesScreen extends StatefulWidget {
+  final String cityName;
   final List<Activity> activities;
   final DateTime beginDate;
   final DateTime endDate;
@@ -17,7 +21,7 @@ class ManageActivitiesScreen extends StatefulWidget {
   final TimeOfDay endTime;
 
 
-  ManageActivitiesScreen({required this.activities, required this.beginDate, required this.endDate,
+  ManageActivitiesScreen({required this.cityName, required this.activities, required this.beginDate, required this.endDate,
       required this.beginTime, required this.endTime});
 
   @override
@@ -28,10 +32,13 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
   List<Activity> _modifiedActivities = [];
   Map<String, ValueNotifier<List<Activity>>> activitiesNotifiers = {};
   Map<int, ValueNotifier<bool>> activityRemovedNotifiers = {};
+  final AuthData _authData = AuthData();
+  String? userId;
 
   @override
   void initState() {
     super.initState();
+    userId = _authData.getCurrentUserId();
     for (var activity in widget.activities) {
       activityRemovedNotifiers[activity.id!] = ValueNotifier<bool>(false);
     }
@@ -88,7 +95,7 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select duration'),
+          title: const Text('Select duration'),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return SizedBox(
@@ -112,7 +119,7 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -241,14 +248,14 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title: Text('Create Schedule'),
+        title: const Text('Create Schedule'),
 
         ),
 
       body: ListView(
         children: [
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: _buildTimetable(),
           ),
           Wrap(
@@ -285,7 +292,7 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
                   tempActivities.add(element);
                 });
               });
-              Schedule schedule=Schedule(tempActivities);
+              Schedule schedule=Schedule(tempActivities, widget.cityName, userId!);
               if(tempActivities.isNotEmpty){
                 Navigator.push(
                     context,

@@ -2,12 +2,13 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:voyage/models/activity.dart';
 import 'package:voyage/ui-components/schedule-screen-components/maps.widget.dart';
 import 'package:voyage/ui-components/place-components/description-box.dart';
-import 'Activity.dart';
 
 class ActivitySlide extends StatefulWidget {
   final Activity activity;
@@ -141,6 +142,7 @@ class _ActivitySlideState extends State<ActivitySlide>
 
   @override
   Widget build(BuildContext context) {
+    var apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
     // Define the color palette and text styles
     Color primaryColor = const Color.fromRGBO(44, 87, 116, 1);
     Color secondaryColor = const Color.fromRGBO(235, 235, 235, 1);
@@ -285,7 +287,7 @@ class _ActivitySlideState extends State<ActivitySlide>
                                   ),
                                 ],
                                 image: DecorationImage(
-                                  image: NetworkImage(photo),
+                                  image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?photo_reference=${photo.photoReference}&maxheight=400&maxwidth=400&key=${apiKey}'),
                                   fit: BoxFit.cover,
                                   alignment: Alignment.center,
                                 ),

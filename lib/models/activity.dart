@@ -1,3 +1,5 @@
+import 'package:voyage/models/photos.dart';
+
 class Activity {
   static int idCounter = 0;
 
@@ -9,7 +11,7 @@ class Activity {
   String? category;
   double? rate;
   String? description;
-  List? photos;
+  List<Photos>? photos;
   String? placeID;
   Duration? duration;
 
@@ -25,4 +27,20 @@ class Activity {
     required this.placeID,
     required this.duration,
   }) : id = idCounter++;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'beginTime': beginTime?.toIso8601String(),
+      'endTime': endTime?.toIso8601String(),
+      'day': day?.toIso8601String(),
+      'title': title,
+      'category': category,
+      'rate': rate,
+      'description': description,
+      'photos': photos,
+      'placeID': placeID,
+      'duration': duration?.inSeconds,
+    };
+  }
 }

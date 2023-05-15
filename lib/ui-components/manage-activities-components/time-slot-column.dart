@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:voyage/models/activity.dart';
 
-import '../schedule-screen-components/Activity.dart';
 
 class TimeSlotsColumn extends StatefulWidget {
   final TimeOfDay startTime;

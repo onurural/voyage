@@ -1,10 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:voyage/ui-components/schedule-screen-components/Activity.dart';
-import 'package:voyage/ui-components/schedule-screen-components/schedule.dart';
-import 'package:voyage/ui-components/schedule-screen-components/activity-slide.dart';
+import 'package:voyage/bloc/schedule/schedule.bloc.dart';
+import 'package:voyage/bloc/schedule/schedule.event.dart';
+import 'package:voyage/data/auth.data.dart';
+import 'package:voyage/models/activity.dart';
+import 'package:voyage/models/schedule.dart';
 
 
 class ScheduleScreen extends StatefulWidget {
@@ -18,12 +21,15 @@ class ScheduleScreen extends StatefulWidget {
 
 class _ScheduleScreenState extends State<ScheduleScreen>
     with SingleTickerProviderStateMixin {
+  final AuthData _authData = AuthData();
+  final ScheduleBloc _scheduleBloc = ScheduleBloc();
+  String? userId;
   late TabController _tabController;
   Map<DateTime, List<Activity>> activitiesByDay = {};
   @override
   void initState() {
     super.initState();
-    // Sort activities by day
+    userId = _authData.getCurrentUserId();
 
     for (Activity activity in widget.schedule.activities) {
       final day = DateTime(activity.beginTime!.year, activity.beginTime!.month, activity.beginTime!.day);
@@ -112,21 +118,60 @@ class _ScheduleScreenState extends State<ScheduleScreen>
           ).toList(),
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: activitiesByDay.values.map((activities) {
-          activities.sort((a, b) => a.beginTime!.compareTo(b.day!));
-          activities.sort((a, b) => a.beginTime!.compareTo(b.beginTime!));
-
-
-          return ListView.builder(
-            itemCount: activities.length,
-            itemBuilder: (context, index) {
-              return ActivitySlide(activities[index]);
-            },
-          );
-        }).toList(),
+      body: Column(
+        children: [
+          // TabBarView(
+          //   controller: _tabController,
+          //   children: activitiesByDay.values.map((activities) {
+          //     activities.sort((a, b) => a.beginTime!.compareTo(b.day!));
+          //     activities.sort((a, b) => a.beginTime!.compareTo(b.beginTime!));
+          //       return ListView.builder(
+          //       itemCount: activities.length,
+          //       itemBuilder: (context, index) {
+          //         return ActivitySlide(activities[index]);
+          //       },
+          //     );
+          //   }).toList(),
+          // ),
+          _saveButton()
+        ],
       ),
+      // floatingActionButton: _saveButton(),
     );
+  }
+
+  _saveButton() {
+    return     ElevatedButton(
+            onPressed: () {
+      if (userId != null) {
+        _scheduleBloc.add(PostSchedule(schedule: widget.schedule));
+      }
+    },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
+
+
+
+              padding: const EdgeInsets
+                  .symmetric(
+                  vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.circular(30),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                'Save',
+                style: GoogleFonts.poppins(
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          );
   }
 }
