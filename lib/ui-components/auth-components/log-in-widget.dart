@@ -103,7 +103,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     child: Icon(
                       Icons.login_sharp,
                       color: Colors.white,
-                      size: 20,
+                      size: 50,
                     ),
                   );
                 }),
@@ -120,13 +120,13 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned(
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          child: loadingAnimation,
-        ),
+        // Positioned(
+        //   top: 0,
+        //   left: 0,
+        //   bottom: 0,
+        //   right: 0,
+        //   child: loadingAnimation,
+        // ),
         SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 100),
@@ -147,17 +147,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                         decoration: InputDecoration(
                           labelText: 'Email',
                           labelStyle: GoogleFonts.poppins(),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: const Color.fromRGBO(80, 120, 150, 1),
+                                color: Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: const Color.fromRGBO(80, 120, 150, 1),
+                                color: Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          errorBorder: OutlineInputBorder(
+                          errorBorder: const OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.red, width: 2.0),
                           ),
@@ -178,17 +178,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: GoogleFonts.poppins(),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: const Color.fromRGBO(80, 120, 150, 1),
+                                color: Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: const Color.fromRGBO(80, 120, 150, 1),
+                                color: Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          errorBorder: OutlineInputBorder(
+                          errorBorder: const OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.red, width: 2.0),
                           ),
@@ -235,7 +235,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
           ),
         ),
-        Positioned(top: 100,left: 0,bottom:0,right: 50,child: Visibility(visible: true,child: loadingAnimation,))
+        // Positioned(top: 100,left: 0,bottom:0,right: 50,child: Visibility(visible: true,child: loadingAnimation,))
 
 
 

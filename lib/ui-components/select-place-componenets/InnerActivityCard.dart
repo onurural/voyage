@@ -63,9 +63,14 @@ class _InnerActivityCardState extends State<InnerActivityCard>
         if (state is PhotosFetcherLoaded) {
           widget.activity.photos = state.images;
           return buildInnerActivityCard(context);
-        } else if (state is PhotosFetcherError) {
+        } 
+        if (state is PhotosFetcherError) {
           return Text('Error: ${state.message}');
-        } else {
+        }
+        if (state is PhotosFetcherInitial) {
+          return const Text('Initial State');
+        }
+        if (state is PhotosFetcherLoaded) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Shimmer.fromColors(
@@ -80,8 +85,9 @@ class _InnerActivityCardState extends State<InnerActivityCard>
 
               ),
             ),
-          ); // Show a loading spinner by default
+          );
         }
+        return  const Text('Unrecognized State');
       },
     );
   }

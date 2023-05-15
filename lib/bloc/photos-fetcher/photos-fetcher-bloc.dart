@@ -9,19 +9,14 @@ class PhotosFetcherBloc extends Bloc<PhotosFetcherEvent, PhotosFetchersState> {
 
   PhotosFetcherBloc({required this.data}) : super(PhotosFetcherInitial()) {
     on<FetchImages>((event, emit) async {
-      emit(PhotosFetcherLoading());
-
-      try {
-        List<String> images = await data.fetchImages(event.location);
-
-        if (images.isEmpty) {
-          emit(PhotosFetcherError('No images found for this location.'));
-        } else {
+        emit(PhotosFetcherLoading());
+        try {
+          List<String> images = await data.fetchImages(event.location);
           emit(PhotosFetcherLoaded(images));
+        } catch (e) {
+          emit(PhotosFetcherError(e.toString()));
         }
-      } catch (_) {
-        emit(PhotosFetcherError('Failed to load images.'));
       }
-    });
+    );
   }
 }
