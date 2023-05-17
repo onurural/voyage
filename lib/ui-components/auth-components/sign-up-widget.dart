@@ -28,6 +28,7 @@ class SignupWidget extends StatefulWidget {
 }
 
 class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMixin{
+  bool _isPasswordHidden = true;
   Widget _buildLoadingAnimation() {
     return Container(
       width: 150.0,
@@ -250,24 +251,35 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
                 },
               ),
               const SizedBox(height: 10),
-              TextFormField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(fontSize: 18),
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(),
-                ),
-                onChanged: (value) {
-                  _password = value;
-                },
-                validator: (value) {
-                  if (value!.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
-              ),
+
+    TextFormField(
+    obscureText: _isPasswordHidden,
+    decoration: InputDecoration(
+    labelText: 'Password',
+    labelStyle: TextStyle(fontSize: 18),
+    border: OutlineInputBorder(),
+    focusedBorder: OutlineInputBorder(),
+    suffixIcon: IconButton( // Add this block
+    icon: Icon(
+    _isPasswordHidden ? Icons.visibility : Icons.visibility_off,
+    ),
+    onPressed: () {
+    setState(() {
+    _isPasswordHidden = !_isPasswordHidden;
+    });
+    },
+    ),
+    ),
+    onChanged: (value) {
+    _password = value;
+    },
+    validator: (value) {
+    if (value!.length < 6) {
+    return 'Password must be at least 6 characters';
+    }
+    return null;
+    },
+    ),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

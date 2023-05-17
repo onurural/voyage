@@ -29,7 +29,7 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixin {
 
 
-
+  bool _isPasswordHidden = true;
   @override
   void initState() {
     // TODO: implement initState
@@ -173,37 +173,46 @@ class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixi
                         },
                       ),
                       const SizedBox(height: 20),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: GoogleFonts.poppins(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: const Color.fromRGBO(80, 120, 150, 1),
-                                width: 2.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: const Color.fromRGBO(80, 120, 150, 1),
-                                width: 2.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide:
-                            BorderSide(color: Colors.red, width: 2.0),
-                          ),
-                        ),
-                        onChanged: (value) => _password = value,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          } else if (value.length < 6) {
-                            return 'Password must be at least 6 characters';
-                          }
+    TextFormField(
+    obscureText: _isPasswordHidden, // use _isPasswordHidden here
+    decoration: InputDecoration(
+    labelText: 'Password',
+    labelStyle: GoogleFonts.poppins(),
+    focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+    color: const Color.fromRGBO(80, 120, 150, 1),
+    width: 2.0),
+    ),
+    enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+    color: const Color.fromRGBO(80, 120, 150, 1),
+    width: 2.0),
+    ),
+    errorBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.red, width: 2.0),
+    ),
+    suffixIcon: IconButton( // Add this block
+    icon: Icon(
+    _isPasswordHidden ? Icons.visibility : Icons.visibility_off,
+    ),
+    onPressed: () {
+    setState(() {
+    _isPasswordHidden = !_isPasswordHidden;
+    });
+    },
+    ),
+    ),
+    onChanged: (value) => _password = value,
+    validator: (value) {
+    if (value == null || value.isEmpty) {
+    return 'Please enter your password';
+    } else if (value.length < 6) {
+    return 'Password must be at least 6 characters';
+    }
 
-                          return null;
-                        },
-                      ),
+    return null;
+    },
+    ),
                     ],
                   ),
                 ),
