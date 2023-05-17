@@ -74,6 +74,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   auto_size_text: ^3.0.0-nullsafety.0
   lottie: ^2.3.2
+  intro_views_flutter: ^3.2.0
 
 
 

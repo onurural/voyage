@@ -84,7 +84,7 @@ void removeFromActivities(Activity activity){
       body: SingleChildScrollView(
         child: SizedBox(
           width: double.maxFinite,
-          height: double.maxFinite,
+          height: 1200,
           child: IntrinsicHeight(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
