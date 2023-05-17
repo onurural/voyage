@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,25 +26,31 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
+  late Timer timer;
+  var percent=20;
+  void startTimer(){
+    setState(() {
+      timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
+        print('Percent Update');
+        setState(() {
+          percent += 1;
+          if (percent >= 100) {
+            timer.cancel();
+            // percent=0;
+          }
+        });
+      });
+    });
+
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadingAnimation= LiquidCustomProgressIndicator(
-      value: 0.2,
-      // Defaults to 0.5.
-      valueColor: AlwaysStoppedAnimation(Colors.pink),
-      // Defaults to the current Theme's accentColor.
-      backgroundColor: Colors.black,
-      // Defaults to the current Theme's backgroundColor.
-      direction: Axis.vertical,
-      // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right).
-      shapePath: buildBoatPath()
-      , // A Path object used to draw the shape of the progress indicator. The size of the progress indicator is created from the bounds of this path.
-    );
+
   }
   bool isLoading = false;
- late Widget loadingAnimation;
+
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
@@ -87,14 +96,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                   }
                   if (state is AuthFailedState) {
                     setState(() {
-                      loadingAnimation = Container();
+                      isLoading=false;
                     });
                     showErrorDialog(
                         context, 'The Email or the password is not correct');
                   }
                   if (state is AuthLoadingState) {
+                    startTimer();
                     setState(() {
-                      isLoading = false;
+                      isLoading = true;
                     });
                   }
                 }, builder: (context, state) {
@@ -103,7 +113,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     child: Icon(
                       Icons.login_sharp,
                       color: Colors.white,
-                      size: 50,
+                      size: 20,
                     ),
                   );
                 }),
@@ -120,13 +130,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Positioned(
-        //   top: 0,
-        //   left: 0,
-        //   bottom: 0,
-        //   right: 0,
-        //   child: loadingAnimation,
-        // ),
+
         SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 100),
@@ -147,19 +151,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                         decoration: InputDecoration(
                           labelText: 'Email',
                           labelStyle: GoogleFonts.poppins(),
-                          focusedBorder: const OutlineInputBorder(
+                          focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromRGBO(80, 120, 150, 1),
+                                color: const Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          enabledBorder: const OutlineInputBorder(
+                          enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromRGBO(80, 120, 150, 1),
+                                color: const Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          errorBorder: const OutlineInputBorder(
+                          errorBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.red, width: 2.0),
+                            BorderSide(color: Colors.red, width: 2.0),
                           ),
                         ),
                         onChanged: (value) => _email = value.trim(),
@@ -178,19 +182,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: GoogleFonts.poppins(),
-                          focusedBorder: const OutlineInputBorder(
+                          focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromRGBO(80, 120, 150, 1),
+                                color: const Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          enabledBorder: const OutlineInputBorder(
+                          enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromRGBO(80, 120, 150, 1),
+                                color: const Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          errorBorder: const OutlineInputBorder(
+                          errorBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.red, width: 2.0),
+                            BorderSide(color: Colors.red, width: 2.0),
                           ),
                         ),
                         onChanged: (value) => _password = value,
@@ -235,11 +239,50 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
           ),
         ),
-        // Positioned(top: 100,left: 0,bottom:0,right: 50,child: Visibility(visible: true,child: loadingAnimation,))
 
+        if (isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              child: Center(
+                child: _buildLoadingAnimation(),
+              ),
+            ),
+          ),
 
 
       ],
+    );
+  }
+
+
+  Widget _buildLoadingAnimation() {
+    return Container(
+      width: 150.0,
+      height: 150.0,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: LiquidCustomProgressIndicator(
+          value: percent / 100,
+          valueColor: AlwaysStoppedAnimation( Color.fromRGBO(37, 154, 180, 1)),
+          backgroundColor: Colors.grey,
+          direction: Axis.vertical,
+          shapePath: buildBoatPath(),
+        ),
+      ),
     );
   }
   Path buildBoatPath() {

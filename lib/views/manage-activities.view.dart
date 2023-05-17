@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:voyage/bloc/schedule/schedule.bloc.dart';
 import 'package:voyage/data/auth.data.dart';
 import 'package:voyage/models/activity.dart';
 
@@ -29,6 +31,7 @@ class ManageActivitiesScreen extends StatefulWidget {
 }
 
 class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
+  final ScheduleBloc scheduleBloc=ScheduleBloc();
   List<Activity> _modifiedActivities = [];
   Map<String, ValueNotifier<List<Activity>>> activitiesNotifiers = {};
   Map<int, ValueNotifier<bool>> activityRemovedNotifiers = {};
@@ -297,7 +300,15 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ScheduleScreen(schedule: schedule)
+                        builder: (context) =>      BlocProvider(
+                          create: (BuildContext context) => scheduleBloc, // You are creating bloc here
+                          child: Builder( // Use Builder to get the context with the bloc provided above
+                            builder: (context) {
+                              final authBloc = BlocProvider.of<ScheduleBloc>(context); // Get the bloc from the context
+                              return ScheduleScreen(schedule: schedule);
+                            },
+                          ),
+                        )
                     ));
               }
 

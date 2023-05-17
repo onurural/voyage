@@ -90,8 +90,8 @@ void removeFromActivities(Activity activity){
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 buildMustSeeCategory(),
-                buildRestaurantCategory(),
-                buildEntertainmentCategory()
+                 buildRestaurantCategory(),
+                 buildEntertainmentCategory()
               ],
             ),
           ),
@@ -111,14 +111,10 @@ void removeFromActivities(Activity activity){
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SelectPlaceToTravelCard(widget.cityName,addToActivities,removeFromActivities),
-            ],
-          ),
-        ),
+        SizedBox(
+          height: 300,
+            width: double.infinity,
+            child: SelectPlaceToTravelCard(widget.cityName,addToActivities,removeFromActivities)),
       ],
     );
   }
@@ -133,14 +129,10 @@ void removeFromActivities(Activity activity){
             style:  TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SelectRestaurantCard(widget.cityName,addToActivities,removeFromActivities),
-            ],
-          ),
-        ),
+        SizedBox(
+          height: 300,
+            width: double.infinity
+            ,child: SelectRestaurantCard(widget.cityName,addToActivities,removeFromActivities)),
       ],
     );
   }
@@ -155,14 +147,10 @@ void removeFromActivities(Activity activity){
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SelectEntertainmentCard(widget.cityName,addToActivities,removeFromActivities)
-            ],
-          ),
-        ),
+        SizedBox(
+          height: 300,
+            width: double.infinity,
+            child: SelectEntertainmentCard(widget.cityName,addToActivities,removeFromActivities)),
       ],
     );
   }

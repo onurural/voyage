@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -208,7 +209,7 @@ class _ActivitySlideState extends State<ActivitySlide>
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(widget.activity.title!, style: titleStyle),
+                          AutoSizeText(widget.activity.title!, style: titleStyle,overflow: TextOverflow.ellipsis),
                           const SizedBox(height: 5),
                           Text(widget.activity.category!, style: subtitleStyle),
                         ],
@@ -273,8 +274,8 @@ class _ActivitySlideState extends State<ActivitySlide>
                               autoPlay: true,
                               enlargeCenterPage: true,
                             ),
-                            items: widget.activity.photos
-                                ?.map((photo) => Container(
+                            items: widget.activity.photosLinks
+                                .map((photo) => Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
@@ -287,7 +288,7 @@ class _ActivitySlideState extends State<ActivitySlide>
                                   ),
                                 ],
                                 image: DecorationImage(
-                                  image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?photo_reference=${photo.photoReference}&maxheight=400&maxwidth=400&key=${apiKey}'),
+                                  image: NetworkImage(photo),
                                   fit: BoxFit.cover,
                                   alignment: Alignment.center,
                                 ),

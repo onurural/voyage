@@ -1,11 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:voyage/bloc/photos-fetcher/photos-fetcher-bloc.dart';
+import 'package:voyage/bloc/photos-fetcher/photos-fetcher-state.dart';
+import 'package:voyage/data/photos-fetcher.data.dart';
 import 'package:voyage/models/activity.dart';
 import 'package:voyage/models/place-to-travel.dart';
 import 'dart:math' as math;
+
+import '../../bloc/photos-fetcher/photos-fetcher-event.dart';
+import '../../models/photos.dart';
 
 
 class InnerPlaceToTravelActivityCard extends StatefulWidget {
@@ -26,13 +34,14 @@ class _InnerActivityCardState extends State<InnerPlaceToTravelActivityCard>
   late Animation<Color?> _colorAnimation;
   late AnimationController _animationController;
   double _rotationAngle = 0;
+  var photosFetcher=PhotosFetcherBloc(data: PhotosFetcherData());
 
   bool _selected = false;
 
   @override
   void initState() {
     super.initState();
-
+    photosFetcher.add(FetchImages(widget.activity.placeID!));
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -52,11 +61,64 @@ class _InnerActivityCardState extends State<InnerPlaceToTravelActivityCard>
 
   @override
   Widget build(BuildContext context) {
-    return buildInnerActivityCard(context);
+    return BlocProvider(
+        create: (_) => photosFetcher,
+        child: BlocConsumer<PhotosFetcherBloc, PhotosFetchersState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is PhotosFetcherLoaded) {
+
+                  for (var element in state.images) {
+                   if(element.isNotEmpty){
+                     widget.activity.photosLinks.add(element);
+                   }
+
+                  }
+                  if(widget.activity.photosLinks.isNotEmpty){
+                    return buildInnerActivityCard(context);
+                  }
+                  else{
+                    return Container();
+                  }
+
+
+              }
+              if (state is PhotosFetcherLoading) {
+
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: Container(
+                        width: 250.0, // Adjust the width to match your card
+
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                  ),
+                );
+              }
+              if (state is PhotosFetcherError) {
+                return Container();
+            }return Container(); } )
+              );
   }
 
   Widget buildInnerActivityCard(BuildContext context) {
-    var photoReference = widget.placeToTravel.photos?[0].photoReference;
+   late var photoReference = widget.placeToTravel.photos?[0].photoReference;
     var apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
     return Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -83,7 +145,7 @@ class _InnerActivityCardState extends State<InnerPlaceToTravelActivityCard>
                   Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?photo_reference=$photoReference&maxheight=400&maxwidth=400&key=$apiKey'),
+                        image: NetworkImage(widget.activity.photosLinks.first),
                         fit: BoxFit.cover,
                       ),
                     ),

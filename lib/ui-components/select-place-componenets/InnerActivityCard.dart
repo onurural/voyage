@@ -1,46 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:voyage/models/activity.dart';
-import 'package:voyage/models/restaurants.dart';
+import 'package:voyage/bloc/photos-fetcher/photos-fetcher-bloc.dart';
+import 'package:voyage/bloc/photos-fetcher/photos-fetcher-state.dart';
 import 'dart:math' as math;
-
-import '../../bloc/photos-fetcher/photos-fetcher-bloc.dart';
 import '../../bloc/photos-fetcher/photos-fetcher-event.dart';
-import '../../bloc/photos-fetcher/photos-fetcher-state.dart';
-import '../../data/photos-fetcher.data.dart';
-import '../../models/photos.dart';
 
-class InnerRestaurantActivityCard extends StatefulWidget {
-  Restaurant restaurant;
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../models/activity.dart';
+
+class InnerActivityCard extends StatefulWidget {
   Activity activity;
   final Function(Activity) addActivity;
   final Function(Activity) removeActivity;
 
-  InnerRestaurantActivityCard(this.restaurant, this.activity, this.addActivity, this.removeActivity);
+  InnerActivityCard(this.activity, this.addActivity, this.removeActivity);
 
   @override
-  State<InnerRestaurantActivityCard> createState() => _InnerActivityCardState();
+  State<InnerActivityCard> createState() => _InnerActivityCardState();
 }
 
-class _InnerActivityCardState extends State<InnerRestaurantActivityCard>
+class _InnerActivityCardState extends State<InnerActivityCard>
     with SingleTickerProviderStateMixin {
   late Animation<double> _scaleAnimation;
   late Animation<Color?> _colorAnimation;
   late AnimationController _animationController;
   double _rotationAngle = 0;
-  var photosFetcher=PhotosFetcherBloc(data: PhotosFetcherData());
 
   bool _selected = false;
 
   @override
   void initState() {
     super.initState();
-    photosFetcher.add(FetchImages(widget.activity.placeID!));
+
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -56,69 +51,44 @@ class _InnerActivityCardState extends State<InnerRestaurantActivityCard>
         _rotationAngle = _animationController.value * 2 * math.pi;
       });
     });
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      BlocProvider.of<PhotosFetcherBloc>(context)
+          .add(FetchImages(widget.activity.placeID!));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (_) => photosFetcher,
-        child: BlocConsumer<PhotosFetcherBloc, PhotosFetchersState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is PhotosFetcherLoaded) {
+    return BlocBuilder<PhotosFetcherBloc, PhotosFetchersState>(
+      builder: (context, state) {
+        if (state is PhotosFetcherLoaded) {
+          widget.activity.photosLinks = state.images;
+          return buildInnerActivityCard(context);
+        } else if (state is PhotosFetcherError) {
+          return Text('Error: ${state.message}');
+        } else {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
+                width: 250 // Adjust the width to match your card
+                ,decoration: BoxDecoration(
+                borderRadius:  BorderRadius.circular(10),
+                color: Colors.grey[300],
+              ),
 
-                  for (var element in state.images) {
-                    if(element.isNotEmpty){
-                      widget.activity.photosLinks.add(element);
-                    }
-
-                  }
-                  if(widget.activity.photosLinks.isNotEmpty){
-                    return buildInnerActivityCard(context);
-                  }
-                  else{
-                    return Container();
-                  }
-
-
-              }
-              if (state is PhotosFetcherLoading) {
-
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey.shade300,
-                      highlightColor: Colors.grey.shade100,
-                      child: Container(
-                        width: 250.0, // Adjust the width to match your card
-
-                        color: Colors.grey[300],
-                      ),
-                    ),
-                  ),
-                );
-              }
-              if (state is PhotosFetcherError) {
-                return Container();
-              }return Container(); } )
+              ),
+            ),
+          ); // Show a loading spinner by default
+        }
+      },
     );
   }
 
   Widget buildInnerActivityCard(BuildContext context) {
-    var photoReference = widget.restaurant.photos?[0].photoReference;
-    var apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
     return Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ScaleTransition(
@@ -144,7 +114,9 @@ class _InnerActivityCardState extends State<InnerRestaurantActivityCard>
                   Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image:  NetworkImage(widget.activity.photosLinks.first),
+                        image: NetworkImage(
+
+                            widget.activity.photosLinks.first),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -167,49 +139,49 @@ class _InnerActivityCardState extends State<InnerRestaurantActivityCard>
                     children: [
                       Expanded(
                           child: Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.activity.title!,
-                              style: GoogleFonts.notoSerif(
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 22,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                RatingBarIndicator(
-                                  rating: 2.5,
-                                  itemBuilder: (context, index) => const Icon(
-                                    Icons.star,
-                                    color: Colors.white,
-                                  ),
-                                  itemCount: 5,
-                                  itemSize: 15,
-                                  direction: Axis.horizontal,
-                                ),
                                 Text(
-                                  widget.activity.rate!.toString(),
-                                  style: GoogleFonts.roboto(
+                                  widget.activity.title!,
+                                  style: GoogleFonts.notoSerif(
                                     textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
                                       color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 22,
                                     ),
                                   ),
                                 ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    RatingBarIndicator(
+                                      rating: 2.5,
+                                      itemBuilder: (context, index) => const Icon(
+                                        Icons.star,
+                                        color: Colors.white,
+                                      ),
+                                      itemCount: 5,
+                                      itemSize: 15,
+                                      direction: Axis.horizontal,
+                                    ),
+                                    Text(
+                                      widget.activity.rate!.toString(),
+                                      style: GoogleFonts.roboto(
+                                        textStyle: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
-                          ],
-                        ),
-                      )),
+                          )),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                         child: Row(
