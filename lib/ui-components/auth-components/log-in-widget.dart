@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:lottie/lottie.dart';
+
 
 
 import 'package:voyage/ui-components/custom-error-dialog.dart';
@@ -25,28 +26,16 @@ class LoginWidget extends StatefulWidget {
   _LoginWidgetState createState() => _LoginWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
-  late Timer timer;
-  var percent=20;
-  void startTimer(){
-    setState(() {
-      timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
-        print('Percent Update');
-        setState(() {
-          percent += 1;
-          if (percent >= 100) {
-            timer.cancel();
-            // percent=0;
-          }
-        });
-      });
-    });
+class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixin {
 
-  }
+
+
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
+    _controller = AnimationController(vsync: this);
 
   }
   bool isLoading = false;
@@ -55,7 +44,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   String _email = '';
   String _password = '';
   final AuthBloc _authBloc = AuthBloc();
-
+  late final AnimationController _controller;
   void _onSignUpButtonPressed() {
     widget.onNavigate(0);
   }
@@ -66,6 +55,10 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   void _onLoginButtonPressed() {
     if (_formKey.currentState!.validate()) {
+
+      setState(() {
+        isLoading = true; // Start loading immediately before adding event
+      });
       _authBloc.add(LogInRequest(_email, _password));
     }
   }
@@ -88,11 +81,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
                   if (state is AuthSuccessState) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainConnector()),
-                    );
+                    Future.delayed(Duration(seconds: 5), () { // Add delay here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainConnector(),
+                        ),
+                      );
+                    });
                   }
                   if (state is AuthFailedState) {
                     setState(() {
@@ -102,7 +98,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         context, 'The Email or the password is not correct');
                   }
                   if (state is AuthLoadingState) {
-                    startTimer();
+
                     setState(() {
                       isLoading = true;
                     });
@@ -275,27 +271,25 @@ class _LoginWidgetState extends State<LoginWidget> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: LiquidCustomProgressIndicator(
-          value: percent / 100,
-          valueColor: AlwaysStoppedAnimation( Color.fromRGBO(37, 154, 180, 1)),
-          backgroundColor: Colors.grey,
-          direction: Axis.vertical,
-          shapePath: buildBoatPath(),
+        child: Lottie.asset(
+          'assets/Images/LoadingAnimation.json',
+          controller: _controller,
+          onLoaded: (composition) {
+            // Configure the AnimationController with the duration of the
+            // Lottie file and start the animation.
+            _controller
+              ..duration = composition.duration
+              ..forward();
+          },
         ),
       ),
     );
   }
-  Path buildBoatPath() {
-    return Path()
-      ..moveTo(15, 120)
-      ..lineTo(0, 85)
-      ..lineTo(50, 85)
-      ..lineTo(50, 0)
-      ..lineTo(105, 80)
-      ..lineTo(60, 80)
-      ..lineTo(60, 85)
-      ..lineTo(120, 85)
-      ..lineTo(105, 120)
-      ..close();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
+
 }
