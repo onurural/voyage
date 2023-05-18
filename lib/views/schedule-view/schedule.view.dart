@@ -158,6 +158,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
           ),
         ),
          _saveButton()
+
       ],
     ),
     // floatingActionButton: _saveButton(),
@@ -165,40 +166,43 @@ class _ScheduleScreenState extends State<ScheduleScreen>
   }
 
   _saveButton() {
-    return     ElevatedButton(
-            onPressed: () {
-      if (userId != null) {
-        print("added++++++++++++++++++++++++");
+    return     Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+              onPressed: () {
+        if (userId != null) {
+          print("added++++++++++++++++++++++++");
 
-        BlocProvider.of<ScheduleBloc>(context).add(PostSchedule(schedule: widget.schedule));
-      }
+          BlocProvider.of<ScheduleBloc>(context).add(PostSchedule(schedule: widget.schedule));
+        }
 
-    },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
+      },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
 
 
 
-              padding: const EdgeInsets
-                  .symmetric(
-                  vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.circular(30),
+                padding: const EdgeInsets
+                    .symmetric(
+                    vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                  BorderRadius.circular(30),
+                ),
               ),
-            ),
-            child: Center(
-              child: Text(
-                'Save',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+              child: Center(
+                child: Text(
+                  'Save',
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
-          );
+    );
   }
 }

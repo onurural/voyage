@@ -251,7 +251,8 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title: const Text('Create Schedule'),
+        backgroundColor: Color.fromRGBO(24, 42, 64, 1),
+        title: const Text('Managing Schedule'),
 
         ),
 
@@ -287,53 +288,66 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
               },
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              List<Activity> tempActivities=[];
-              this.activitiesNotifiers.forEach((key, value) {
-                value.value.forEach((element) {
-                  tempActivities.add(element);
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                List<Activity> tempActivities=[];
+                this.activitiesNotifiers.forEach((key, value) {
+                  value.value.forEach((element) {
+                    tempActivities.add(element);
+                  });
                 });
-              });
-              Schedule schedule=Schedule(tempActivities, widget.cityName, userId!);
-              if(tempActivities.isNotEmpty){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>      BlocProvider(
-                          create: (BuildContext context) => scheduleBloc, // You are creating bloc here
-                          child: Builder( // Use Builder to get the context with the bloc provided above
-                            builder: (context) {
-                              final authBloc = BlocProvider.of<ScheduleBloc>(context); // Get the bloc from the context
-                              return ScheduleScreen(schedule: schedule);
-                            },
-                          ),
-                        )
-                    ));
-              }
+                Schedule schedule=Schedule(tempActivities, widget.cityName, userId!);
+                if(tempActivities.isNotEmpty){
+                  Navigator.push(context, PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>  BlocProvider(
+                      create: (BuildContext context) => scheduleBloc, // You are creating bloc here
+                      child: Builder( // Use Builder to get the context with the bloc provided above
+                        builder: (context) {
+                          final authBloc = BlocProvider.of<ScheduleBloc>(context); // Get the bloc from the context
+                          return ScheduleScreen(schedule: schedule);
+                        },
+                      ),
+                    ),
+                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                      var begin = Offset(1.0, 0.0);
+                      var end = Offset.zero;
+                      var curve = Curves.ease;
 
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
+                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                      return SlideTransition(
+                        position: animation.drive(tween),
+                        child: child,
+                      );
+                    },
+                  ));
+                }
+
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
 
 
 
-              padding: const EdgeInsets
-                  .symmetric(
-                  vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.circular(30),
+                padding: const EdgeInsets
+                    .symmetric(
+                    vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                  BorderRadius.circular(30),
+                ),
               ),
-            ),
-            child: Center(
-              child: Text(
-                'Next',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+              child: Center(
+                child: Text(
+                  'Next',
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
