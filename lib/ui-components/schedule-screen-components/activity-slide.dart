@@ -206,13 +206,15 @@ class _ActivitySlideState extends State<ActivitySlide>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AutoSizeText(widget.activity.title!, style: titleStyle,overflow: TextOverflow.ellipsis),
-                          const SizedBox(height: 5),
-                          Text(widget.activity.category!, style: subtitleStyle),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.activity.title!, style: titleStyle, maxLines: 3, overflow: TextOverflow.ellipsis),
+                            const SizedBox(height: 5),
+                            Text(widget.activity.category!, style: subtitleStyle),
+                          ],
+                        ),
                       ),
                       Column(
                         children: [

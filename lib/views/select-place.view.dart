@@ -63,36 +63,42 @@ void removeFromActivities(Activity activity){
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.cityName),
-      ),
-      floatingActionButton: CustomFloatingActionButton(onPressed: (){
-        if(activities.isNotEmpty){
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ManageActivitiesScreen(cityName: widget.cityName, activities: activities, beginDate: widget.beginDate, endDate: widget.endDate, beginTime: widget.beginTime, endTime: widget.endTime)
-            ),
-          );
-        }
-        else{
-          showErrorDialog(context, 'Please Select At Least One Activity');
-        }
+    return Hero(
+      tag: 'screen1',
+      child: Scaffold(
 
-      }, icon: CupertinoIcons.check_mark,),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: double.maxFinite,
-          height: 1200,
-          child: IntrinsicHeight(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildMustSeeCategory(),
-                 buildRestaurantCategory(),
-                 buildEntertainmentCategory()
-              ],
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(24, 42, 64, 1),
+          title: Text(widget.cityName),
+
+        ),
+        floatingActionButton: CustomFloatingActionButton(onPressed: (){
+          if(activities.isNotEmpty){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ManageActivitiesScreen(cityName: widget.cityName, activities: activities, beginDate: widget.beginDate, endDate: widget.endDate, beginTime: widget.beginTime, endTime: widget.endTime)
+              ),
+            );
+          }
+          else{
+            showErrorDialog(context, 'Please Select At Least One Activity');
+          }
+
+        }, icon: CupertinoIcons.check_mark,),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            width: double.maxFinite,
+            height: 1200,
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildMustSeeCategory(),
+                   buildRestaurantCategory(),
+                   buildEntertainmentCategory()
+                ],
+              ),
             ),
           ),
         ),

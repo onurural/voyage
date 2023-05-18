@@ -13,6 +13,8 @@ import 'package:voyage/ui-components/create-schedule/trip-companions-container.d
 import 'package:voyage/ui-components/custom-error-dialog.dart';
 import 'package:voyage/views/select-place.view.dart';
 
+import '../ui-components/place-components/hero_dialog_route.dart';
+
 
 class CreateScheduleScreen extends StatefulWidget {
   const CreateScheduleScreen({Key? key}) : super(key: key);
@@ -240,65 +242,72 @@ var searchBar=SearchBarView();
                  ),
                  Padding(
                    padding: const EdgeInsets.fromLTRB( 8, 300, 8, 0),
-                   child: ElevatedButton(
-                     onPressed: () {
-                       if (searchBar.cityName.isNotEmpty) {
-                         Navigator.push(
-                             context,
-                             MaterialPageRoute(builder: (context) =>
-                                 SelectPlaceScreen(cityName: searchBar.cityName,
-                                   entertainment: doubleToBool((listWidgets[4] as InterestContainer)
-                                       .preferences['entertainment']! ),
-                                   gastronomy:  doubleToBool((listWidgets[4] as InterestContainer)
-                                       .preferences['gastronomy']!),
-                                   health:  doubleToBool((listWidgets[4] as InterestContainer)
-                                       .preferences['health']!),
-                                   shopping: doubleToBool((listWidgets[4] as InterestContainer)
-                                       .preferences['shopping']!),
-                                   history: doubleToBool((listWidgets[4] as InterestContainer)
-                                       .preferences['history']!),
-                                   nature:  doubleToBool((listWidgets[4] as InterestContainer)
-                                       .preferences['nature']!),
-                                   sport: doubleToBool((listWidgets[4] as InterestContainer)
-                                       .preferences['sport']!),
-                                   beginDate: (listWidgets[0] as DateBeginEndContainer)
-                                       .startDate,
-                                   endDate: (listWidgets[0] as DateBeginEndContainer)
-                                       .endDate,
-                                   beginTime: (listWidgets[1] as FreeTimePerDayContainer)
-                                       .beginTime,
-                                   endTime: (listWidgets[1] as FreeTimePerDayContainer)
-                                       .endTime,
-                                   budget: (listWidgets[2] as BudgetContainer)
-                                       .budgetValue,
-                                   companion: (listWidgets[3] as TripCompanionsContainer)
-                                       .companion,)));
-                       }
-                       else{
-                         showErrorDialog(context, "Please Select a City");
-                       }
-                     },
-                     style: ElevatedButton.styleFrom(
-                       backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
+                   child: Hero(
+                     tag: 'screen1',
+                     child: ElevatedButton(
+                       onPressed: () {
+                         if (searchBar.cityName.isNotEmpty) {
+                           Navigator.of(context).push(
+                             HeroDialogRoute(
+                               builder: (context) =>
+                                   SelectPlaceScreen(cityName: searchBar.cityName,
+                                     entertainment: doubleToBool((listWidgets[4] as InterestContainer)
+                                         .preferences['entertainment']! ),
+                                     gastronomy:  doubleToBool((listWidgets[4] as InterestContainer)
+                                         .preferences['gastronomy']!),
+                                     health:  doubleToBool((listWidgets[4] as InterestContainer)
+                                         .preferences['health']!),
+                                     shopping: doubleToBool((listWidgets[4] as InterestContainer)
+                                         .preferences['shopping']!),
+                                     history: doubleToBool((listWidgets[4] as InterestContainer)
+                                         .preferences['history']!),
+                                     nature:  doubleToBool((listWidgets[4] as InterestContainer)
+                                         .preferences['nature']!),
+                                     sport: doubleToBool((listWidgets[4] as InterestContainer)
+                                         .preferences['sport']!),
+                                     beginDate: (listWidgets[0] as DateBeginEndContainer)
+                                         .startDate,
+                                     endDate: (listWidgets[0] as DateBeginEndContainer)
+                                         .endDate,
+                                     beginTime: (listWidgets[1] as FreeTimePerDayContainer)
+                                         .beginTime,
+                                     endTime: (listWidgets[1] as FreeTimePerDayContainer)
+                                         .endTime,
+                                     budget: (listWidgets[2] as BudgetContainer)
+                                         .budgetValue,
+                                     companion: (listWidgets[3] as TripCompanionsContainer)
+                                         .companion,),
+                               settings:  const RouteSettings(),
+                               fullscreenDialog: true,
+                             ),
+                           );
+                         }
+                         else{
+                           showErrorDialog(context, "Please Select a City");
+                         }
+                       },
+                       style: ElevatedButton.styleFrom(
+                         backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
 
 
 
-                     padding: const EdgeInsets
-                           .symmetric(
-                           vertical: 16),
-                       shape: RoundedRectangleBorder(
-                         borderRadius:
-                         BorderRadius.circular(30),
+                       padding: const EdgeInsets
+                             .symmetric(
+                             vertical: 16),
+                         shape: RoundedRectangleBorder(
+                           borderRadius:
+                           BorderRadius.circular(30),
+                         ),
                        ),
-                     ),
-                     child: Center(
-                       child: Text(
-                         'Create Your Schedule',
-                         style: GoogleFonts.poppins(
-                           textStyle: const TextStyle(
-                             fontSize: 20,
-                             fontWeight: FontWeight.w700,
-                             color: Colors.white,
+                       child: Center(
+                         child: Text(
+                           'Create Your Schedule',
+                           style: GoogleFonts.poppins(
+                             textStyle: const TextStyle(
+                               fontSize: 20,
+                               fontWeight: FontWeight.w700,
+                               color: Colors.white,
+                             ),
                            ),
                          ),
                        ),
