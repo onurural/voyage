@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/models/activity.dart';
@@ -12,7 +14,7 @@ class ToManageActivityTile extends StatefulWidget {
 
 
   ToManageActivityTile(
-      this.activity, this.onPressed, this.index, this.isRemovedNotifier);
+      this.activity, this.onPressed, this.index, this.isRemovedNotifier, {super.key});
 
   @override
   State<ToManageActivityTile> createState() => _ToManageActivityTileState();
@@ -28,7 +30,7 @@ class _ToManageActivityTileState extends State<ToManageActivityTile> {
     setState(() {
       _opacity = 0.0;
     });
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
     widget.isRemovedNotifier.value = true;
     _isAnimating = false;
   }
@@ -38,7 +40,6 @@ class _ToManageActivityTileState extends State<ToManageActivityTile> {
     return MaterialButton(
       onPressed: () async {
         bool result = await widget.onPressed(widget.index);
-        print('onAddActivity result: $result');
         if (result) {
           _fadeOut();
           widget.isRemovedNotifier.value=true;
@@ -46,7 +47,7 @@ class _ToManageActivityTileState extends State<ToManageActivityTile> {
       },
       child: AnimatedOpacity(
         opacity: _opacity,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         child: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(

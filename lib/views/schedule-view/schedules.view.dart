@@ -5,9 +5,7 @@ import 'package:voyage/bloc/schedule/schedule.bloc.dart';
 import 'package:voyage/bloc/schedule/schedule.event.dart';
 import 'package:voyage/bloc/schedule/schedule.state.dart';
 import 'package:voyage/data/auth.data.dart';
-import 'package:voyage/models/user-schedules.dart';
 import 'package:voyage/ui-components/schedule-screen-components/schedule-card.dart';
-import 'package:voyage/models/schedule.dart';
 
 class SchedulesScreen extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables

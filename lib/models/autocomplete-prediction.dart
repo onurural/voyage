@@ -1,3 +1,6 @@
+// ignore: file_names
+// ignore_for_file: file_names, duplicate_ignore
+
 class AutocompletePrediction {
   AutocompletePrediction({
     required this.predictions,
@@ -12,10 +15,10 @@ class AutocompletePrediction {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['predictions'] = predictions.map((e)=>e.toJson()).toList();
-    _data['status'] = status;
-    return _data;
+    final data = <String, dynamic>{};
+    data['predictions'] = predictions.map((e)=>e.toJson()).toList();
+    data['status'] = status;
+    return data;
   }
 }
 
@@ -48,15 +51,15 @@ class Predictions {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['description'] = description;
-    _data['matched_substrings'] = matchedSubstrings.map((e)=>e.toJson()).toList();
-    _data['place_id'] = placeId;
-    _data['reference'] = reference;
-    _data['structured_formatting'] = structuredFormatting.toJson();
-    _data['terms'] = terms.map((e)=>e.toJson()).toList();
-    _data['types'] = types;
-    return _data;
+    final data = <String, dynamic>{};
+    data['description'] = description;
+    data['matched_substrings'] = matchedSubstrings.map((e)=>e.toJson()).toList();
+    data['place_id'] = placeId;
+    data['reference'] = reference;
+    data['structured_formatting'] = structuredFormatting.toJson();
+    data['terms'] = terms.map((e)=>e.toJson()).toList();
+    data['types'] = types;
+    return data;
   }
 }
 
@@ -74,10 +77,10 @@ class MatchedSubstrings {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['length'] = length;
-    _data['offset'] = offset;
-    return _data;
+    final data = <String, dynamic>{};
+    data['length'] = length;
+    data['offset'] = offset;
+    return data;
   }
 }
 
@@ -96,10 +99,10 @@ class StructuredFormatting {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['main_text'] = mainText;
-    _data['main_text_matched_substrings'] = mainTextMatchedSubstrings.map((e)=>e.toJson()).toList();
-    return _data;
+    final data = <String, dynamic>{};
+    data['main_text'] = mainText;
+    data['main_text_matched_substrings'] = mainTextMatchedSubstrings.map((e)=>e.toJson()).toList();
+    return data;
   }
 }
 
@@ -117,10 +120,10 @@ class MainTextMatchedSubstrings {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['length'] = length;
-    _data['offset'] = offset;
-    return _data;
+    final data = <String, dynamic>{};
+    data['length'] = length;
+    data['offset'] = offset;
+    return data;
   }
 }
 
@@ -138,9 +141,9 @@ class Terms {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['offset'] = offset;
-    _data['value'] = value;
-    return _data;
+    final data = <String, dynamic>{};
+    data['offset'] = offset;
+    data['value'] = value;
+    return data;
   }
 }

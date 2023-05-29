@@ -7,7 +7,7 @@ import 'gradient-icon.dart';
 class NavBar extends StatefulWidget {
   final void Function(int index) onTap;
 
-  const NavBar({super.key, required this.onTap});
+  const NavBar({Key? key, required this.onTap}) : super(key: key);
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -15,52 +15,8 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
-
-  final List<Widget> _gradientIcons = [
-    const GradientIcon(
-        icon: Icons.home,
-        size: 40,
-        gradient: LinearGradient(
-            colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter)),
-    const GradientIcon(
-        icon: Icons.calendar_month,
-        size: 40,
-        gradient: LinearGradient(
-            colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter)),
-    const GradientIcon(
-        icon: Icons.add_circle_outlined,
-        size: 50,
-        gradient: LinearGradient(
-            colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter)),
-    const GradientIcon(
-        icon: Icons.document_scanner,
-        size: 40,
-        gradient: LinearGradient(
-            colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter)),
-    const GradientIcon(
-        icon: Icons.account_circle,
-        size: 40,
-        gradient: LinearGradient(
-            colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter)),
-  ];
-
-  final List<Widget> _icons = [
-    const Icon(Icons.home, color: Color.fromRGBO(44, 87, 116, 100), size: 40),
-    const Icon(Icons.calendar_month_rounded, color: Color.fromRGBO(44, 87, 116, 100), size: 40),
-    const Icon(Icons.add_circle_rounded, color: Color.fromRGBO(44, 87, 116, 100), size: 50),
-    const Icon(Icons.document_scanner, color: Color.fromRGBO(44, 87, 116, 100), size: 40),
-    const Icon(Icons.account_circle, color: Color.fromRGBO(44, 87, 116, 100), size: 40),
-  ];
+  List<Widget> _gradientIcons = [];
+  List<Widget> _icons = [];
 
   void selectScreen(int index) {
     setState(() {
@@ -71,16 +27,59 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
+    double iconSize = MediaQuery.of(context).size.width / 10;
+    double bigIconSize = MediaQuery.of(context).size.width /7.7;
+    _gradientIcons = [
+      GradientIcon(
+          icon: Icons.home,
+          size: iconSize,
+          gradient: const LinearGradient(
+              colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter)),
+      GradientIcon(
+          icon: Icons.calendar_month,
+          size: iconSize,
+          gradient: const LinearGradient(
+              colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter)),
+      GradientIcon(
+          icon: Icons.add_circle_outlined,
+          size: bigIconSize,
+          gradient: const LinearGradient(
+              colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter)),
+      GradientIcon(
+          icon: Icons.document_scanner,
+          size: iconSize,
+          gradient: const LinearGradient(
+              colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter)),
+      GradientIcon(
+          icon: Icons.account_circle,
+          size: iconSize,
+          gradient: const LinearGradient(
+              colors: [Color.fromRGBO(37, 154, 180, 100), Colors.black],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter)),
+    ];
+
+    _icons = [
+      Icon(Icons.home, color: const Color.fromRGBO(44, 87, 116, 100), size: iconSize),
+      Icon(Icons.calendar_month_rounded, color: const Color.fromRGBO(44, 87, 116, 100), size: iconSize),
+      Icon(Icons.add_circle_rounded, color: const Color.fromRGBO(44, 87, 116, 100), size: bigIconSize),
+      Icon(Icons.document_scanner, color: const Color.fromRGBO(44, 87, 116, 100), size: iconSize),
+      Icon(Icons.account_circle, color: const Color.fromRGBO(44, 87, 116, 100), size: iconSize),
+    ];
+
     return Center(
       child: Container(
-        decoration:
-        const BoxDecoration
-          (
-          color: Colors.white,
-        ),
+        decoration: const BoxDecoration(color: Colors.white),
         padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
         width: double.infinity,
-
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [

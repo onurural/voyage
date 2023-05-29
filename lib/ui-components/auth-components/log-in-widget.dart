@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, prefer_const_constructors_in_immutables, library_private_types_in_public_api
+
 import 'dart:async';
 import 'dart:ui';
 
@@ -15,12 +17,11 @@ import '../../bloc/auth/auth.bloc.dart';
 import '../../bloc/auth/auth.event.dart';
 import '../../bloc/auth/auth.state.dart';
 import '../../views/main-connector.dart';
-import 'package:flutter/material.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function(double) onNavigate;
 
-  LoginWidget(this.onNavigate);
+  LoginWidget(this.onNavigate, {super.key});
 
   @override
   _LoginWidgetState createState() => _LoginWidgetState();
@@ -81,7 +82,7 @@ class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixi
                 ),
                 BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
                   if (state is AuthSuccessState) {
-                    Future.delayed(Duration(seconds: 5), () { // Add delay here
+                    Future.delayed(const Duration(seconds: 5), () { // Add delay here
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -135,7 +136,7 @@ class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixi
               children: [
                 Text('Log In',
                     style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontSize: 32, fontWeight: FontWeight.bold))),
                 const SizedBox(height: 40),
                 Form(
@@ -147,17 +148,17 @@ class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixi
                         decoration: InputDecoration(
                           labelText: 'Email',
                           labelStyle: GoogleFonts.poppins(),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: const Color.fromRGBO(80, 120, 150, 1),
+                                color: Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: const Color.fromRGBO(80, 120, 150, 1),
+                                color: Color.fromRGBO(80, 120, 150, 1),
                                 width: 2.0),
                           ),
-                          errorBorder: OutlineInputBorder(
+                          errorBorder: const OutlineInputBorder(
                             borderSide:
                             BorderSide(color: Colors.red, width: 2.0),
                           ),
@@ -178,17 +179,17 @@ class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixi
     decoration: InputDecoration(
     labelText: 'Password',
     labelStyle: GoogleFonts.poppins(),
-    focusedBorder: OutlineInputBorder(
+    focusedBorder: const OutlineInputBorder(
     borderSide: BorderSide(
-    color: const Color.fromRGBO(80, 120, 150, 1),
+    color: Color.fromRGBO(80, 120, 150, 1),
     width: 2.0),
     ),
-    enabledBorder: OutlineInputBorder(
+    enabledBorder: const OutlineInputBorder(
     borderSide: BorderSide(
-    color: const Color.fromRGBO(80, 120, 150, 1),
+    color: Color.fromRGBO(80, 120, 150, 1),
     width: 2.0),
     ),
-    errorBorder: OutlineInputBorder(
+    errorBorder: const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.red, width: 2.0),
     ),
     suffixIcon: IconButton( // Add this block
@@ -274,7 +275,7 @@ class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixi
             color: Colors.black.withOpacity(0.2),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),

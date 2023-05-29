@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class InterestedCategory {
   String? clickledUserIdStringValue;
   String? placeCategoryStringValue;

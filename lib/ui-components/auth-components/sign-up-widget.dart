@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api, prefer_interpolation_to_compose_strings
+
 import 'dart:io';
 import 'dart:ui';
 
@@ -13,7 +15,6 @@ import 'package:voyage/ui-components/custom-error-dialog.dart';
 import '../../bloc/auth/auth.bloc.dart';
 import '../../bloc/auth/auth.event.dart';
 import '../../bloc/auth/auth.state.dart';
-import '../../data/auth.data.dart';
 import '../../views/main-connector.dart';
 
 class SignupWidget extends StatefulWidget {
@@ -21,7 +22,7 @@ class SignupWidget extends StatefulWidget {
 
 
 
-  SignupWidget(this.onNavigate);
+  const SignupWidget(this.onNavigate, {super.key});
 
   @override
   _SignupWidgetState createState() => _SignupWidgetState();
@@ -41,7 +42,7 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
             color: Colors.black.withOpacity(0.2),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -79,7 +80,6 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
   String _lastName = '';
   bool isLoading = false;
   final AuthBloc _authBloc = AuthBloc();
-  final AuthData _authData = AuthData();
   File? _image;
   final picker = ImagePicker();
 
@@ -137,7 +137,7 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
                 BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
                       if (state is AuthSuccessState) {
-                        Future.delayed(Duration(seconds: 5), () { // Add delay here
+                        Future.delayed(const Duration(seconds: 5), () { // Add delay here
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -146,7 +146,7 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
                           );
                         });
                         // var userId = _authData.getCurrentUserId();
-                        _authBloc.add(SaveUserToMongoDB(_email, _firstName.replaceAll(" ", "_")+"_"+_lastName.replaceAll(" ", "_"), _password));
+                        _authBloc.add(SaveUserToMongoDB(_email, _firstName.replaceAll(' ', '_')+'_'+_lastName.replaceAll(' ', '_'), _password));
                       } else if (state is AuthFailedState) {
                         setState(() {
                           isLoading=false;
@@ -191,7 +191,7 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
           key: _formKey,
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -199,7 +199,7 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
                     Expanded(
                       child: TextFormField(
                         keyboardType: TextInputType.name,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'First Name',
                           labelStyle: TextStyle(fontSize: 18),
                           border: OutlineInputBorder(),
@@ -215,7 +215,7 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
                         padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                         child: TextFormField(
                           keyboardType: TextInputType.name,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Last Name',
                             labelStyle: TextStyle(fontSize: 18),
                             border: OutlineInputBorder(),
@@ -234,7 +234,7 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
               const SizedBox(height: 10),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(fontSize: 18),
                   border: OutlineInputBorder(),
@@ -256,9 +256,9 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
     obscureText: _isPasswordHidden,
     decoration: InputDecoration(
     labelText: 'Password',
-    labelStyle: TextStyle(fontSize: 18),
-    border: OutlineInputBorder(),
-    focusedBorder: OutlineInputBorder(),
+    labelStyle: const TextStyle(fontSize: 18),
+    border: const OutlineInputBorder(),
+    focusedBorder: const OutlineInputBorder(),
     suffixIcon: IconButton( // Add this block
     icon: Icon(
     _isPasswordHidden ? Icons.visibility : Icons.visibility_off,
@@ -286,11 +286,11 @@ class _SignupWidgetState extends State<SignupWidget>  with TickerProviderStateMi
                 children: [
                   TextButton.icon(
                     onPressed: getImage,
-                    icon: Icon(Icons.photo_camera),
-                    label: Text("Upload Profile Picture"),
+                    icon: const Icon(Icons.photo_camera),
+                    label: const Text('Upload Profile Picture'),
                   ),
                   _image == null
-                      ? Text('No image.', style: TextStyle(color : Colors.blueGrey),)
+                      ? const Text('No image.', style: TextStyle(color : Colors.blueGrey),)
                       : Image.file(_image!, height: 50, width: 50),
                 ],
               ),

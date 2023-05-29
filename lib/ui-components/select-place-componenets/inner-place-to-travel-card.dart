@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,7 +14,6 @@ import 'package:voyage/models/place-to-travel.dart';
 import 'dart:math' as math;
 
 import '../../bloc/photos-fetcher/photos-fetcher-event.dart';
-import '../../models/photos.dart';
 
 
 class InnerPlaceToTravelActivityCard extends StatefulWidget {

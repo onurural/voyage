@@ -67,7 +67,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
 
     return BlocListener<ScheduleBloc, ScheduleState>(
         listener: (context, state) {
-          print("State received: $state");
+
           if (state is PostScheduleUploadingState) {
 
           } else if (state is PostScheduleUploadedState) {
@@ -171,7 +171,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
       child: ElevatedButton(
               onPressed: () {
         if (userId != null) {
-          print("added++++++++++++++++++++++++");
+
 
           BlocProvider.of<ScheduleBloc>(context).add(PostSchedule(schedule: widget.schedule));
         }

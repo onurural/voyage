@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
@@ -13,7 +13,6 @@ import 'dart:math' as math;
 import '../../bloc/photos-fetcher/photos-fetcher-bloc.dart';
 import '../../bloc/photos-fetcher/photos-fetcher-state.dart';
 import '../../data/photos-fetcher.data.dart';
-import '../../models/photos.dart';
 
 
 
@@ -23,7 +22,7 @@ class InnerEntertainmentActivityCard extends StatefulWidget {
   final Function(Activity) addActivity;
   final Function(Activity) removeActivity;
 
-  InnerEntertainmentActivityCard(this.entertainment, this.activity, this.addActivity, this.removeActivity);
+  InnerEntertainmentActivityCard(this.entertainment, this.activity, this.addActivity, this.removeActivity, {super.key});
 
   @override
   State<InnerEntertainmentActivityCard> createState() => _InnerActivityCardState();
@@ -119,8 +118,6 @@ class _InnerActivityCardState extends State<InnerEntertainmentActivityCard>
 
 
   Widget buildInnerActivityCard(BuildContext context) {
-    var photoReference = widget.entertainment.photos?[0].photoReference;
-    var apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
     return Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ScaleTransition(

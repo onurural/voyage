@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:voyage/views/auth.view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:voyage/views/auth.view.dart';
+import 'package:voyage/views/main-connector.dart';
 
-
-
+import 'bloc/user/user.bloc.dart';
+import 'bloc/user/user.event.dart';
+import 'data/auth.data.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -12,25 +15,38 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
 
-  runApp(const MyApp());
+  final authData = AuthData();
+  final userId = authData.getCurrentUserId();
+
+  runApp(MyApp(userId: userId));
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  final String? userId;
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
+  const MyApp({Key? key, this.userId}) : super(key: key);
 
-class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: AuthScreen()
-      );
-    
+    return MaterialApp(
+      home: Builder(
+        builder: (context) {
+          if (userId == null) {
+            // No user is currently signed in, show the AuthScreen.
+            return const AuthScreen();
+          } else {
+            // A user is signed in, initialize the UserBloc and fetch user details.
+            final userBloc = UserBloc()..add(GetUserCredential(userId!));
+            return BlocProvider(
+              create: (context) => userBloc,
+              child: const MainConnector(), // Replace with your main page widget
+            );
+          }
+        },
+      ),
+    );
   }
 }

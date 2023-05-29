@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +16,7 @@ class ForgotPasswordWidget extends StatefulWidget {
 
 
 
-  ForgotPasswordWidget(this.onNavigate);
+  const ForgotPasswordWidget(this.onNavigate, {super.key});
 
   @override
   _ForgotPasswordWidgetState createState() => _ForgotPasswordWidgetState();
@@ -29,9 +31,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
   }
 
   void _onResetPasswordButtonPressed() {
-    print("pressed one");
     if (_formKey.currentState!.validate()) {
-      print("pressed two");
       BlocProvider.of<AuthBloc>(context).add(ForgotPasswordRequest(_email));
 
     }
@@ -42,7 +42,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
     
     return BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          print("State received: $state");
           if (state is AuthLoadingState) {
 
           } else if (state is AuthSuccessState) {
@@ -63,7 +62,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text('Forgot Password', style: GoogleFonts.poppins(textStyle: (TextStyle(fontSize: 32, fontWeight: FontWeight.bold))),),
+           Text('Forgot Password', style: GoogleFonts.poppins(textStyle: (const TextStyle(fontSize: 32, fontWeight: FontWeight.bold))),),
           const SizedBox(height: 40),
           Form(
             key: _formKey,
@@ -71,13 +70,13 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
               children: [
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Email',
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: const Color.fromRGBO(80, 120, 150, 1), width: 2.0),
+                      borderSide: BorderSide(color: Color.fromRGBO(80, 120, 150, 1), width: 2.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: const Color.fromRGBO(80, 120, 150, 1), width: 2.0),
+                      borderSide: BorderSide(color: Color.fromRGBO(80, 120, 150, 1), width: 2.0),
                     ),
                     errorBorder:   OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.red,width: 2.0),
@@ -105,13 +104,13 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
           MaterialButton(
 
             onPressed: _onResetPasswordButtonPressed,
-            child: Container(child: Padding(
+            child: Container(decoration: (const BoxDecoration (color: Color.fromRGBO(80, 120, 150, 1),)),child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child:  Text('Reset Password' , style: GoogleFonts.poppins(textStyle:TextStyle(
+              child:  Text('Reset Password' , style: GoogleFonts.poppins(textStyle:const TextStyle(
                 color: Colors.white,
 
               ) ),),
-            ), decoration: (BoxDecoration (color: const Color.fromRGBO(80, 120, 150, 1),)),),
+            ),),
 
           ),
         ],

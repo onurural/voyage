@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,7 @@ class InnerActivityCard extends StatefulWidget {
   final Function(Activity) addActivity;
   final Function(Activity) removeActivity;
 
-  InnerActivityCard(this.activity, this.addActivity, this.removeActivity);
+  InnerActivityCard(this.activity, this.addActivity, this.removeActivity, {super.key});
 
   @override
   State<InnerActivityCard> createState() => _InnerActivityCardState();
@@ -231,7 +232,7 @@ class _InnerActivityCardState extends State<InnerActivityCard>
                                       child: Icon(
                                         Icons.add_box_outlined,
                                         color: _selected
-                                            ? Color.fromRGBO(37, 154, 180, 100)
+                                            ? const Color.fromRGBO(37, 154, 180, 100)
                                             : Colors.white,
                                         size: 25,
                                       ),

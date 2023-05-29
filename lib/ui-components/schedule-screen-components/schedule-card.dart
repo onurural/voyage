@@ -50,7 +50,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                 Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                            image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?photo_reference=${photoReference}&maxheight=400&maxwidth=400&key=${apiKey}'),
+                            image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?photo_reference=$photoReference&maxheight=400&maxwidth=400&key=$apiKey'),
                             fit: BoxFit.cover,
                           )
                   ),

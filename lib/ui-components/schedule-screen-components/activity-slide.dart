@@ -1,9 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -143,7 +141,6 @@ class _ActivitySlideState extends State<ActivitySlide>
 
   @override
   Widget build(BuildContext context) {
-    var apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
     // Define the color palette and text styles
     Color primaryColor = const Color.fromRGBO(44, 87, 116, 1);
     Color secondaryColor = const Color.fromRGBO(235, 235, 235, 1);

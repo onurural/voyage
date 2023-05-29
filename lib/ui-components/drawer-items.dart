@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../bloc/user/user.bloc.dart';
+import '../bloc/user/user.event.dart';
 import '../bloc/user/user.state.dart';
+import '../data/auth.data.dart';
 
 class DrawerItem {
   final String title;
@@ -20,6 +22,8 @@ class DrawerItem {
 }
 
 class DrawerItems {
+  static final AuthData authData = AuthData();
+ static final userId = authData.getCurrentUserId();
   static final UserBloc userBloc = UserBloc();
   static final profile = DrawerItem(
 
@@ -37,16 +41,16 @@ class DrawerItems {
             ),
             const SizedBox(height: 8),
             BlocProvider(
-              create: (_) => userBloc,
+              create: (_) => userBloc..add(GetUserCredential(userId!)),
               child: BlocConsumer<UserBloc, UserState>(
                 listener: (context, state) {},
                 builder: (context, state) {
                   if (state is CredentialSuccessState) {
                     return Text(
-                      '${state.model.userName?.replaceAll("_", " ")}',
-                      style: GoogleFonts.pacifico(
+                      '${state.model.userName?.replaceAll("_", " ").toUpperCase()}',
+                      style: GoogleFonts.poppins(
                           textStyle: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w800)),
+                              fontSize: 18, fontWeight: FontWeight.w800,color: Colors.white)),
                     );
                   }
                   if (state is CredentialLoadingState) {

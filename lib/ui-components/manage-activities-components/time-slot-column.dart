@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable, unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -40,7 +42,7 @@ class _TimeSlotsColumnState extends State<TimeSlotsColumn>
   }
 
   List<Widget> generateTimeSlots(TimeOfDay startTime, TimeOfDay endTime, List<Activity> activities) {
-    if (startTime == null || endTime == null) {
+    if (endTime == null) {
       throw ArgumentError('Start time and end time must be provided.');
     }
 
@@ -91,9 +93,7 @@ class _TimeSlotsColumnState extends State<TimeSlotsColumn>
   }
 
   String formatTimeSlot(DateTime start, DateTime end) {
-    return DateFormat('h:mm a').format(start) +
-        '-' +
-        DateFormat('h:mm a').format(end);
+    return '${DateFormat('h:mm a').format(start)}-${DateFormat('h:mm a').format(end)}';
   }
 
   DateTime timeOfDayToDateTime(TimeOfDay time) {
@@ -111,15 +111,15 @@ class _TimeSlotsColumnState extends State<TimeSlotsColumn>
           ? () => showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
-                  title: Text("Remove activity?"),
-                  content: Text("Do you want to remove this activity?"),
+                  title: const Text('Remove activity?'),
+                  content: const Text('Do you want to remove this activity?'),
                   actions: [
                     TextButton(
-                      child: Text("Cancel"),
+                      child: const Text('Cancel'),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                     TextButton(
-                      child: Text("Remove"),
+                      child: const Text('Remove'),
                       onPressed: () {
                         setState(() {
                           widget.activityRemovedNotifiers[currentActivity.id]?.value=false;
@@ -135,12 +135,12 @@ class _TimeSlotsColumnState extends State<TimeSlotsColumn>
           : null,
       child: AnimatedOpacity(
         opacity: currentActivity == null ? 0.5 : 1.0,
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 5),
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 colors: [
                   Color.fromRGBO(37, 154, 180, 100),
                   Color.fromRGBO(37, 154, 180, 50)
@@ -149,7 +149,7 @@ class _TimeSlotsColumnState extends State<TimeSlotsColumn>
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(5),
-              border: Border.fromBorderSide(
+              border: const Border.fromBorderSide(
                   BorderSide(color: Colors.grey, width: 2)),
             ),
             child: Row(
@@ -159,13 +159,13 @@ class _TimeSlotsColumnState extends State<TimeSlotsColumn>
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5),
-                    border: Border.fromBorderSide(BorderSide(
+                    border: const Border.fromBorderSide(BorderSide(
                         color: Color.fromRGBO(37, 154, 180, 100), width: 2)),
                   ),
                   child: Text(
                     currentFormatted,
                     style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             color: Color.fromRGBO(37, 154, 180, 100))),
                   ),
                 ),
@@ -175,7 +175,7 @@ class _TimeSlotsColumnState extends State<TimeSlotsColumn>
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.fromBorderSide(BorderSide(
+                      border: const Border.fromBorderSide(BorderSide(
                           color: Color.fromRGBO(37, 154, 180, 100), width: 2)),
                     ),
                     child: Center(
@@ -184,7 +184,7 @@ class _TimeSlotsColumnState extends State<TimeSlotsColumn>
                             ? 'Free Time'
                             : currentActivity.title!,
                         style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                                 color: Color.fromRGBO(37, 154, 180, 100))),
                       ),
                     ),

@@ -1,5 +1,4 @@
 import 'package:voyage/models/schedule.dart';
-import 'package:voyage/models/user-schedules.dart';
 abstract class ScheduleEvent {}
 
 class PostSchedule extends ScheduleEvent {

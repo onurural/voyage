@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:voyage/models/activity.dart';
@@ -24,8 +26,8 @@ class SelectPlaceScreen extends StatefulWidget {
   final double budget;
   final String companion;
 
-  SelectPlaceScreen(
-      {required this.cityName,
+  const SelectPlaceScreen(
+      {super.key, required this.cityName,
       required this.entertainment,
       required this.gastronomy,
       required this.health,
@@ -68,7 +70,7 @@ void removeFromActivities(Activity activity){
       child: Scaffold(
 
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(24, 42, 64, 1),
+          backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
           title: Text(widget.cityName),
 
         ),
@@ -77,7 +79,7 @@ void removeFromActivities(Activity activity){
             Navigator.push(context, PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) => ManageActivitiesScreen(cityName: widget.cityName, activities: activities, beginDate: widget.beginDate, endDate: widget.endDate, beginTime: widget.beginTime, endTime: widget.endTime),
               transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                var begin = Offset(1.0, 0.0);
+                var begin = const Offset(1.0, 0.0);
                 var end = Offset.zero;
                 var curve = Curves.ease;
 
