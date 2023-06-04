@@ -298,15 +298,15 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
                     tempActivities.add(element);
                   });
                 });
-                Schedule schedule=Schedule(tempActivities, widget.cityName, userId!);
+                Schedule schedule=Schedule(tempActivities,  userId!,widget.cityName);
                 if(tempActivities.isNotEmpty){
                   Navigator.push(context, PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>  BlocProvider(
                       create: (BuildContext context) => scheduleBloc, // You are creating bloc here
                       child: Builder( // Use Builder to get the context with the bloc provided above
                         builder: (context) {
-                          final authBloc = BlocProvider.of<ScheduleBloc>(context); // Get the bloc from the context
-                          return ScheduleScreen(schedule: schedule);
+
+                          return ScheduleScreen(schedule: schedule,newCreated: true,);
                         },
                       ),
                     ),

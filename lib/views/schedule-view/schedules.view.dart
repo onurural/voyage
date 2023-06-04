@@ -62,6 +62,7 @@ class _SchedulesScreenState extends State<SchedulesScreen>
               ),
               itemCount: state.schedule.length,
               itemBuilder: (BuildContext context, int index) {
+
                 final random = Random();
                 return AnimatedOpacity(
                   duration: Duration(milliseconds: random.nextInt(800) + 400),

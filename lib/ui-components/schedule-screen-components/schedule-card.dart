@@ -1,10 +1,17 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:voyage/models/user-schedules.dart';
+import 'package:voyage/bloc/schedule/schedule.bloc.dart';
+import 'package:voyage/models/activity.dart' as ActivityT;
+
+
+import '../../models/schedule.dart';
+import '../../models/user-schedules.dart';
+import '../../views/schedule-view/schedule.view.dart';
 
 class ScheduleCard extends StatefulWidget {
   final UserSchedule schedule;
@@ -18,11 +25,26 @@ class ScheduleCard extends StatefulWidget {
 }
 
 class _ScheduleCardState extends State<ScheduleCard> {
-  
+  Schedule convertToNormalSchedule(){
+    List<ActivityT.Activity> tempList=[];
+
+    for (Activity activity in widget.schedule.activities ?? []) {
+
+     ActivityT.Activity temp=new ActivityT.Activity(beginTime: activity.beginTime, endTime: activity.endTime, day: activity.day, title: activity.title, category: activity.category, rate: activity.rate, description: activity.description, photos: [], placeID: activity.placeId, duration: Duration(minutes: activity.duration!), photosLinks: []);
+     tempList.add(temp);
+    }
+
+    return Schedule(
+      tempList,
+
+      widget.schedule.userId!,
+      widget.schedule.title!,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    var photoReference = widget.schedule.activities?[0].photos?[0].photoReference;
+    // var photoReference = widget.schedule.activities?[0].photos?[0].photoReference;
     var apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -49,10 +71,10 @@ class _ScheduleCardState extends State<ScheduleCard> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                            image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?photo_reference=$photoReference&maxheight=400&maxwidth=400&key=$apiKey'),
-                            fit: BoxFit.cover,
-                          )
+                    // image: DecorationImage(
+                    //         image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?photo_reference=$photoReference&maxheight=400&maxwidth=400&key=$apiKey'),
+                    //         fit: BoxFit.cover,
+                    //       )
                   ),
                 ), // TODO handle the decoration.
                 Container(
@@ -90,19 +112,19 @@ class _ScheduleCardState extends State<ScheduleCard> {
                                 ),
                               ),
                             ),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                widget.schedule.activities?[0].title ?? 'nil',
-                                style: GoogleFonts.notoSerif(
-                                  textStyle: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 22,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // FittedBox(
+                            //   fit: BoxFit.scaleDown,
+                            //   child: Text(
+                            //     widget.schedule.activities?[0].title ?? 'nil',
+                            //     style: GoogleFonts.notoSerif(
+                            //       textStyle: const TextStyle(
+                            //         color: Colors.white,
+                            //         fontWeight: FontWeight.w700,
+                            //         fontSize: 22,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                             const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,9 +162,20 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         ScheduleScreen(schedule: widget.schedule)));
+                          
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                              BlocProvider(
+                                create: (BuildContext context) => ScheduleBloc(), // You are creating bloc here
+                                child: Builder( // Use Builder to get the context with the bloc provided above
+                                  builder: (context) {
+
+                                    return ScheduleScreen(schedule: convertToNormalSchedule(),newCreated: false,);
+                                  },
+                                )
+                              )
+                          )
+                              );
                         },
                         child: Center(
                           child: Text(

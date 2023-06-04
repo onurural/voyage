@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:voyage/views/auth.view.dart';
 import 'package:voyage/views/main-connector.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 
 import 'bloc/user/user.bloc.dart';
 import 'bloc/user/user.event.dart';
@@ -16,6 +17,11 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  final FirebasePerformance _performance = FirebasePerformance.instance;
+  Trace performanceTrace = _performance.newTrace("performance test");
+  Trace networkTrace=_performance.newTrace("network trace");
+  performanceTrace.start();
+  networkTrace.start();
 
   final authData = AuthData();
   final userId = authData.getCurrentUserId();
@@ -24,6 +30,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   final String? userId;
 
   const MyApp({Key? key, this.userId}) : super(key: key);

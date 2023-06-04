@@ -17,8 +17,8 @@ import '../../ui-components/schedule-screen-components/activity-slide.dart';
 
 class ScheduleScreen extends StatefulWidget {
   final Schedule schedule;
-
-  const ScheduleScreen({super.key, required this.schedule});
+  final bool newCreated;
+  const ScheduleScreen({super.key, required this.schedule,required this.newCreated});
 
   @override
   _ScheduleScreenState createState() => _ScheduleScreenState();
@@ -36,7 +36,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
     super.initState();
     userId = _authData.getCurrentUserId();
 
-    for (Activity activity in widget.schedule.activities) {
+    for (Activity activity in widget.schedule.activities!) {
       final day = DateTime(activity.beginTime!.year, activity.beginTime!.month, activity.beginTime!.day);
       if (activitiesByDay.containsKey(day)) {
         activitiesByDay[day]!.add(activity);
@@ -151,13 +151,14 @@ class _ScheduleScreenState extends State<ScheduleScreen>
                 return ListView.builder(
                 itemCount: activities.length,
                 itemBuilder: (context, index) {
-                  return ActivitySlide(activities[index]);
+                  return ActivitySlide(activities[index],widget.newCreated);
                 },
               );
             }).toList(),
           ),
         ),
-         _saveButton()
+         widget.newCreated?
+         _saveButton():Container()
 
       ],
     ),
