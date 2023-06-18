@@ -9,6 +9,7 @@ import 'package:voyage/models/activity.dart';
 
 
 import 'package:voyage/models/schedule.dart';
+import 'package:voyage/ui-components/custom-error-dialog.dart';
 import 'package:voyage/ui-components/manage-activities-components/time-slot-column.dart';
 import 'package:voyage/ui-components/manage-activities-components/to-manage-tile.dart';
 import 'package:voyage/views/schedule-view/schedule.view.dart';
@@ -63,6 +64,22 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
       );
     }
   }
+  bool isInTimeRange(TimeOfDay inputStartTime, TimeOfDay inputEndTime) {
+    DateTime now = DateTime.now();
+    DateTime convertedInputStartTime = DateTime(now.year, now.month, now.day, inputStartTime.hour, inputStartTime.minute);
+    DateTime convertedInputEndTime = DateTime(now.year, now.month, now.day, inputEndTime.hour, inputEndTime.minute);
+
+    for (var activity in _modifiedActivities) {
+      DateTime convertedActivityStartTime = DateTime(now.year, now.month, now.day, activity.beginTime!.hour, activity.beginTime!.minute);
+      DateTime convertedActivityEndTime = DateTime(now.year, now.month, now.day, activity.endTime!.hour, activity.endTime!.minute);
+
+      if ((convertedInputStartTime.isAfter(convertedActivityStartTime) || convertedInputStartTime.isAtSameMomentAs(convertedActivityStartTime)) &&
+          (convertedInputEndTime.isBefore(convertedActivityEndTime) || convertedInputEndTime.isAtSameMomentAs(convertedActivityEndTime))) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   Map<String, TimeSlotsColumn> timeSlotColumns = {};
 
@@ -81,7 +98,12 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
     );
 
     if (selectedEndTime == null) return false;
-
+    var timeChecker=isInTimeRange(selectedStartTime,selectedEndTime);
+    print("Time Checkerrrrr+++++++"+timeChecker.toString());
+if(timeChecker){
+  showErrorDialog(context, 'This Time is Not Available...Please modify your schedule if you want it in that time');
+  return false;
+}
     // Show date picker dialog
     DateTime? selectedDate = await showDatePicker(
       context: context,

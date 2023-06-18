@@ -285,8 +285,7 @@ class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixi
           'assets/Images/LoadingAnimation.json',
           controller: _controller,
           onLoaded: (composition) {
-            // Configure the AnimationController with the duration of the
-            // Lottie file and start the animation.
+
             _controller
               ..duration = composition.duration
               ..forward();
