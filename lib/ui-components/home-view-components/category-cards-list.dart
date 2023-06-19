@@ -65,9 +65,9 @@ class _CategoryCardsListState extends State<CategoryCardsList>
   var categories = [
     Category('Historic', const CategoryPlacesList(), Icons.museum_outlined),
     Category('Natural', const CategoryPlacesList(), CupertinoIcons.tree),
-    Category('City Vibes', const CategoryPlacesList(), CupertinoIcons.tree),
-    Category('Rural', const CategoryPlacesList(), Icons.shopping_bag),
-    Category('Medditerrain', const CategoryPlacesList(), Icons.sports_volleyball),
+    Category('City Vibes', const CategoryPlacesList(), Icons.location_city),
+    Category('Rural', const CategoryPlacesList(), Icons.local_florist),
+    Category('Medditerrain', const CategoryPlacesList(), Icons.beach_access),
   ];
 
   List<CategoryCard> categoryCards = [];
@@ -185,7 +185,7 @@ class _CategoryCardsListState extends State<CategoryCardsList>
           ),
           SizedBox(
             height: 600,
-            child: TabBarView(physics: NeverScrollableScrollPhysics(),controller: _tabController, children: [
+            child: TabBarView(physics: const NeverScrollableScrollPhysics(),controller: _tabController, children: [
               place(),
               place(),
               place(),

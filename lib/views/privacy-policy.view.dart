@@ -21,13 +21,14 @@ class PrivacyPolicyPage extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: Colors.black
                     ),
                     child: AnimatedTextKit(
                       animatedTexts: [
                         TypewriterAnimatedText('Voyage Privacy Policy'),
                       ],
                       onTap: () {
-                        print("Privacy Policy");
+
                       },
                     ),
                   ),

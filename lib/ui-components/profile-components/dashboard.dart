@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,13 +21,16 @@ class Dashboard extends StatelessWidget {
       padding: const EdgeInsets.all(35),
       child: Column(
         children: [
-          Text('Your Statistics',
-              style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                color: Colors.black,
-                fontSize: 30,
-                fontWeight: FontWeight.w800,
-              ))),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+            child: Text('Your Statistics',
+                style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w800,
+                ))),
+          ),
           const CategoryStatistics(),
         ],
       ),
@@ -111,11 +116,12 @@ class _CategoryStatisticsState extends State<CategoryStatistics>
                 barGroups: state.categories.asMap().entries.map((entry) {
                   final int index = entry.key;
                   final InterestedCategory category = entry.value;
+                  final double cappedPercentage = min(1.0, (category.count! * 0.1));
                   return BarChartGroupData(
                     x: index,
                     barRods: [
                       BarChartRodData(
-                        y: (category.count! * 0.1) * _animation.value,
+                        y: cappedPercentage * _animation.value,
                         colors: [
                           const Color.fromRGBO(44, 87, 116, 100),
                           Colors.grey

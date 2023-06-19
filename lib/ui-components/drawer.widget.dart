@@ -1,13 +1,17 @@
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:voyage/ui-components/drawer-items.dart';
 import 'package:voyage/views/auth.view.dart';
-import 'package:voyage/views/log-in.view.dart';
 
 class DrawerWidget extends StatelessWidget {
   final ValueChanged<DrawerItem> onSelectedItem;
+ FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  const DrawerWidget({
+
+  DrawerWidget({
     Key? key,
     required this.onSelectedItem,
   }) : super(key: key);
@@ -44,12 +48,13 @@ class DrawerWidget extends StatelessWidget {
                 const TextStyle(color: Colors.white, fontSize: 17),
               ),
             ),
-            onTap: () {
+            onTap: () async {
               if(item.title != 'Log Out'){
                 onSelectedItem(item);
               }
               else {
-                Navigator.push(
+                await firebaseAuth.signOut();
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const AuthScreen()),
                 );

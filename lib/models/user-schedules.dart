@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 
@@ -21,19 +23,19 @@ class UserSchedule {
     String toRawJson() => json.encode(toJson());
 
     factory UserSchedule.fromJson(Map<String, dynamic> json) => UserSchedule(
-        id: json["_id"],
-        userId: json["userId"],
-        activities: json["activities"] == null ? [] : List<Activity>.from(json["activities"]!.map((x) => Activity.fromJson(x))),
-        title: json["title"],
-        v: json["__v"],
+        id: json['_id'],
+        userId: json['userId'],
+        activities: json['activities'] == null ? [] : List<Activity>.from(json['activities']!.map((x) => Activity.fromJson(x))),
+        title: json['title'],
+        v: json['__v'],
     );
 
     Map<String, dynamic> toJson() => {
-        "_id": id,
-        "userId": userId,
-        "activities": activities == null ? [] : List<dynamic>.from(activities!.map((x) => x.toJson())),
-        "title": title,
-        "__v": v,
+        '_id': id,
+        'userId': userId,
+        'activities': activities == null ? [] : List<dynamic>.from(activities!.map((x) => x.toJson())),
+        'title': title,
+        '__v': v,
     };
 }
 
@@ -69,31 +71,31 @@ class Activity {
     String toRawJson() => json.encode(toJson());
 
     factory Activity.fromJson(Map<String, dynamic> json) => Activity(
-        id: json["id"],
-        beginTime: json["beginTime"] == null ? null : DateTime.parse(json["beginTime"]),
-        endTime: json["endTime"] == null ? null : DateTime.parse(json["endTime"]),
-        day: json["day"] == null ? null : DateTime.parse(json["day"]),
-        title: json["title"],
-        category: json["category"],
-        rate: json["rate"]?.toDouble(),
-        description: json["description"],
-        photos: json["photos"] == null ? [] : List<Photo>.from(json["photos"]!.map((x) => Photo.fromJson(x))),
-        placeId: json["placeID"],
-        duration: json["duration"],
+        id: json['id'],
+        beginTime: json['beginTime'] == null ? null : DateTime.parse(json['beginTime']),
+        endTime: json['endTime'] == null ? null : DateTime.parse(json['endTime']),
+        day: json['day'] == null ? null : DateTime.parse(json['day']),
+        title: json['title'],
+        category: json['category'],
+        rate: json['rate']?.toDouble(),
+        description: json['description'],
+        photos: json['photos'] == null ? [] : List<Photo>.from(json['photos']!.map((x) => Photo.fromJson(x))),
+        placeId: json['placeID'],
+        duration: json['duration'],
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id,
-        "beginTime": beginTime?.toIso8601String(),
-        "endTime": endTime?.toIso8601String(),
-        "day": day?.toIso8601String(),
-        "title": title,
-        "category": category,
-        "rate": rate,
-        "description": description,
-        "photos": photos == null ? [] : List<dynamic>.from(photos!.map((x) => x.toJson())),
-        "placeID": placeId,
-        "duration": duration,
+        'id': id,
+        'beginTime': beginTime?.toIso8601String(),
+        'endTime': endTime?.toIso8601String(),
+        'day': day?.toIso8601String(),
+        'title': title,
+        'category': category,
+        'rate': rate,
+        'description': description,
+        'photos': photos == null ? [] : List<dynamic>.from(photos!.map((x) => x.toJson())),
+        'placeID': placeId,
+        'duration': duration,
     };
 }
 
@@ -115,16 +117,16 @@ class Photo {
     String toRawJson() => json.encode(toJson());
 
     factory Photo.fromJson(Map<String, dynamic> json) => Photo(
-        height: json["height"],
-        htmlAttributions: json["html_attributions"] == null ? [] : List<String>.from(json["html_attributions"]!.map((x) => x)),
-        photoReference: json["photo_reference"],
-        width: json["width"],
+        height: json['height'],
+        htmlAttributions: json['html_attributions'] == null ? [] : List<String>.from(json['html_attributions']!.map((x) => x)),
+        photoReference: json['photo_reference'],
+        width: json['width'],
     );
 
     Map<String, dynamic> toJson() => {
-        "height": height,
-        "html_attributions": htmlAttributions == null ? [] : List<dynamic>.from(htmlAttributions!.map((x) => x)),
-        "photo_reference": photoReference,
-        "width": width,
+        'height': height,
+        'html_attributions': htmlAttributions == null ? [] : List<dynamic>.from(htmlAttributions!.map((x) => x)),
+        'photo_reference': photoReference,
+        'width': width,
     };
 }

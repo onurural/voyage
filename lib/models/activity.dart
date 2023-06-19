@@ -14,6 +14,8 @@ class Activity {
   List<Photos>? photos;
   String? placeID;
   Duration? duration;
+  List<String> photosLinks;
+
 
   Activity({
     required this.beginTime,
@@ -26,6 +28,7 @@ class Activity {
     required this.photos,
     required this.placeID,
     required this.duration,
+    required this.photosLinks
   }) : id = idCounter++;
 
   Map<String, dynamic> toJson() {

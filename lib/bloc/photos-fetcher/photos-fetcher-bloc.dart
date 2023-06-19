@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voyage/bloc/photos-fetcher/photos-fetcher-event.dart';
 import 'package:voyage/bloc/photos-fetcher/photos-fetcher-state.dart';

@@ -14,7 +14,10 @@ class ScheduleData implements ScheduleRepository {
   Future<bool> postSchedule({required Schedule schedule}) async {
     try {
       var url = Uri.https(apiURL, scheduleEndpoint);
-      final response = await http.post(url, body: jsonEncode(schedule));
+      var jsonSchedule=jsonEncode(schedule);
+      final response = await http.post(url, body: jsonSchedule,headers: {"Content-Type":"application/json"});
+      var statusCode=response.statusCode;
+
       return response.statusCode == 201;
     } catch (e) {
       debugPrint(e.toString());
@@ -28,8 +31,12 @@ class ScheduleData implements ScheduleRepository {
       var url = Uri.https(apiURL, scheduleEndpoint, {'userId': userId});
       final response = await http.get(url);
       if (response.body.isNotEmpty) {
+
           List<dynamic> data = json.decode(response.body);
+
           List<UserSchedule> placesToTravel = data.map((json) => UserSchedule.fromJson(json)).toList();
+
+
             return placesToTravel;
         }
         throw HttpException('Unexpected status code : ${response.statusCode}');

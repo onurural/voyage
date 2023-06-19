@@ -2,19 +2,26 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:voyage/models/activity.dart';
 import 'package:voyage/ui-components/schedule-screen-components/maps.widget.dart';
 import 'package:voyage/ui-components/place-components/description-box.dart';
 
+import '../../bloc/photos-fetcher/photos-fetcher-bloc.dart';
+import '../../bloc/photos-fetcher/photos-fetcher-event.dart';
+import '../../bloc/photos-fetcher/photos-fetcher-state.dart';
+import '../../data/photos-fetcher.data.dart';
+
 class ActivitySlide extends StatefulWidget {
   final Activity activity;
   final DateFormat timeFormat = DateFormat('hh:mm a');
+  final bool newCreated;
 
-  ActivitySlide(this.activity, {super.key});
+  ActivitySlide(this.activity,this.newCreated, {super.key});
 
   @override
   State<ActivitySlide> createState() => _ActivitySlideState();
@@ -22,6 +29,7 @@ class ActivitySlide extends StatefulWidget {
 
 class _ActivitySlideState extends State<ActivitySlide>
     with TickerProviderStateMixin {
+  var photosFetcher=PhotosFetcherBloc(data: PhotosFetcherData());
   bool isContentShown = false;
   bool isDescShowed = false;
   var descButtonIcon = Icons.arrow_downward_rounded;
@@ -35,6 +43,10 @@ class _ActivitySlideState extends State<ActivitySlide>
   @override
   void initState() {
     super.initState();
+    if(widget.newCreated ==false){
+      photosFetcher.add(FetchImages(widget.activity.placeID!));
+    }
+
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
@@ -142,7 +154,6 @@ class _ActivitySlideState extends State<ActivitySlide>
 
   @override
   Widget build(BuildContext context) {
-    var apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
     // Define the color palette and text styles
     Color primaryColor = const Color.fromRGBO(44, 87, 116, 1);
     Color secondaryColor = const Color.fromRGBO(235, 235, 235, 1);
@@ -205,13 +216,15 @@ class _ActivitySlideState extends State<ActivitySlide>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.activity.title!, style: titleStyle),
-                          const SizedBox(height: 5),
-                          Text(widget.activity.category!, style: subtitleStyle),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.activity.title!, style: titleStyle, maxLines: 3, overflow: TextOverflow.ellipsis),
+                            const SizedBox(height: 5),
+                            Text(widget.activity.category!, style: subtitleStyle),
+                          ],
+                        ),
                       ),
                       Column(
                         children: [
@@ -265,37 +278,9 @@ class _ActivitySlideState extends State<ActivitySlide>
                         });
                       },
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                          child: CarouselSlider(
-                            options: CarouselOptions(
-                              height: 200,
-                              autoPlay: true,
-                              enlargeCenterPage: true,
-                            ),
-                            items: widget.activity.photos
-                                ?.map((photo) => Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color:
-                                    Colors.black.withOpacity(0.25),
-                                    spreadRadius: 1,
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                                image: DecorationImage(
-                                  image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?photo_reference=${photo.photoReference}&maxheight=400&maxwidth=400&key=${apiKey}'),
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment.center,
-                                ),
-                              ),
-                            ))
-                                .toList(),
-                          ),
-                        ),
+                        widget.newCreated?  gallery():
+                     fetchedGallery(),
+
                         const MapsWidget(),
                       ],
                     ),
@@ -375,5 +360,96 @@ class _ActivitySlideState extends State<ActivitySlide>
         ),
       ),
     );
+  }
+
+  fetchedGallery() {
+   return BlocProvider(
+                      create: (_) => photosFetcher,
+                child: BlocConsumer<PhotosFetcherBloc, PhotosFetchersState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      if (state is PhotosFetcherLoaded) {
+
+                        for (var element in state.images) {
+                          if(element.isNotEmpty){
+                            widget.activity.photosLinks.add(element);
+                          }
+
+                        }
+                        if(widget.activity.photosLinks.isNotEmpty){
+                          return gallery();
+                        }
+                        else{
+                          return Container();
+                        }
+
+
+                      }
+                      if (state is PhotosFetcherLoading) {
+
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.grey.shade300,
+                              highlightColor: Colors.grey.shade100,
+                              child: Container(
+                                width: 250.0, // Adjust the width to match your card
+
+                                color: Colors.grey[300],
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      if (state is PhotosFetcherError) {
+                        return Container();
+                      }return Container(); } )
+            );
+  }
+
+  Padding gallery() {
+    return Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                        child: CarouselSlider(
+                          options: CarouselOptions(
+                            height: 200,
+                            autoPlay: true,
+                            enlargeCenterPage: true,
+                          ),
+                          items: widget.activity.photosLinks
+                              .map((photo) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                  Colors.black.withOpacity(0.25),
+                                  spreadRadius: 1,
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                              image: DecorationImage(
+                                image: NetworkImage(photo),
+                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          ))
+                              .toList(),
+                        ),
+                      );
   }
 }

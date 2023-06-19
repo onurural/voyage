@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:voyage/models/activity.dart';
@@ -24,8 +26,8 @@ class SelectPlaceScreen extends StatefulWidget {
   final double budget;
   final String companion;
 
-  SelectPlaceScreen(
-      {required this.cityName,
+  const SelectPlaceScreen(
+      {super.key, required this.cityName,
       required this.entertainment,
       required this.gastronomy,
       required this.health,
@@ -63,36 +65,51 @@ void removeFromActivities(Activity activity){
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.cityName),
-      ),
-      floatingActionButton: CustomFloatingActionButton(onPressed: (){
-        if(activities.isNotEmpty){
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ManageActivitiesScreen(cityName: widget.cityName, activities: activities, beginDate: widget.beginDate, endDate: widget.endDate, beginTime: widget.beginTime, endTime: widget.endTime)
-            ),
-          );
-        }
-        else{
-          showErrorDialog(context, 'Please Select At Least One Activity');
-        }
+    return Hero(
+      tag: 'screen1',
+      child: Scaffold(
 
-      }, icon: CupertinoIcons.check_mark,),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: double.maxFinite,
-          height: double.maxFinite,
-          child: IntrinsicHeight(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildMustSeeCategory(),
-                buildRestaurantCategory(),
-                buildEntertainmentCategory()
-              ],
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
+          title: Text(widget.cityName),
+
+        ),
+        floatingActionButton: CustomFloatingActionButton(onPressed: (){
+          if(activities.isNotEmpty){
+            Navigator.push(context, PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) => ManageActivitiesScreen(cityName: widget.cityName, activities: activities, beginDate: widget.beginDate, endDate: widget.endDate, beginTime: widget.beginTime, endTime: widget.endTime),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                var begin = const Offset(1.0, 0.0);
+                var end = Offset.zero;
+                var curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+            ));
+          }
+          else{
+            showErrorDialog(context, 'Please Select At Least One Activity');
+          }
+
+        }, icon: CupertinoIcons.check_mark,),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            width: double.maxFinite,
+            height: 1200,
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildMustSeeCategory(),
+                   buildRestaurantCategory(),
+                   buildEntertainmentCategory()
+                ],
+              ),
             ),
           ),
         ),
@@ -111,14 +128,10 @@ void removeFromActivities(Activity activity){
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SelectPlaceToTravelCard(widget.cityName,addToActivities,removeFromActivities),
-            ],
-          ),
-        ),
+        SizedBox(
+          height: 300,
+            width: double.infinity,
+            child: SelectPlaceToTravelCard(widget.cityName,addToActivities,removeFromActivities)),
       ],
     );
   }
@@ -133,14 +146,10 @@ void removeFromActivities(Activity activity){
             style:  TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SelectRestaurantCard(widget.cityName,addToActivities,removeFromActivities),
-            ],
-          ),
-        ),
+        SizedBox(
+          height: 300,
+            width: double.infinity
+            ,child: SelectRestaurantCard(widget.cityName,addToActivities,removeFromActivities)),
       ],
     );
   }
@@ -155,14 +164,10 @@ void removeFromActivities(Activity activity){
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SelectEntertainmentCard(widget.cityName,addToActivities,removeFromActivities)
-            ],
-          ),
-        ),
+        SizedBox(
+          height: 300,
+            width: double.infinity,
+            child: SelectEntertainmentCard(widget.cityName,addToActivities,removeFromActivities)),
       ],
     );
   }

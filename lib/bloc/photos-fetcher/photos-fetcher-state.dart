@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 abstract class PhotosFetchersState {}
 
 class PhotosFetcherInitial extends PhotosFetchersState {}

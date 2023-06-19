@@ -23,6 +23,9 @@ class _MainConnectorState extends State<MainConnector> {
 
   void _onItemTapped(int index) {
     setState(() {
+      if(index ==1){
+        (screens[1] as SchedulesScreen).refreshData();
+      }
       _currentIndex = index;
     });
   }
@@ -31,17 +34,17 @@ class _MainConnectorState extends State<MainConnector> {
   void initState() {
     super.initState();
   }
-
+  List<Widget> screens = [
+    const HomeCon(),
+    SchedulesScreen(),
+    const CreateScheduleScreen(),
+    const SavedDocumentsScreen(),
+    const ProfilePage(),
+  ];
   @override
   Widget build(BuildContext context) {
               List<Schedule> schedules = [];
-         List<Widget> screens = [
-                const HomeCon(),
-                SchedulesScreen(),
-                const CreateScheduleScreen(),
-                const SavedDocumentsScreen(),
-                const ProfilePage(),
-              ];
+
     return Scaffold(
       body:  Column(
                 children: [

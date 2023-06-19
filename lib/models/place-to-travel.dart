@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:voyage/models/photos.dart';
 
 class PlaceToTravel {

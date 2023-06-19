@@ -1,8 +1,14 @@
+// ignore_for_file: file_names, prefer_const_constructors_in_immutables, library_private_types_in_public_api
+
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:lottie/lottie.dart';
+
 
 
 import 'package:voyage/ui-components/custom-error-dialog.dart';
@@ -11,42 +17,35 @@ import '../../bloc/auth/auth.bloc.dart';
 import '../../bloc/auth/auth.event.dart';
 import '../../bloc/auth/auth.state.dart';
 import '../../views/main-connector.dart';
-import 'package:flutter/material.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function(double) onNavigate;
 
-  LoginWidget(this.onNavigate);
+  LoginWidget(this.onNavigate, {super.key});
 
   @override
   _LoginWidgetState createState() => _LoginWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginWidgetState extends State<LoginWidget>  with TickerProviderStateMixin {
+
+
+  bool _isPasswordHidden = true;
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
-    loadingAnimation= LiquidCustomProgressIndicator(
-      value: 0.2,
-      // Defaults to 0.5.
-      valueColor: AlwaysStoppedAnimation(Colors.pink),
-      // Defaults to the current Theme's accentColor.
-      backgroundColor: Colors.black,
-      // Defaults to the current Theme's backgroundColor.
-      direction: Axis.vertical,
-      // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right).
-      shapePath: buildBoatPath()
-      , // A Path object used to draw the shape of the progress indicator. The size of the progress indicator is created from the bounds of this path.
-    );
+    _controller = AnimationController(vsync: this);
+
   }
   bool isLoading = false;
- late Widget loadingAnimation;
+
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
   final AuthBloc _authBloc = AuthBloc();
-
+  late final AnimationController _controller;
   void _onSignUpButtonPressed() {
     widget.onNavigate(0);
   }
@@ -57,6 +56,10 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   void _onLoginButtonPressed() {
     if (_formKey.currentState!.validate()) {
+
+      setState(() {
+        isLoading = true; // Start loading immediately before adding event
+      });
       _authBloc.add(LogInRequest(_email, _password));
     }
   }
@@ -79,22 +82,26 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
                   if (state is AuthSuccessState) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainConnector()),
-                    );
+                    Future.delayed(const Duration(seconds: 5), () { // Add delay here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainConnector(),
+                        ),
+                      );
+                    });
                   }
                   if (state is AuthFailedState) {
                     setState(() {
-                      loadingAnimation = Container();
+                      isLoading=false;
                     });
                     showErrorDialog(
                         context, 'The Email or the password is not correct');
                   }
                   if (state is AuthLoadingState) {
+
                     setState(() {
-                      isLoading = false;
+                      isLoading = true;
                     });
                   }
                 }, builder: (context, state) {
@@ -103,7 +110,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     child: Icon(
                       Icons.login_sharp,
                       color: Colors.white,
-                      size: 50,
+                      size: 20,
                     ),
                   );
                 }),
@@ -120,13 +127,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Positioned(
-        //   top: 0,
-        //   left: 0,
-        //   bottom: 0,
-        //   right: 0,
-        //   child: loadingAnimation,
-        // ),
+
         SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 100),
@@ -135,7 +136,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               children: [
                 Text('Log In',
                     style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontSize: 32, fontWeight: FontWeight.bold))),
                 const SizedBox(height: 40),
                 Form(
@@ -159,7 +160,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           ),
                           errorBorder: const OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.red, width: 2.0),
+                            BorderSide(color: Colors.red, width: 2.0),
                           ),
                         ),
                         onChanged: (value) => _email = value.trim(),
@@ -173,37 +174,46 @@ class _LoginWidgetState extends State<LoginWidget> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: GoogleFonts.poppins(),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(80, 120, 150, 1),
-                                width: 2.0),
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(80, 120, 150, 1),
-                                width: 2.0),
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.red, width: 2.0),
-                          ),
-                        ),
-                        onChanged: (value) => _password = value,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          } else if (value.length < 6) {
-                            return 'Password must be at least 6 characters';
-                          }
+    TextFormField(
+    obscureText: _isPasswordHidden, // use _isPasswordHidden here
+    decoration: InputDecoration(
+    labelText: 'Password',
+    labelStyle: GoogleFonts.poppins(),
+    focusedBorder: const OutlineInputBorder(
+    borderSide: BorderSide(
+    color: Color.fromRGBO(80, 120, 150, 1),
+    width: 2.0),
+    ),
+    enabledBorder: const OutlineInputBorder(
+    borderSide: BorderSide(
+    color: Color.fromRGBO(80, 120, 150, 1),
+    width: 2.0),
+    ),
+    errorBorder: const OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.red, width: 2.0),
+    ),
+    suffixIcon: IconButton( // Add this block
+    icon: Icon(
+    _isPasswordHidden ? Icons.visibility : Icons.visibility_off,
+    ),
+    onPressed: () {
+    setState(() {
+    _isPasswordHidden = !_isPasswordHidden;
+    });
+    },
+    ),
+    ),
+    onChanged: (value) => _password = value,
+    validator: (value) {
+    if (value == null || value.isEmpty) {
+    return 'Please enter your password';
+    } else if (value.length < 6) {
+    return 'Password must be at least 6 characters';
+    }
 
-                          return null;
-                        },
-                      ),
+    return null;
+    },
+    ),
                     ],
                   ),
                 ),
@@ -235,24 +245,60 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
           ),
         ),
-        // Positioned(top: 100,left: 0,bottom:0,right: 50,child: Visibility(visible: true,child: loadingAnimation,))
 
+        if (isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              child: Center(
+                child: _buildLoadingAnimation(),
+              ),
+            ),
+          ),
 
 
       ],
     );
   }
-  Path buildBoatPath() {
-    return Path()
-      ..moveTo(15, 120)
-      ..lineTo(0, 85)
-      ..lineTo(50, 85)
-      ..lineTo(50, 0)
-      ..lineTo(105, 80)
-      ..lineTo(60, 80)
-      ..lineTo(60, 85)
-      ..lineTo(120, 85)
-      ..lineTo(105, 120)
-      ..close();
+
+
+  Widget _buildLoadingAnimation() {
+    return Container(
+      width: 150.0,
+      height: 150.0,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Lottie.asset(
+          'assets/Images/LoadingAnimation.json',
+          controller: _controller,
+          onLoaded: (composition) {
+
+            _controller
+              ..duration = composition.duration
+              ..forward();
+          },
+        ),
+      ),
+    );
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
 }

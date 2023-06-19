@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:voyage/bloc/schedule/schedule.bloc.dart';
 import 'package:voyage/data/auth.data.dart';
 import 'package:voyage/models/activity.dart';
 
 
 import 'package:voyage/models/schedule.dart';
+import 'package:voyage/ui-components/custom-error-dialog.dart';
 import 'package:voyage/ui-components/manage-activities-components/time-slot-column.dart';
 import 'package:voyage/ui-components/manage-activities-components/to-manage-tile.dart';
 import 'package:voyage/views/schedule-view/schedule.view.dart';
@@ -29,6 +32,7 @@ class ManageActivitiesScreen extends StatefulWidget {
 }
 
 class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
+  final ScheduleBloc scheduleBloc=ScheduleBloc();
   List<Activity> _modifiedActivities = [];
   Map<String, ValueNotifier<List<Activity>>> activitiesNotifiers = {};
   Map<int, ValueNotifier<bool>> activityRemovedNotifiers = {};
@@ -60,6 +64,22 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
       );
     }
   }
+  bool isInTimeRange(TimeOfDay inputStartTime, TimeOfDay inputEndTime) {
+    DateTime now = DateTime.now();
+    DateTime convertedInputStartTime = DateTime(now.year, now.month, now.day, inputStartTime.hour, inputStartTime.minute);
+    DateTime convertedInputEndTime = DateTime(now.year, now.month, now.day, inputEndTime.hour, inputEndTime.minute);
+
+    for (var activity in _modifiedActivities) {
+      DateTime convertedActivityStartTime = DateTime(now.year, now.month, now.day, activity.beginTime!.hour, activity.beginTime!.minute);
+      DateTime convertedActivityEndTime = DateTime(now.year, now.month, now.day, activity.endTime!.hour, activity.endTime!.minute);
+
+      if ((convertedInputStartTime.isAfter(convertedActivityStartTime) || convertedInputStartTime.isAtSameMomentAs(convertedActivityStartTime)) &&
+          (convertedInputEndTime.isBefore(convertedActivityEndTime) || convertedInputEndTime.isAtSameMomentAs(convertedActivityEndTime))) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   Map<String, TimeSlotsColumn> timeSlotColumns = {};
 
@@ -78,7 +98,12 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
     );
 
     if (selectedEndTime == null) return false;
-
+    var timeChecker=isInTimeRange(selectedStartTime,selectedEndTime);
+    print("Time Checkerrrrr+++++++"+timeChecker.toString());
+if(timeChecker){
+  showErrorDialog(context, 'This Time is Not Available...Please modify your schedule if you want it in that time');
+  return false;
+}
     // Show date picker dialog
     DateTime? selectedDate = await showDatePicker(
       context: context,
@@ -248,7 +273,8 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title: const Text('Create Schedule'),
+        backgroundColor: Color.fromRGBO(24, 42, 64, 1),
+        title: const Text('Managing Schedule'),
 
         ),
 
@@ -284,45 +310,66 @@ class _ManageActivitiesScreenState extends State<ManageActivitiesScreen> {
               },
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              List<Activity> tempActivities=[];
-              this.activitiesNotifiers.forEach((key, value) {
-                value.value.forEach((element) {
-                  tempActivities.add(element);
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                List<Activity> tempActivities=[];
+                this.activitiesNotifiers.forEach((key, value) {
+                  value.value.forEach((element) {
+                    tempActivities.add(element);
+                  });
                 });
-              });
-              Schedule schedule=Schedule(tempActivities, widget.cityName, userId!);
-              if(tempActivities.isNotEmpty){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ScheduleScreen(schedule: schedule)
-                    ));
-              }
+                Schedule schedule=Schedule(tempActivities,  userId!,widget.cityName);
+                if(tempActivities.isNotEmpty){
+                  Navigator.push(context, PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>  BlocProvider(
+                      create: (BuildContext context) => scheduleBloc, // You are creating bloc here
+                      child: Builder( // Use Builder to get the context with the bloc provided above
+                        builder: (context) {
 
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
+                          return ScheduleScreen(schedule: schedule,newCreated: true,);
+                        },
+                      ),
+                    ),
+                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                      var begin = Offset(1.0, 0.0);
+                      var end = Offset.zero;
+                      var curve = Curves.ease;
+
+                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                      return SlideTransition(
+                        position: animation.drive(tween),
+                        child: child,
+                      );
+                    },
+                  ));
+                }
+
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(24, 42, 64, 1),
 
 
 
-              padding: const EdgeInsets
-                  .symmetric(
-                  vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.circular(30),
+                padding: const EdgeInsets
+                    .symmetric(
+                    vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                  BorderRadius.circular(30),
+                ),
               ),
-            ),
-            child: Center(
-              child: Text(
-                'Next',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+              child: Center(
+                child: Text(
+                  'Next',
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

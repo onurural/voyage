@@ -3,8 +3,9 @@ class Photos {
   List<String>? htmlAttributions;
   String? photoReference;
   int? width;
+   String? link;
 
-  Photos({this.height, this.htmlAttributions, this.photoReference, this.width});
+  Photos({this.height, this.htmlAttributions, this.photoReference, this.width,this.link});
 
   Photos.fromJson(Map<String, dynamic> json) {
     height = json['height'];

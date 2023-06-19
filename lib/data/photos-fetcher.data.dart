@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 class PhotosFetcherData implements PhotosFetcherRepository {
   String apiKey='AIzaSyBwUfNX77fGSlKtOj7jUBxiiXEvcf0hAbU';
   @override
-  Future<List<String>> fetchImages(String location) async {
-    String placeId = await _fetchPlaceId(location);
+  Future<List<String>> fetchImages(String placeId) async {
+
     List<String> photoReferences = await _fetchPhotoReferences(placeId);
 
 
@@ -19,16 +19,7 @@ class PhotosFetcherData implements PhotosFetcherRepository {
     return photoUrls;
   }
 
-  Future<String> _fetchPlaceId(String location) async {
-    final response = await http.get(
-        Uri.parse('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=$location&inputtype=textquery&fields=place_id&key=$apiKey'));
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      return data['candidates'][0]['place_id'];
-    } else {
-      throw Exception('Failed to load place ID');
-    }
-  }
+
 
   Future<List<String>> _fetchPhotoReferences(String placeId) async {
     final response = await http.get(
